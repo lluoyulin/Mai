@@ -1,24 +1,22 @@
 //
-//  ViewController.m
+//  BaseViewController.m
 //  Mai
 //
-//  Created by freedom on 16/1/20.
+//  Created by freedom on 16/1/21.
 //  Copyright © 2016年 freedom_luo. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "BaseViewController.h"
 
-@interface ViewController ()
+@interface BaseViewController ()
 
 @end
 
-@implementation ViewController
+@implementation BaseViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title=@"出来mai";
-    self.view.backgroundColor=[UIColor yellowColor];
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

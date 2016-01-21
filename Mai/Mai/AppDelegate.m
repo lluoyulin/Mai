@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import "MainViewController.h"
+#import "TabBarViewController.h"
+#import "SCShoppingCartViewController.h"
 
 @interface AppDelegate ()
 
@@ -22,7 +24,7 @@
     
     self.window=[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor=[UIColor whiteColor];
-    self.window.rootViewController=[[UINavigationController alloc] initWithRootViewController:[ViewController new]];
+    self.window.rootViewController=[[MainViewController alloc] initWithLeftViewController:[SCShoppingCartViewController new] centerViewController:[TabBarViewController new]];
     [self.window makeKeyAndVisible];
     
     return YES;
