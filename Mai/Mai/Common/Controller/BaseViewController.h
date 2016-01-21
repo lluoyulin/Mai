@@ -10,4 +10,6 @@
 
 @interface BaseViewController : UIViewController
 
+@property(nonatomic,getter=isShowMenu) BOOL showMenu;
+
 @end

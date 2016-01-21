@@ -20,6 +20,8 @@
     [super viewDidLoad];
    
     self.view.backgroundColor=ThemeBlack;
+    
+    self.showMenu=YES;
 }
 
 - (void)didReceiveMemoryWarning {

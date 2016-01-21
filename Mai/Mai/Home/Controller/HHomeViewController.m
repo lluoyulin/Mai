@@ -23,6 +23,8 @@
     
     self.view.backgroundColor=ThemeYellow;
     
+    self.showMenu=YES;
+    
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame=CGRectMake((SCREEN_WIDTH-100)/2, (SCREEN_HEIGHT-50)/2, 100, 50);
     [btn setTitle:@"push下一个页面" forState:UIControlStateNormal];
@@ -33,16 +35,6 @@
     self.navigationController.navigationBar.barTintColor=ThemeYellow;
     self.navigationController.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:ThemeBlack};
     [self.navigationController.navigationBar setTranslucent:NO];
-    
-    UIButton *left=[UIButton buttonWithType:UIButtonTypeCustom];
-    left.frame=CGRectMake(0, 0, 44, 44);
-    [left setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 22)];
-    [left setImage:[UIImage imageNamed:@"navigation_menu"] forState:UIControlStateNormal];
-    [left addTarget:self action:@selector(left:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc] initWithCustomView:left];
-    
-    self.navigationItem.leftBarButtonItem=leftItem;
 }
 
 -(void)btn:(UIButton *)sender{
@@ -51,9 +43,6 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
--(void)left:(UIButton *)sender{
-    NSLog(@"adfasfsadfsa");
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
