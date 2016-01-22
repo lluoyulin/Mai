@@ -8,6 +8,21 @@
 
 #import "BaseViewController.h"
 
-@interface HHomeViewController : BaseViewController
+@protocol HHomeViewControllerDelegate <NSObject>
+
+/**
+ *  选中类型
+ *
+ *  @param index 选中类型索引
+ */
+-(void)selectType:(NSInteger)index;
+
+@end
+
+@interface HHomeViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
+
+@property(nonatomic,weak) id<HHomeViewControllerDelegate> delegate;
+
+-(instancetype)initWithFrame:(CGRect)frame;
 
 @end

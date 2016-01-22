@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
+#import "Const.h"
+
 @interface BaseViewController ()
 
 @end
@@ -16,6 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.barTintColor=ThemeYellow;
+    self.navigationController.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:ThemeBlack};
+    [self.navigationController.navigationBar setTranslucent:NO];
 }
 
 -(void)setShowMenu:(BOOL)showMenu{

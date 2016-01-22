@@ -48,6 +48,11 @@
 #define NetErrorMessage @"网络故障"
 
 /**
+ *  白色
+ */
+#define ThemeWhite [UIColor whiteColor]
+
+/**
  *  黄色
  */
 #define ThemeYellow UIColorFromRGB(0xffd943)

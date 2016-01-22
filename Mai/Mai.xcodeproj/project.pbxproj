@@ -68,6 +68,10 @@
 		E6BA82081C5091F100A5C16F /* CAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA82071C5091F100A5C16F /* CAlertView.m */; };
 		E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA820A1C50B9E700A5C16F /* TabBarViewController.m */; };
 		E6BA82141C50C3BB00A5C16F /* HGoodsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */; };
+		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
+		E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */; };
+		E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */; };
+		E6F3CE141C523387001A3670 /* HHomeDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -195,6 +199,14 @@
 		E6BA820A1C50B9E700A5C16F /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		E6BA82121C50C3BB00A5C16F /* HGoodsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsDetailsViewController.h; sourceTree = "<group>"; };
 		E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGoodsDetailsViewController.m; sourceTree = "<group>"; };
+		E6F3CE091C522FEA001A3670 /* NSObject+DataConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DataConvert.h"; sourceTree = "<group>"; };
+		E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DataConvert.m"; sourceTree = "<group>"; };
+		E6F3CE0C1C523201001A3670 /* HHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeTableViewCell.h; sourceTree = "<group>"; };
+		E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeTableViewCell.m; sourceTree = "<group>"; };
+		E6F3CE0F1C5232C2001A3670 /* HHomeDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeDetailsViewController.h; sourceTree = "<group>"; };
+		E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeDetailsViewController.m; sourceTree = "<group>"; };
+		E6F3CE121C523387001A3670 /* HHomeDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeDetailsTableViewCell.h; sourceTree = "<group>"; };
+		E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeDetailsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +281,8 @@
 				E65B0B511C4F8005002262F1 /* UIView+Frame.m */,
 				E65B0B531C4F8205002262F1 /* UILabel+AutoFrame.h */,
 				E65B0B541C4F8205002262F1 /* UILabel+AutoFrame.m */,
+				E6F3CE091C522FEA001A3670 /* NSObject+DataConvert.h */,
+				E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -518,6 +532,8 @@
 			children = (
 				E6BA81EC1C508C9D00A5C16F /* HHomeViewController.h */,
 				E6BA81ED1C508C9D00A5C16F /* HHomeViewController.m */,
+				E6F3CE0F1C5232C2001A3670 /* HHomeDetailsViewController.h */,
+				E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */,
 				E6BA82121C50C3BB00A5C16F /* HGoodsDetailsViewController.h */,
 				E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */,
 			);
@@ -527,6 +543,10 @@
 		E6BA81DF1C508A7200A5C16F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E6F3CE0C1C523201001A3670 /* HHomeTableViewCell.h */,
+				E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */,
+				E6F3CE121C523387001A3670 /* HHomeDetailsTableViewCell.h */,
+				E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -680,9 +700,12 @@
 				E65B0BA21C4F84C4002262F1 /* MJRefreshGifHeader.m in Sources */,
 				E65B0B9F1C4F84C4002262F1 /* MJRefreshBackGifFooter.m in Sources */,
 				E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */,
+				E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */,
+				E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */,
 				E6BA81F41C508CF200A5C16F /* SCShoppingCartViewController.m in Sources */,
 				E65B0BA41C4F84C4002262F1 /* MJRefreshStateHeader.m in Sources */,
 				E65B0B521C4F8005002262F1 /* UIView+Frame.m in Sources */,
+				E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */,
 				E65B0B9D1C4F84C4002262F1 /* MJRefreshAutoNormalFooter.m in Sources */,
 				E65B0B991C4F84C4002262F1 /* MJRefreshComponent.m in Sources */,
 				E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */,
@@ -710,6 +733,7 @@
 				E65B0BCF1C4F84CE002262F1 /* SDWebImageCompat.m in Sources */,
 				E65B0BA01C4F84C4002262F1 /* MJRefreshBackNormalFooter.m in Sources */,
 				E65B0BD01C4F84CE002262F1 /* SDWebImageDecoder.m in Sources */,
+				E6F3CE141C523387001A3670 /* HHomeDetailsTableViewCell.m in Sources */,
 				E65B0BCE1C4F84CE002262F1 /* SDImageCache.m in Sources */,
 				E65B0BCC1C4F84CE002262F1 /* MKAnnotationView+WebCache.m in Sources */,
 				E65B0BA31C4F84C4002262F1 /* MJRefreshNormalHeader.m in Sources */,
