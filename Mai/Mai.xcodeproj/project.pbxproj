@@ -275,7 +275,7 @@
 			children = (
 				E65B0B4B1C4F7F06002262F1 /* Category */,
 				E65B0B4C1C4F7F06002262F1 /* Controller */,
-				E65B0B4D1C4F7F06002262F1 /* Utnils */,
+				E65B0B4D1C4F7F06002262F1 /* Utils */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -310,13 +310,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		E65B0B4D1C4F7F06002262F1 /* Utnils */ = {
+		E65B0B4D1C4F7F06002262F1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				E6BA82051C5090ED00A5C16F /* Const.h */,
 				E6BA82061C5091F100A5C16F /* CAlertView.h */,
 				E6BA82071C5091F100A5C16F /* CAlertView.m */,
 			);
+			name = Utils;
 			path = Utnils;
 			sourceTree = "<group>";
 		};
