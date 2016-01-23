@@ -55,6 +55,7 @@
 		E65B0BDA1C4F84CE002262F1 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0BC91C4F84CE002262F1 /* UIImageView+WebCache.m */; };
 		E65B0BDB1C4F84CE002262F1 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0BCB1C4F84CE002262F1 /* UIView+WebCacheOperation.m */; };
 		E65B0BDF1C4F8584002262F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0BDE1C4F8584002262F1 /* MBProgressHUD.m */; };
+		E66397351C53926100E5F593 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E66397341C53926100E5F593 /* NSString+Utils.m */; };
 		E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81D81C5083DF00A5C16F /* MainViewController.m */; };
 		E6BA81E81C508AC800A5C16F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81E71C508AC800A5C16F /* BaseViewController.m */; };
 		E6BA81EE1C508C9D00A5C16F /* HHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81ED1C508C9D00A5C16F /* HHomeViewController.m */; };
@@ -72,6 +73,7 @@
 		E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */; };
 		E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */; };
 		E6F3CE141C523387001A3670 /* HHomeDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */; };
+		E6F3CE1A1C5274C1001A3670 /* NSObject+HttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE191C5274C1001A3670 /* NSObject+HttpTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -172,6 +174,8 @@
 		E65B0BCB1C4F84CE002262F1 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		E65B0BDD1C4F8584002262F1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		E65B0BDE1C4F8584002262F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		E66397331C53926100E5F593 /* NSString+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
+		E66397341C53926100E5F593 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		E6BA81D71C5083DF00A5C16F /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E6BA81D81C5083DF00A5C16F /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E6BA81E61C508AC800A5C16F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 		E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeDetailsViewController.m; sourceTree = "<group>"; };
 		E6F3CE121C523387001A3670 /* HHomeDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeDetailsTableViewCell.h; sourceTree = "<group>"; };
 		E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeDetailsTableViewCell.m; sourceTree = "<group>"; };
+		E6F3CE181C5274C1001A3670 /* NSObject+HttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+HttpTask.h"; sourceTree = "<group>"; };
+		E6F3CE191C5274C1001A3670 /* NSObject+HttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+HttpTask.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +289,10 @@
 				E65B0B541C4F8205002262F1 /* UILabel+AutoFrame.m */,
 				E6F3CE091C522FEA001A3670 /* NSObject+DataConvert.h */,
 				E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */,
+				E6F3CE181C5274C1001A3670 /* NSObject+HttpTask.h */,
+				E6F3CE191C5274C1001A3670 /* NSObject+HttpTask.m */,
+				E66397331C53926100E5F593 /* NSString+Utils.h */,
+				E66397341C53926100E5F593 /* NSString+Utils.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -697,6 +707,7 @@
 				E6BA82081C5091F100A5C16F /* CAlertView.m in Sources */,
 				E65B0B981C4F84C4002262F1 /* MJRefreshBackFooter.m in Sources */,
 				E65B0BD21C4F84CE002262F1 /* SDWebImageDownloaderOperation.m in Sources */,
+				E6F3CE1A1C5274C1001A3670 /* NSObject+HttpTask.m in Sources */,
 				E65B0BA21C4F84C4002262F1 /* MJRefreshGifHeader.m in Sources */,
 				E65B0B9F1C4F84C4002262F1 /* MJRefreshBackGifFooter.m in Sources */,
 				E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */,
@@ -747,6 +758,7 @@
 				E65B0BD91C4F84CE002262F1 /* UIImageView+HighlightedWebCache.m in Sources */,
 				E65B0B351C4F7A24002262F1 /* main.m in Sources */,
 				E65B0B9A1C4F84C4002262F1 /* MJRefreshFooter.m in Sources */,
+				E66397351C53926100E5F593 /* NSString+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

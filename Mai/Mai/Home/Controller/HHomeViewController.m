@@ -11,6 +11,7 @@
 #import "Const.h"
 #import "UIView+Frame.h"
 #import "NSObject+DataConvert.h"
+#import "NSObject+HttpTask.h"
 
 #import "HGoodsDetailsViewController.h"
 #import "HHomeTableViewCell.h"
@@ -20,7 +21,7 @@
 #import "MBProgressHUD.h"
 
 @interface HHomeViewController (){
-    NSMutableArray *_locationList;//列表数据源
+    NSMutableArray *_typeList;//列表数据源
     NSInteger _selectIndex;//选中的索引
     CGRect _frame;
 }
@@ -79,20 +80,30 @@
  *  初始化数据
  */
 -(void)initData{
-    NSString *json=[UserData objectForKey:@"locationlist"];
-    if (json!=nil) {
-        NSArray *arr=[self toNSArryOrNSDictionaryWithJSon:json];
+    //构造参数
+    NSDictionary *parm=@{@"token":@"71583E074D967903000B5618E4693918s"};
+    
+    [self post:@"http://chulai-mai.com/index.php?m=Home&c=App&a=fenlei" parameters:parm cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
-        NSDictionary *dicCity=arr[0];//获取市级节点
-        NSArray *locationArr=[dicCity objectForKey:@"children"];//获取区级节点
+        if (isSuccess) {
+            NSArray *array=(NSArray *)result;
+            if (array.count>0) {//有数据
+                [UserData setObject:[self toJSonWithNSArrayOrNSDictionary:array] forKey:@"typelist"];//保存数据到本地
+                
+                [_typeList removeAllObjects];//移除全部数据
+                
+                [_typeList addObjectsFromArray:array];//把返回的数据添加到数据源中
+            }
+        }
+        else{
+            
+        }
         
-        _locationList=[[NSMutableArray alloc] initWithArray:locationArr];
+    } failure:^(NSError *error) {
         
-        self.title=[dicCity objectForKey:@"name"];
-    }
-    else{
-        _locationList=[[NSMutableArray alloc] init];
-    }
+        NSLog(@"失败:%@",error);
+        
+    }];
 }
 
 #pragma mark 表格数据源委托
@@ -101,7 +112,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _locationList.count;
+    return _typeList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -112,7 +123,7 @@
         cell=[[HHomeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
     }
     
-    cell.dic=_locationList[indexPath.row];
+    cell.dic=_typeList[indexPath.row];
     cell.selectIndex=_selectIndex;
     cell.index=indexPath.row;
     

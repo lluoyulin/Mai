@@ -11,7 +11,7 @@
 @implementation NSObject (DataConvert)
 
 /**
- *  数组转化成JSon字符串
+ *  数组或字典转化成JSon字符串
  *
  *  @param arry 数组
  *
