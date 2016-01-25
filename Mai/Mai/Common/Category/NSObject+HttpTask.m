@@ -13,6 +13,8 @@
 
 #import "AFHTTPSessionManager.h"
 
+static NSString *const HttpUrl=@"http://chulai-mai.com/index.php?m=Home&c=App&a=";
+
 @implementation NSObject (HttpTask)
 
 /**
@@ -32,7 +34,7 @@
     
     AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
-    [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager POST:[HttpUrl stringByAppendingString:url] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dic=(NSDictionary *)responseObject;
         int isSuccess=[[dic objectForKey:@"isSuccess"] intValue];

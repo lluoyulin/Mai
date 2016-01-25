@@ -11,13 +11,16 @@
 #import "Const.h"
 #import "UIView+Frame.h"
 #import "NSObject+DataConvert.h"
+#import "NSObject+HttpTask.h"
 
 #import "HHomeDetailsTableViewCell.h"
 
+#import "MJRefresh.h"
+
 @interface HHomeDetailsViewController (){
-    NSMutableArray *_locationDetailList;//列表数据源
-    NSMutableArray *_cityList;//城市数据源
+    NSMutableArray *_goodsList;//列表数据源
     CGRect _frame;
+    int _pageIndex;//页数
 }
 
 @property(nonatomic,strong) UITableView *tableView;
@@ -53,26 +56,140 @@
     [self.view addSubview:self.tableView];
     
     [self refreshTableViewWithType:0];//默认选中第一个
+    
+    // 添加传统的下拉刷新
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadNewData];
+    }];
+    
+    // 马上进入刷新状态
+    [self.tableView.mj_header beginRefreshing];
+    
+    // 添加传统的上拉刷新
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self loadMoreData];
+    }];
+    
+    self.tableView.mj_footer.hidden=YES;
 }
 
 /**
  *  初始化数据
  */
 -(void)initData{
-    NSString *json=[UserData objectForKey:@"locationlist"];
-    if (json!=nil) {
-        NSArray *arr=[self toNSArryOrNSDictionaryWithJSon:json];
-        
-        NSDictionary *dicCity=arr[0];//获取市级节点
-        NSArray *locationArr=[dicCity objectForKey:@"children"];//获取区级节点
-        
-        _cityList=[[NSMutableArray alloc] initWithArray:locationArr];
-    }
-    else{
-        _cityList=[[NSMutableArray alloc] init];
-    }
+    _pageIndex=1;
     
-    _locationDetailList=[[NSMutableArray alloc] init];
+    _goodsList=[[NSMutableArray alloc] init];
+    
+    //构造参数
+    NSString *url=@"good_list";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"fid":@"",
+                               @"p":[NSString stringWithFormat:@"%d",_pageIndex],
+                               @"l":@"10"};
+    
+    //获取缓存数据
+    NSString *cacheData=[self cacheWithUrl:url parameters:parameters];
+    if (cacheData) {
+        NSDictionary *dic=[self toNSArryOrNSDictionaryWithJSon:cacheData];
+        NSArray *array=[dic objectForKey:@"list"];
+        if (array.count>0) {
+            [_goodsList addObjectsFromArray:array];
+        }
+    }
+}
+
+/**
+ *  下拉刷新数据
+ */
+- (void)loadNewData{
+    _pageIndex=1;
+    
+    //构造参数
+    NSString *url=@"good_list";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"fid":@"",
+                               @"p":[NSString stringWithFormat:@"%d",_pageIndex],
+                               @"l":@"10"};
+    
+    //获取服务器数据
+    [self post:url parameters:parameters cache:YES success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            NSArray *array=[dic objectForKey:@"list"];//数据集合
+            NSInteger page=[[dic objectForKey:@"page"] integerValue];//总条数
+            if (array.count>0) {//有数据
+                [_goodsList removeAllObjects];//移除全部数据
+                
+                [_goodsList addObjectsFromArray:array];//把返回的数据添加到数据源中
+                
+                [self.tableView reloadData];
+                
+                self.tableView.mj_footer.hidden=NO;
+                
+                if (_goodsList.count>=page) {//没有更多的数据
+                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+            }
+        }
+        
+        [self.tableView.mj_header endRefreshing];
+        
+    } failure:^(NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        
+        NSLog(@"失败:%@",error);
+        
+    }];
+}
+
+/**
+ *  上拉加载更多数据
+ */
+- (void)loadMoreData{
+    _pageIndex+=1;
+    
+    //构造参数
+    NSString *url=@"good_list";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"fid":@"",
+                               @"p":[NSString stringWithFormat:@"%d",_pageIndex],
+                               @"l":@"10"};
+    
+    //获取服务器数据
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            NSArray *array=[dic objectForKey:@"list"];//数据集合
+            NSInteger page=[[dic objectForKey:@"page"] integerValue];//总条数
+            if (array.count>0) {//有数据
+                [_goodsList addObjectsFromArray:array];//把返回的数据添加到数据源中
+                
+                [self.tableView reloadData];
+                
+                if (_goodsList.count>=page) {//没有更多的数据
+                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                }
+            }
+            else{
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+        }
+        
+        [self.tableView.mj_footer endRefreshing];
+        
+    } failure:^(NSError *error) {
+        
+        [self.tableView.mj_footer endRefreshing];
+        
+        NSLog(@"失败:%@",error);
+        
+    }];
 }
 
 /**
@@ -81,22 +198,22 @@
  *  @param index 选中类型索引
  */
 -(void)refreshTableViewWithType:(NSInteger)index{
-    if (_cityList.count>0) {
-        [_locationDetailList removeAllObjects];//移除全部数据
-        
-        NSDictionary *dicCity=_cityList[index];//获取该索引区级节点
-        NSArray *arr=[dicCity objectForKey:@"children"];//获取该区的路级节点
-        
-        for (NSDictionary *dic in arr) {
-            [_locationDetailList addObject:dic];
-        }
-        
-        self.title=[dicCity objectForKey:@"name"];
-        
-        [self.tableView reloadData];//刷新tableView
-        
-        [self.tableView setContentOffset:CGPointZero animated:YES];//返回到顶部
-    }
+//    if (_cityList.count>0) {
+//        [_locationDetailList removeAllObjects];//移除全部数据
+//        
+//        NSDictionary *dicCity=_cityList[index];//获取该索引区级节点
+//        NSArray *arr=[dicCity objectForKey:@"children"];//获取该区的路级节点
+//        
+//        for (NSDictionary *dic in arr) {
+//            [_locationDetailList addObject:dic];
+//        }
+//        
+//        self.title=[dicCity objectForKey:@"name"];
+//        
+//        [self.tableView reloadData];//刷新tableView
+//        
+//        [self.tableView setContentOffset:CGPointZero animated:YES];//返回到顶部
+//    }
 }
 
 #pragma mark 表格数据源委托
@@ -105,7 +222,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _locationDetailList.count;
+    return _goodsList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -116,7 +233,7 @@
         cell=[[HHomeDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
     }
     
-    cell.dic=_locationDetailList[indexPath.row];
+    cell.dic=_goodsList[indexPath.row];
     
     return cell;
 }
@@ -137,15 +254,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 55;
+    return 120;
 }
 
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *location=[NSString stringWithFormat:@"%@-%@",self.title,[_locationDetailList[indexPath.row] objectForKey:@"name"]];
-    
-    //发送选中地址通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectLocation" object:nil userInfo:@{@"cid":[_locationDetailList[indexPath.row] objectForKey:@"id"],@"location":location}];
+//    NSString *location=[NSString stringWithFormat:@"%@-%@",self.title,[_locationDetailList[indexPath.row] objectForKey:@"name"]];
+//    
+//    //发送选中地址通知
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectLocation" object:nil userInfo:@{@"cid":[_locationDetailList[indexPath.row] objectForKey:@"id"],@"location":location}];
 }
 
 #pragma mark ZHLocationListViewControllerDelegate动作委托

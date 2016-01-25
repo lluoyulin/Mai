@@ -23,6 +23,4 @@
 
 @property(nonatomic,weak) id<HHomeViewControllerDelegate> delegate;
 
--(instancetype)initWithFrame:(CGRect)frame;
-
 @end

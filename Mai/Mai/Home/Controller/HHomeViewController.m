@@ -23,7 +23,6 @@
 @interface HHomeViewController (){
     NSMutableArray *_typeList;//列表数据源
     NSInteger _selectIndex;//选中的索引
-    CGRect _frame;
 }
 
 @property(nonatomic,strong) UITableView *tableView;
@@ -32,16 +31,6 @@
 @end
 
 @implementation HHomeViewController
-
--(instancetype)initWithFrame:(CGRect)frame{
-    self=[super init];
-    
-    if (self) {
-        _frame=frame;
-    }
-    
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,14 +44,16 @@
     
     _selectIndex=0;
     
-    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 87, _frame.size.height)];
+    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.backgroundColor=UIColorFromRGB(0xf6f6f6);
     self.tableView.tableFooterView=[[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorColor=UIColorFromRGB(0xdddddd);
+//    self.tableView.showsVerticalScrollIndicator=NO;
     [self.view addSubview:self.tableView];
     
-    self.homeDetailListView=[[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x+self.tableView.frame.size.width, self.tableView.frame.origin.y, _frame.size.width-self.tableView.frame.size.width, self.tableView.frame.size.height)];
+    self.homeDetailListView=[[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x+self.tableView.frame.size.width, self.tableView.frame.origin.y, SCREEN_WIDTH-self.tableView.frame.size.width, self.tableView.frame.size.height)];
     self.homeDetailListView.layer.masksToBounds=YES;
     [self.view addSubview:self.homeDetailListView];
     
@@ -80,19 +71,34 @@
  *  初始化数据
  */
 -(void)initData{
-    //构造参数
-    NSDictionary *parm=@{@"token":@"71583E074D967903000B5618E4693918s"};
+    _typeList=[[NSMutableArray alloc] init];
     
-    [self post:@"http://chulai-mai.com/index.php?m=Home&c=App&a=fenlei" parameters:parm cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+    //构造参数
+    NSString *url=@"fenlei";
+    NSDictionary *parameters=@{@"token":Token};
+    
+    //获取缓存数据
+    NSString *cacheData=[self cacheWithUrl:url parameters:parameters];
+    if (cacheData) {
+        NSArray *array=[self toNSArryOrNSDictionaryWithJSon:cacheData];
+        if (array.count>0) {
+            [_typeList addObject:@{@"id":@"",@"name":@"所有商品",@"stank":@""}];
+            [_typeList addObjectsFromArray:array];
+        }
+    }
+    
+    //获取服务器数据
+    [self post:url parameters:parameters cache:YES success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
             NSArray *array=(NSArray *)result;
             if (array.count>0) {//有数据
-                [UserData setObject:[self toJSonWithNSArrayOrNSDictionary:array] forKey:@"typelist"];//保存数据到本地
-                
                 [_typeList removeAllObjects];//移除全部数据
                 
+                [_typeList addObject:@{@"id":@"",@"name":@"所有商品",@"stank":@""}];
                 [_typeList addObjectsFromArray:array];//把返回的数据添加到数据源中
+                
+                [self.tableView reloadData];
             }
         }
         else{
@@ -146,7 +152,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 55;
+    return 50;
 }
 
 #pragma mark tableView动作委托

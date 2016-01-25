@@ -26,7 +26,7 @@
 #define UIColorFromRGB(rgbValue) COLOUR_FROM_HEX(rgbValue)
 
 //接口地址
-#define HttpUrl @"https://mapi.gzstv.com"
+#define HttpUrl @"http://chulai-mai.com/index.php?m=Home&c=App&a="
 
 //用户数据
 #define UserData [NSUserDefaults standardUserDefaults]
@@ -71,5 +71,7 @@
  *  灰色
  */
 #define ThemeGray UIColorFromRGB(0x999999)
+
+#define Token @"71583E074D967903000B5618E4693918"
 
 #endif /* Const_h */
