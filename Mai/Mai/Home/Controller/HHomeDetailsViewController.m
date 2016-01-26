@@ -528,8 +528,7 @@
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
     // clear
     [self.imagePlayerView stopTimer];
     self.imagePlayerView.imagePlayerViewDelegate = nil;
