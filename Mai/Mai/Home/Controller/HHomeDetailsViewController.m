@@ -21,6 +21,7 @@
     NSMutableArray *_goodsList;//列表数据源
     CGRect _frame;
     int _pageIndex;//页数
+    NSString *_fid;//商品类型id
 }
 
 @property(nonatomic,strong) UITableView *tableView;
@@ -44,9 +45,6 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
-    //初始化数据
-    [self initData];
-    
     self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0,0, _frame.size.width, _frame.size.height)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -55,7 +53,8 @@
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-    [self refreshTableViewWithType:0];//默认选中第一个
+    //初始化数据
+    [self initData];
     
     // 添加传统的下拉刷新
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
@@ -79,14 +78,24 @@
  *  初始化数据
  */
 -(void)initData{
-    _pageIndex=1;
+    _fid=@"";//所有商品
+    
+    _pageIndex=1;//页数
     
     _goodsList=[[NSMutableArray alloc] init];
     
+    //获取缓存数据
+    [self cacheData];
+}
+
+/**
+ *  获取缓存数据
+ */
+-(void)cacheData{
     //构造参数
     NSString *url=@"good_list";
     NSDictionary *parameters=@{@"token":Token,
-                               @"fid":@"",
+                               @"fid":_fid,
                                @"p":[NSString stringWithFormat:@"%d",_pageIndex],
                                @"l":@"10"};
     
@@ -96,7 +105,11 @@
         NSDictionary *dic=[self toNSArryOrNSDictionaryWithJSon:cacheData];
         NSArray *array=[dic objectForKey:@"list"];
         if (array.count>0) {
+            [_goodsList removeAllObjects];//移除所有数据
+            
             [_goodsList addObjectsFromArray:array];
+            
+            [self.tableView reloadData];//刷新tableView
         }
     }
 }
@@ -110,7 +123,7 @@
     //构造参数
     NSString *url=@"good_list";
     NSDictionary *parameters=@{@"token":Token,
-                               @"fid":@"",
+                               @"fid":_fid,
                                @"p":[NSString stringWithFormat:@"%d",_pageIndex],
                                @"l":@"10"};
     
@@ -120,23 +133,19 @@
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             NSArray *array=[dic objectForKey:@"list"];//数据集合
-            NSInteger page=[[dic objectForKey:@"page"] integerValue];//总条数
             if (array.count>0) {//有数据
                 [_goodsList removeAllObjects];//移除全部数据
                 
                 [_goodsList addObjectsFromArray:array];//把返回的数据添加到数据源中
                 
-                [self.tableView reloadData];
+                [self.tableView reloadData];//刷新tableView
                 
                 self.tableView.mj_footer.hidden=NO;
-                
-                if (_goodsList.count>=page) {//没有更多的数据
-                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                }
             }
         }
         
         [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer resetNoMoreData];
         
     } failure:^(NSError *error) {
         
@@ -156,7 +165,7 @@
     //构造参数
     NSString *url=@"good_list";
     NSDictionary *parameters=@{@"token":Token,
-                               @"fid":@"",
+                               @"fid":_fid,
                                @"p":[NSString stringWithFormat:@"%d",_pageIndex],
                                @"l":@"10"};
     
@@ -166,22 +175,20 @@
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             NSArray *array=[dic objectForKey:@"list"];//数据集合
-            NSInteger page=[[dic objectForKey:@"page"] integerValue];//总条数
             if (array.count>0) {//有数据
                 [_goodsList addObjectsFromArray:array];//把返回的数据添加到数据源中
                 
-                [self.tableView reloadData];
+                [self.tableView reloadData];//刷新tableView
                 
-                if (_goodsList.count>=page) {//没有更多的数据
-                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                }
+                [self.tableView.mj_footer endRefreshing];
             }
             else{
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }
         }
-        
-        [self.tableView.mj_footer endRefreshing];
+        else{
+            [self.tableView.mj_footer endRefreshing];
+        }
         
     } failure:^(NSError *error) {
         
@@ -195,25 +202,16 @@
 /**
  *  根据选中类型刷新tableView
  *
- *  @param index 选中类型索引
+ *  @param fid 选中类型id
  */
--(void)refreshTableViewWithType:(NSInteger)index{
-//    if (_cityList.count>0) {
-//        [_locationDetailList removeAllObjects];//移除全部数据
-//        
-//        NSDictionary *dicCity=_cityList[index];//获取该索引区级节点
-//        NSArray *arr=[dicCity objectForKey:@"children"];//获取该区的路级节点
-//        
-//        for (NSDictionary *dic in arr) {
-//            [_locationDetailList addObject:dic];
-//        }
-//        
-//        self.title=[dicCity objectForKey:@"name"];
-//        
-//        [self.tableView reloadData];//刷新tableView
-//        
-//        [self.tableView setContentOffset:CGPointZero animated:YES];//返回到顶部
-//    }
+-(void)refreshTableViewWithType:(NSString *)fid{
+    _fid=fid;
+    
+    //获取缓存数据
+    [self cacheData];
+    
+    //进入刷新状态
+    [self.tableView.mj_header beginRefreshing];
 }
 
 #pragma mark 表格数据源委托
@@ -266,8 +264,8 @@
 }
 
 #pragma mark ZHLocationListViewControllerDelegate动作委托
--(void)selectType:(NSInteger)index{
-    [self refreshTableViewWithType:index];
+-(void)selectType:(NSString *)fid{
+    [self refreshTableViewWithType:fid];
 }
 
 - (void)didReceiveMemoryWarning {

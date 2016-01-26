@@ -13,9 +13,9 @@
 /**
  *  选中类型
  *
- *  @param index 选中类型索引
+ *  @param index 选中类型id
  */
--(void)selectType:(NSInteger)index;
+-(void)selectType:(NSString *)fid;
 
 @end
 

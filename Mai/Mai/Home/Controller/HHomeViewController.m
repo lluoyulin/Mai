@@ -160,7 +160,7 @@
     _selectIndex=indexPath.row;
     [self.tableView reloadData];
     
-    [self.delegate selectType:_selectIndex];
+    [self.delegate selectType:[_typeList[indexPath.row] objectForKey:@"id"]];
 }
 
 @end
