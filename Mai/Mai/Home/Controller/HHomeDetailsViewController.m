@@ -12,6 +12,7 @@
 #import "UIView+Frame.h"
 #import "NSObject+DataConvert.h"
 #import "NSObject+HttpTask.h"
+#import "UILabel+AutoFrame.h"
 
 #import "HHomeDetailsTableViewCell.h"
 
@@ -21,18 +22,24 @@
 
 @interface HHomeDetailsViewController ()<ImagePlayerViewDelegate>{
     NSMutableArray *_goodsList;//列表数据源
+    NSMutableArray *_sortList;//排序列表数据源
     NSMutableArray *_imagePlayerList;//幻灯片数据源
     CGRect _frame;
     int _pageIndex;//页数
     NSString *_fid;//商品类型id
+    NSString *_sort;//排序
 }
 
 @property(nonatomic,strong) UITableView *tableView;
 @property(nonatomic,strong) UIView *tableHeader;//表头
 @property(nonatomic,strong) ImagePlayerView *imagePlayerView;//幻灯片视图
-@property(nonatomic,strong) UIButton *defaultButton;//默认
-@property(nonatomic,strong) UIButton *salesButton;//销量
-@property(nonatomic,strong) UIButton *priceButton;//价格
+@property(nonatomic,strong) UIView *toolBarView;//排序操作栏视图
+@property(nonatomic,strong) UIButton *defaultButton;//默认按钮
+@property(nonatomic,strong) UIButton *salesButton;//销量按钮
+@property(nonatomic,strong) UIButton *priceButton;//价格按钮
+@property(nonatomic,strong) UIImageView *salesImage;//销量排序图标
+@property(nonatomic,strong) UIImageView *priceImage;//价格排序图标
+@property(nonatomic,strong) UIView *line;//线
 
 @end
 
@@ -80,8 +87,58 @@
     
     //表头
     self.tableHeader=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 136)];
-    self.tableHeader.backgroundColor=[UIColor whiteColor];
     self.tableView.tableHeaderView=self.tableHeader;
+    
+    //排序操作栏视图
+    self.toolBarView=[[UIView alloc] initWithFrame:CGRectMake(0, 98, self.tableHeader.width, self.tableHeader.height-98)];
+    self.toolBarView.backgroundColor=[UIColor whiteColor];
+    [self.tableHeader addSubview:self.toolBarView];
+    
+    //默认按钮
+    self.defaultButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.defaultButton.frame=CGRectMake(0, 0, self.toolBarView.width/3.0, self.toolBarView.height);
+    self.defaultButton.titleLabel.font=[UIFont systemFontOfSize:13.0];
+    [self.defaultButton setTitleColor:ThemeRed forState:UIControlStateSelected];
+    [self.defaultButton setTitleColor:ThemeGray forState:UIControlStateNormal];
+    [self.defaultButton setTitle:@"默认" forState:UIControlStateNormal];
+    [self.defaultButton addTarget:self action:@selector(defaultButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.defaultButton.selected=YES;
+    [self.toolBarView addSubview:self.defaultButton];
+    
+    //销量按钮
+    self.salesButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.salesButton.frame=CGRectMake(self.defaultButton.right, self.defaultButton.top, self.defaultButton.width, self.defaultButton.height);
+    self.salesButton.titleLabel.font=[UIFont systemFontOfSize:13.0];
+    [self.salesButton setTitleColor:ThemeRed forState:UIControlStateSelected];
+    [self.salesButton setTitleColor:ThemeGray forState:UIControlStateNormal];
+    [self.salesButton setTitle:@"销量" forState:UIControlStateNormal];
+    [self.salesButton addTarget:self action:@selector(salesButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.toolBarView addSubview:self.salesButton];
+    
+    //销量排序图标
+    self.salesImage=[[UIImageView alloc] initWithFrame:CGRectMake((self.salesButton.width-26)/2+26, (self.salesButton.height-12)/2, 12, 12)];
+    self.salesImage.image=[UIImage imageNamed:@"home_arrow"];
+    [self.salesButton addSubview:self.salesImage];
+    
+    //价格按钮
+    self.priceButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.priceButton.frame=CGRectMake(self.salesButton.right, self.salesButton.top, self.salesButton.width, self.salesButton.height);
+    self.priceButton.titleLabel.font=[UIFont systemFontOfSize:13.0];
+    [self.priceButton setTitleColor:ThemeRed forState:UIControlStateSelected];
+    [self.priceButton setTitleColor:ThemeGray forState:UIControlStateNormal];
+    [self.priceButton setTitle:@"价格" forState:UIControlStateNormal];
+    [self.priceButton addTarget:self action:@selector(priceButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.toolBarView addSubview:self.priceButton];
+    
+    //价格排序图标
+    self.priceImage=[[UIImageView alloc] initWithFrame:CGRectMake((self.priceButton.width-26)/2+26, (self.priceButton.height-12)/2, 12, 12)];
+    self.priceImage.image=[UIImage imageNamed:@"home_arrow"];
+    [self.priceButton addSubview:self.priceImage];
+    
+    //线
+    self.line=[[UIView alloc] initWithFrame:CGRectMake(0, self.toolBarView.height-0.5, self.toolBarView.width, 0.5)];
+    self.line.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.toolBarView addSubview:self.line];
 }
 
 /**
@@ -127,6 +184,8 @@
     _pageIndex=1;//页数
     
     _goodsList=[[NSMutableArray alloc] init];//列表数据源
+    
+    _sortList=[[NSMutableArray alloc] init];//排序列表数据源
     
     _imagePlayerList=[[NSMutableArray alloc] init];//幻灯片数据源
     
@@ -194,13 +253,11 @@
         NSDictionary *dic=[self toNSArryOrNSDictionaryWithJSon:cacheData];
         NSArray *array=[dic objectForKey:@"list"];
         if (array.count>0) {
-            [_goodsList removeAllObjects];//移除所有数据
-            
             [_goodsList addObjectsFromArray:array];
-            
-            [self.tableView reloadData];//刷新tableView
         }
     }
+    
+    [self.tableView reloadData];//刷新tableView
 }
 
 /**
@@ -294,6 +351,15 @@
  *  @param fid 选中类型id
  */
 -(void)refreshTableViewWithType:(NSString *)fid{
+    //重置商品列表为默认排序
+    self.tableView.mj_footer.hidden=YES;
+    self.defaultButton.selected=YES;
+    self.salesButton.selected=NO;
+    self.priceButton.selected=NO;
+    [_sortList removeAllObjects];//移除全部排序数据
+    [_goodsList removeAllObjects];//移除所有数据
+    
+    //商品类型id
     _fid=fid;
     
     //获取缓存数据
@@ -303,13 +369,106 @@
     [self.tableView.mj_header beginRefreshing];
 }
 
+/**
+ *  排序
+ *
+ *  @param key       需要排序的字段名
+ *  @param ascending 是否升序
+ */
+-(void)sortWithKey:(NSString *)key ascending:(BOOL)ascending{
+    //初始化需要排序的字段名
+    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
+    
+    //排序
+    NSArray *array=[_goodsList sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+    
+    [_sortList removeAllObjects];
+    
+    [_sortList addObjectsFromArray:array];
+    
+    [self.tableView reloadData];
+    
+    for(NSInteger i = 0; i < [array count]; i++)
+    {
+        NSLog(@"%@--------%@\n", [array[i] objectForKey:@"title"],[array[i] objectForKey:@"xl"]);
+    }
+}
+
+#pragma mark 按钮事件
+/**
+ *  默认按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)defaultButton:(UIButton *)sender{
+    self.defaultButton.selected=YES;
+    self.salesButton.selected=NO;
+    self.priceButton.selected=NO;
+    
+    [_sortList removeAllObjects];//移除全部排序数据
+    
+    [self.tableView reloadData];
+}
+
+/**
+ *  销量按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)salesButton:(UIButton *)sender{
+    if (self.salesButton.isSelected) {//选中(当前在数据是以销量排序)
+        _sort=[_sort isEqualToString:@"desc"] ? @"asc" : @"desc";
+    }
+    else{//未选中(当前在数据不是以销量排序)
+        self.defaultButton.selected=NO;
+        self.salesButton.selected=YES;
+        self.priceButton.selected=NO;
+        
+        _sort=@"desc";
+    }
+    
+    //排序图标动画
+    [UIView animateWithDuration:0.2 animations:^{
+        self.salesImage.transform=[_sort isEqualToString:@"desc"] ? CGAffineTransformIdentity : CGAffineTransformMakeRotation(M_PI);
+    }];
+    
+    //排序
+    [self sortWithKey:@"xl" ascending:[_sort isEqualToString:@"desc"] ? NO : YES];
+}
+
+/**
+ *  价格按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)priceButton:(UIButton *)sender{
+    if (self.priceButton.isSelected) {//选中(当前在数据是以价格排序)
+        _sort=[_sort isEqualToString:@"desc"] ? @"asc" : @"desc";
+    }
+    else{//未选中(当前在数据不是以价格排序)
+        self.defaultButton.selected=NO;
+        self.salesButton.selected=NO;
+        self.priceButton.selected=YES;
+        
+        _sort=@"desc";
+    }
+    
+    //排序图标动画
+    [UIView animateWithDuration:0.2 animations:^{
+        self.priceImage.transform=[_sort isEqualToString:@"desc"] ? CGAffineTransformIdentity : CGAffineTransformMakeRotation(M_PI);
+    }];
+    
+    //排序
+    [self sortWithKey:@"price2" ascending:[_sort isEqualToString:@"desc"] ? NO : YES];
+}
+
 #pragma mark 表格数据源委托
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _goodsList.count;
+    return _sortList.count>0 ? _sortList.count : _goodsList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -320,7 +479,7 @@
         cell=[[HHomeDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
     }
     
-    cell.dic=_goodsList[indexPath.row];
+    cell.dic=_sortList.count>0 ? _sortList[indexPath.row] : _goodsList[indexPath.row];
     
     return cell;
 }
@@ -346,10 +505,10 @@
 
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSString *location=[NSString stringWithFormat:@"%@-%@",self.title,[_locationDetailList[indexPath.row] objectForKey:@"name"]];
-//    
-//    //发送选中地址通知
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectLocation" object:nil userInfo:@{@"cid":[_locationDetailList[indexPath.row] objectForKey:@"id"],@"location":location}];
+    //    NSString *location=[NSString stringWithFormat:@"%@-%@",self.title,[_locationDetailList[indexPath.row] objectForKey:@"name"]];
+    //
+    //    //发送选中地址通知
+    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectLocation" object:nil userInfo:@{@"cid":[_locationDetailList[indexPath.row] objectForKey:@"id"],@"location":location}];
 }
 
 #pragma mark ZHLocationListViewControllerDelegate动作委托
