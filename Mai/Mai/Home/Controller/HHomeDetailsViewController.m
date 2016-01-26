@@ -16,15 +16,23 @@
 #import "HHomeDetailsTableViewCell.h"
 
 #import "MJRefresh.h"
+#import "ImagePlayerView.h"
+#import "UIImageView+WebCache.h"
 
-@interface HHomeDetailsViewController (){
+@interface HHomeDetailsViewController ()<ImagePlayerViewDelegate>{
     NSMutableArray *_goodsList;//列表数据源
+    NSMutableArray *_imagePlayerList;//幻灯片数据源
     CGRect _frame;
     int _pageIndex;//页数
     NSString *_fid;//商品类型id
 }
 
 @property(nonatomic,strong) UITableView *tableView;
+@property(nonatomic,strong) UIView *tableHeader;//表头
+@property(nonatomic,strong) ImagePlayerView *imagePlayerView;//幻灯片视图
+@property(nonatomic,strong) UIButton *defaultButton;//默认
+@property(nonatomic,strong) UIButton *salesButton;//销量
+@property(nonatomic,strong) UIButton *priceButton;//价格
 
 @end
 
@@ -45,6 +53,23 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
+    //初始化表格
+    [self initTableView];
+    
+    //初始化幻灯片视图
+    [self initImagePlayerView];
+    
+    //初始化数据
+    [self initData];
+    
+    //初始化表格刷新
+    [self initRefreshing];
+}
+
+/**
+ *  初始化表格
+ */
+-(void)initTableView{
     self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0,0, _frame.size.width, _frame.size.height)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -53,9 +78,28 @@
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-    //初始化数据
-    [self initData];
-    
+    //表头
+    self.tableHeader=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 136)];
+    self.tableHeader.backgroundColor=[UIColor whiteColor];
+    self.tableView.tableHeaderView=self.tableHeader;
+}
+
+/**
+ *  初始化幻灯片视图
+ */
+-(void)initImagePlayerView{
+    //幻灯片视图
+    self.imagePlayerView=[[ImagePlayerView alloc] initWithFrame:CGRectMake(0, 0, self.tableHeader.width, 98)];
+    self.imagePlayerView.imagePlayerViewDelegate=self;
+    self.imagePlayerView.pageControlPosition=ICPageControlPosition_BottomCenter;
+    self.imagePlayerView.scrollInterval=3;
+    [self.tableHeader addSubview:self.imagePlayerView];
+}
+
+/**
+ *  初始化表格刷新功能
+ */
+-(void)initRefreshing{
     // 添加传统的下拉刷新
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -82,10 +126,55 @@
     
     _pageIndex=1;//页数
     
-    _goodsList=[[NSMutableArray alloc] init];
+    _goodsList=[[NSMutableArray alloc] init];//列表数据源
+    
+    _imagePlayerList=[[NSMutableArray alloc] init];//幻灯片数据源
+    
+    //获取幻灯片数据
+    [self imagePlayerData];
     
     //获取缓存数据
     [self cacheData];
+}
+
+/**
+ *  获取幻灯片数据
+ */
+-(void)imagePlayerData{
+    //构造参数
+    NSString *url=@"piclist";
+    NSDictionary *parameters=@{@"token":Token};
+    
+    //获取缓存数据
+    NSString *cacheData=[self cacheWithUrl:url parameters:parameters];
+    if (cacheData) {
+        NSArray *array=[self toNSArryOrNSDictionaryWithJSon:cacheData];
+        if (array.count) {
+            [_imagePlayerList addObjectsFromArray:array];
+            
+            [self.imagePlayerView reloadData];
+        }
+    }
+    
+    //获取服务器数据
+    [self post:url parameters:parameters cache:YES success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSArray *array=(NSArray *)result;
+            if (array.count>0) {
+                [_imagePlayerList removeAllObjects];
+                
+                [_imagePlayerList addObjectsFromArray:array];
+                
+                [self.imagePlayerView reloadData];
+            }
+        }
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"失败:%@",error);
+        
+    }];
 }
 
 /**
@@ -266,6 +355,26 @@
 #pragma mark ZHLocationListViewControllerDelegate动作委托
 -(void)selectType:(NSString *)fid{
     [self refreshTableViewWithType:fid];
+}
+
+#pragma mark ImagePlayerViewDelegate
+- (NSInteger)numberOfItems{
+    return _imagePlayerList.count;
+}
+
+- (void)imagePlayerView:(ImagePlayerView *)imagePlayerView loadImageForImageView:(UIImageView *)imageView index:(NSInteger)index{
+    
+    if (_imagePlayerList.count>0) {
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[_imagePlayerList[index] objectForKey:@"pic"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    }
+}
+
+- (void)dealloc
+{
+    // clear
+    [self.imagePlayerView stopTimer];
+    self.imagePlayerView.imagePlayerViewDelegate = nil;
+    self.imagePlayerView = nil;
 }
 
 - (void)didReceiveMemoryWarning {

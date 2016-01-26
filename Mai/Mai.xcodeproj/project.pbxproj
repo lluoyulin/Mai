@@ -74,6 +74,7 @@
 		E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */; };
 		E6F3CE141C523387001A3670 /* HHomeDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */; };
 		E6F3CE1A1C5274C1001A3670 /* NSObject+HttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE191C5274C1001A3670 /* NSObject+HttpTask.m */; };
+		E6F455901C574A6400B69D29 /* ImagePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F4558F1C574A6400B69D29 /* ImagePlayerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -213,6 +214,9 @@
 		E6F3CE131C523387001A3670 /* HHomeDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeDetailsTableViewCell.m; sourceTree = "<group>"; };
 		E6F3CE181C5274C1001A3670 /* NSObject+HttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+HttpTask.h"; sourceTree = "<group>"; };
 		E6F3CE191C5274C1001A3670 /* NSObject+HttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+HttpTask.m"; sourceTree = "<group>"; };
+		E6F4558D1C574A6400B69D29 /* ImagePlayerView-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImagePlayerView-Prefix.pch"; sourceTree = "<group>"; };
+		E6F4558E1C574A6400B69D29 /* ImagePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePlayerView.h; sourceTree = "<group>"; };
+		E6F4558F1C574A6400B69D29 /* ImagePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePlayerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +317,7 @@
 		E65B0B4E1C4F7F06002262F1 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				E6F4558C1C574A6400B69D29 /* ImagePlayerView */,
 				E6BA81F81C508D6500A5C16F /* SwipeBackNavigation */,
 				E65B0BDC1C4F8584002262F1 /* MBProgressHUD */,
 				E65B0BAA1C4F84CE002262F1 /* SDWebImage */,
@@ -624,6 +629,16 @@
 			path = SwipeBackNavigation;
 			sourceTree = "<group>";
 		};
+		E6F4558C1C574A6400B69D29 /* ImagePlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				E6F4558D1C574A6400B69D29 /* ImagePlayerView-Prefix.pch */,
+				E6F4558E1C574A6400B69D29 /* ImagePlayerView.h */,
+				E6F4558F1C574A6400B69D29 /* ImagePlayerView.m */,
+			);
+			path = ImagePlayerView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -718,6 +733,7 @@
 				E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */,
 				E65B0B9D1C4F84C4002262F1 /* MJRefreshAutoNormalFooter.m in Sources */,
 				E65B0B991C4F84C4002262F1 /* MJRefreshComponent.m in Sources */,
+				E6F455901C574A6400B69D29 /* ImagePlayerView.m in Sources */,
 				E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */,
 				E65B0B691C4F84B8002262F1 /* AFURLSessionManager.m in Sources */,
 				E6BA82031C508D6500A5C16F /* PushViewAnimation.m in Sources */,
