@@ -376,22 +376,24 @@
  *  @param ascending 是否升序
  */
 -(void)sortWithKey:(NSString *)key ascending:(BOOL)ascending{
-    //初始化需要排序的字段名
-    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:key ascending:ascending];
-    
     //排序
-    NSArray *array=[_goodsList sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+    NSArray *array = [_goodsList sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        //得到想要排序字段的NSNumber对象
+        NSNumber *number1=[NSNumber numberWithInteger:[[obj1 objectForKey:key] integerValue]];
+        NSNumber *number2=[NSNumber numberWithInteger:[[obj2 objectForKey:key] integerValue]];
+        
+        NSComparisonResult result=[number1 compare:number2];
+        
+        return ascending ? result==NSOrderedDescending : result==NSOrderedAscending;
+        
+    }];
     
     [_sortList removeAllObjects];
     
     [_sortList addObjectsFromArray:array];
     
     [self.tableView reloadData];
-    
-    for(NSInteger i = 0; i < [array count]; i++)
-    {
-        NSLog(@"%@--------%@\n", [array[i] objectForKey:@"title"],[array[i] objectForKey:@"xl"]);
-    }
 }
 
 #pragma mark 按钮事件
