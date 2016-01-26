@@ -18,8 +18,8 @@
     UIImageView *_goodsImage;//商品图片
     UILabel *_nameLabel;//商品名称
     UILabel *_descriptionLabel;//简述
-    UILabel *_price1Label;//零售价
-    UILabel *_price2Label;//本店零售价
+    UILabel *_price1Label;//本店零售价
+    UILabel *_price2Label;//零售价
     UILabel *_salesLabel;//销量
     UIButton *_shoppingButton;//购买
     UIView *_line;//单元格分割线
@@ -88,14 +88,14 @@
     _descriptionLabel.textColor=ThemeRed;
     _descriptionLabel.text=[self.dic objectForKey:@"jianshu"];
     
-    //本店零售价
+    //零售价
     _price2Label.font=[UIFont systemFontOfSize:11.0];
     _price2Label.textColor=ThemeGray;
-    [_price2Label setTextWidth:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price2"]] size:CGSizeMake(40, 13)];
+    [_price2Label setTextWidth:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price1"]] size:CGSizeMake(40, 13)];
     _price2Label.frame=CGRectMake(_nameLabel.left, _goodsImage.bottom-13, _price2Label.width, 13);
     
     //添加删除线
-    NSMutableAttributedString *price2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price2"]]];
+    NSMutableAttributedString *price2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price1"]]];
     [price2 addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, price2.length)];
     _price2Label.attributedText = price2;
     
@@ -111,13 +111,13 @@
     [_shoppingButton setImage:[UIImage imageNamed:@"home_shopping"] forState:UIControlStateNormal];
     [_shoppingButton addTarget:self action:@selector(shoppingButton:) forControlEvents:UIControlEventTouchUpInside];
     
-    //零售价
+    //本店零售价
     _price1Label.frame=CGRectMake(_nameLabel.left, _price2Label.top-22-10, _nameLabel.width-_shoppingButton.width, 22);
     _price1Label.font=[UIFont systemFontOfSize:20.0];
     _price1Label.textColor=ThemeRed;
     
     //修改字体大小
-    NSMutableAttributedString *price1=[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price1"]]];
+    NSMutableAttributedString *price1=[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price2"]]];
     [price1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
     _price1Label.attributedText=price1;
     

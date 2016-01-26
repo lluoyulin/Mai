@@ -44,13 +44,13 @@
     
     _selectIndex=0;
     
-    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT)];
+    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.backgroundColor=UIColorFromRGB(0xf6f6f6);
     self.tableView.tableFooterView=[[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorColor=UIColorFromRGB(0xdddddd);
-//    self.tableView.showsVerticalScrollIndicator=NO;
+    self.tableView.showsVerticalScrollIndicator=NO;
     [self.view addSubview:self.tableView];
     
     self.homeDetailListView=[[UIView alloc] initWithFrame:CGRectMake(self.tableView.frame.origin.x+self.tableView.frame.size.width, self.tableView.frame.origin.y, SCREEN_WIDTH-self.tableView.frame.size.width, self.tableView.frame.size.height)];
