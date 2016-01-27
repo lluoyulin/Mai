@@ -15,6 +15,6 @@
 /**
  *  添加购物车成功Block
  */
-@property(nonatomic,copy) void(^ShoppingBlock)(NSString *sid,NSString *count);
+@property(nonatomic,copy) void(^ShoppingBlock)(NSString *sid,NSString *count,NSString *fid);
 
 @end

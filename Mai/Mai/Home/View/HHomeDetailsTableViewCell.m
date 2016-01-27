@@ -164,7 +164,7 @@
         
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
-            self.ShoppingBlock([self.dic objectForKey:@"sid"],[dic objectForKey:@"count"]);
+            self.ShoppingBlock([self.dic objectForKey:@"sid"],[dic objectForKey:@"count"],[self.dic objectForKey:@"fid"]);
         }
         else{
             [CAlertView alertMessage:error];

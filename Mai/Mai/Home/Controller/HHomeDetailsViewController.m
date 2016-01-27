@@ -527,10 +527,10 @@
         cell=[[HHomeDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
         
         //添加购物车成功Block
-        cell.ShoppingBlock=^(NSString *sid,NSString *count){
+        cell.ShoppingBlock=^(NSString *sid,NSString *count,NSString *fid){
             
             //设置商品购物车数量
-            [self setShoppingCount:count sid:sid fid:_fid];
+            [self setShoppingCount:count sid:sid fid:fid];
             
             //刷新购物车block
             self.RefreshShoppingCartBlock();
