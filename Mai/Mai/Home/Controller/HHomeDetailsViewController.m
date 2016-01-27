@@ -525,6 +525,15 @@
     HHomeDetailsTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:tableViewCellIdentifier];
     if (cell==nil) {
         cell=[[HHomeDetailsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
+        
+        //添加购物车成功Block
+        cell.ShoppingBlock=^(NSString *sid,NSString *count){
+            
+            //设置商品购物车数量
+            [self setShoppingCount:count sid:sid fid:_fid];
+            
+            [self.tableView reloadData];//刷新tableView
+        };
     }
     
     cell.dic=_sortList.count>0 ? _sortList[indexPath.row] : _goodsList[indexPath.row];

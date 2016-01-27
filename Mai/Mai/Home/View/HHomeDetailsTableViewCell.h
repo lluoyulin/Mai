@@ -10,6 +10,11 @@
 
 @interface HHomeDetailsTableViewCell : UITableViewCell
 
-@property(nonatomic,strong) NSDictionary *dic;
+@property(nonatomic,strong) NSMutableDictionary *dic;
+
+/**
+ *  添加购物车成功Block
+ */
+@property(nonatomic,copy) void(^ShoppingBlock)(NSString *sid,NSString *count);
 
 @end

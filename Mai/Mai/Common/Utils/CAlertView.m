@@ -21,4 +21,9 @@
     [target presentViewController:alert animated:YES completion:nil];
 }
 
++(void)alertMessage:(NSString *)message{
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+    [alert show];
+}
+
 @end

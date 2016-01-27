@@ -12,4 +12,6 @@
 
 +(void)alertTarget:(id)target message:(NSString *)message handler:(void(^)(void))handler;
 
++(void)alertMessage:(NSString *)message;
+
 @end

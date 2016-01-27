@@ -11,6 +11,8 @@
 #import "Const.h"
 #import "UIView+Frame.h"
 #import "UILabel+AutoFrame.h"
+#import "NSObject+HttpTask.h"
+#import "CAlertView.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -23,6 +25,7 @@
     UILabel *_salesLabel;//销量
     UIButton *_shoppingButton;//购买
     UIView *_line;//单元格分割线
+    UILabel *_countLabel;//购买数量
 }
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -67,6 +70,10 @@
     //单元格分割线
     _line=[UIView new];
     [self.contentView addSubview:_line];
+    
+    //购买数量
+    _countLabel=[UILabel new];
+    [_shoppingButton addSubview:_countLabel];
 }
 
 -(void)layoutSubviews{
@@ -111,6 +118,20 @@
     [_shoppingButton setImage:[UIImage imageNamed:@"home_shopping"] forState:UIControlStateNormal];
     [_shoppingButton addTarget:self action:@selector(shoppingButton:) forControlEvents:UIControlEventTouchUpInside];
     
+    //购买数量
+    _countLabel.frame=CGRectMake(_shoppingButton.width-14-6, 6, 14, 14);
+    _countLabel.font=[UIFont systemFontOfSize:10.0];
+    _countLabel.textColor=[UIColor whiteColor];
+    _countLabel.textAlignment=NSTextAlignmentCenter;
+    _countLabel.backgroundColor=[UIColor redColor];
+    _countLabel.layer.masksToBounds=YES;
+    _countLabel.layer.cornerRadius=_countLabel.width/2;
+    
+    //获取商品购物车数量
+    NSString *count=[UserData objectForKey:[NSString stringWithFormat:@"sid_%@",[self.dic objectForKey:@"sid"]]];
+    _countLabel.text=count ? count : @"";
+    _countLabel.hidden=count ? NO : YES;
+    
     //本店零售价
     _price1Label.frame=CGRectMake(_nameLabel.left, _price2Label.top-22-10, _nameLabel.width-_shoppingButton.width, 22);
     _price1Label.font=[UIFont systemFontOfSize:20.0];
@@ -126,8 +147,36 @@
     _line.backgroundColor=UIColorFromRGB(0xdddddd);
 }
 
+/**
+ *  添加购物车
+ *
+ *  @param sender 按钮对象
+ */
 -(void)shoppingButton:(UIButton *)sender{
-    NSLog(@"购买");
+    //构造参数
+    NSString *url=@"add_to_car";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":@"95",
+                               @"gid":[self.dic objectForKey:@"sid"],
+                               @"isLogin":@"1"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            self.ShoppingBlock([self.dic objectForKey:@"sid"],[dic objectForKey:@"count"]);
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+        NSLog(@"失败:%@",error);
+        
+    }];
 }
 
 @end

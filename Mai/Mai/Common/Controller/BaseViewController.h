@@ -12,4 +12,18 @@
 
 @property(nonatomic,getter=isShowMenu) BOOL showMenu;
 
+/**
+ *  设置购物车商品数量
+ *
+ *  @param count 购物车数量
+ *  @param sid   商品id
+ *  @param fid   商品类型id
+ */
+-(void)setShoppingCount:(NSString *)count sid:(NSString *)sid fid:(NSString *)fid;
+
+/**
+ *  清除购物车商品数量
+ */
+-(void)clearShoppingCount;
+
 @end
