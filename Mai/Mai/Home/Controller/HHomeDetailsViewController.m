@@ -532,6 +532,9 @@
             //设置商品购物车数量
             [self setShoppingCount:count sid:sid fid:_fid];
             
+            //刷新购物车block
+            self.RefreshShoppingCartBlock();
+            
             [self.tableView reloadData];//刷新tableView
         };
     }

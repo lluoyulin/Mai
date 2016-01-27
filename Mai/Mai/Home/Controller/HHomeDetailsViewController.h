@@ -12,6 +12,11 @@
 
 @interface HHomeDetailsViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource,HHomeViewControllerDelegate>
 
+/**
+ *  刷新购物车block
+ */
+@property(nonatomic,copy) void(^RefreshShoppingCartBlock)(void);
+
 -(instancetype)initWithFrame:(CGRect)frame;
 
 @end

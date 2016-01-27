@@ -65,6 +65,11 @@
     [self.homeDetailListView addSubview:homeDetailListViewVC.view];
     
     self.delegate=homeDetailListViewVC;
+    
+    //刷新购物车block
+    homeDetailListViewVC.RefreshShoppingCartBlock=^(){
+        [self.tableView reloadData];//刷新tableView
+    };
 }
 
 /**

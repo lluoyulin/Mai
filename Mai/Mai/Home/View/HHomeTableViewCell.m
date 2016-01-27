@@ -15,6 +15,7 @@
 @implementation HHomeTableViewCell{
     UILabel *_name;//商品名称
     UIView *_line;//右边线
+    UILabel *_countLabel;//购买数量
 }
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -35,6 +36,10 @@
     //右边线
     _line=[UIView new];
     [self.contentView addSubview:_line];
+    
+    //购买数量
+    _countLabel=[UILabel new];
+    [self.contentView addSubview:_countLabel];
 }
 
 -(void)layoutSubviews{
@@ -53,6 +58,21 @@
     _line.frame=CGRectMake(self.width-0.5, 0, 0.5, self.height);
     _line.backgroundColor=UIColorFromRGB(0xdddddd);
     
+    //购买数量
+    _countLabel.frame=CGRectMake(10, 5, 14, 14);
+    _countLabel.font=[UIFont systemFontOfSize:10.0];
+    _countLabel.textColor=[UIColor whiteColor];
+    _countLabel.textAlignment=NSTextAlignmentCenter;
+    _countLabel.backgroundColor=[UIColor redColor];
+    _countLabel.layer.masksToBounds=YES;
+    _countLabel.layer.cornerRadius=_countLabel.width/2;
+    
+    //获取商品购物车数量
+    NSString *count=[UserData objectForKey:[NSString stringWithFormat:@"fid_%@",[self.dic objectForKey:@"id"]]];
+    _countLabel.text=count ? count : @"";
+    _countLabel.hidden=count ? NO : YES;
+    
+    //是否选中该单元格
     if (self.index==self.selectIndex) {
         [self setSelected:YES animated:YES];
     }
