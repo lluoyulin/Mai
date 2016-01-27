@@ -284,7 +284,17 @@
                 
                 [_goodsList addObjectsFromArray:array];//把返回的数据添加到数据源中
                 
-                [self.tableView reloadData];//刷新tableView
+                if (self.salesButton.isSelected) {//数据为销量排序
+                    [self sortWithKey:@"xl" ascending:[_sort isEqualToString:@"desc"] ? NO : YES];
+                }
+                else if (self.priceButton.isSelected) {//数据为价格排序
+                    [self sortWithKey:@"price2" ascending:[_sort isEqualToString:@"desc"] ? NO : YES];
+                }
+                else{
+                    [_sortList removeAllObjects];//移除所有排序数据
+                    
+                    [self.tableView reloadData];//刷新tableView
+                }
                 
                 self.tableView.mj_footer.hidden=NO;
             }
@@ -324,8 +334,19 @@
             if (array.count>0) {//有数据
                 [_goodsList addObjectsFromArray:array];//把返回的数据添加到数据源中
                 
-                [self.tableView reloadData];//刷新tableView
+                if (self.salesButton.isSelected) {//数据为销量排序
+                    NSArray *tempArray=[self sortArray:array key:@"xl" ascending:[_sort isEqualToString:@"desc"] ? NO : YES];
+                    [_sortList addObjectsFromArray:tempArray];
+                }
+                else if (self.priceButton.isSelected) {//数据为价格排序
+                    NSArray *tempArray=[self sortArray:array key:@"price2" ascending:[_sort isEqualToString:@"desc"] ? NO : YES];
+                    [_sortList addObjectsFromArray:tempArray];
+                }
+                else{
+                    [_sortList removeAllObjects];//移除所有排序数据
+                }
                 
+                [self.tableView reloadData];//刷新tableView
                 [self.tableView.mj_footer endRefreshing];
             }
             else{
@@ -394,6 +415,31 @@
     [_sortList addObjectsFromArray:array];
     
     [self.tableView reloadData];
+}
+
+/**
+ *  数组排序
+ *
+ *  @param array     需要排序的数组
+ *  @param key       需要排序的字段名
+ *  @param ascending 是否升序
+ *
+ *  @return 排序后的数组
+ */
+-(NSArray *)sortArray:(NSArray *)array key:(NSString *)key ascending:(BOOL)ascending{
+    NSArray *tempArray=[array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        
+        //得到想要排序字段的NSNumber对象
+        NSNumber *number1=[NSNumber numberWithInteger:[[obj1 objectForKey:key] integerValue]];
+        NSNumber *number2=[NSNumber numberWithInteger:[[obj2 objectForKey:key] integerValue]];
+        
+        NSComparisonResult result=[number1 compare:number2];
+        
+        return ascending ? result==NSOrderedDescending : result==NSOrderedAscending;
+        
+    }];
+    
+    return tempArray;
 }
 
 #pragma mark 按钮事件
