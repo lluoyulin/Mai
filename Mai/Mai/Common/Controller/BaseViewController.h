@@ -22,8 +22,8 @@
 -(void)setShoppingCount:(NSString *)count sid:(NSString *)sid fid:(NSString *)fid;
 
 /**
- *  清除购物车商品数量
+ *  清除购物车
  */
--(void)clearShoppingCount;
+-(void)clearShoppingCart;
 
 @end

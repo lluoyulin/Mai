@@ -114,8 +114,9 @@
     
     //购买
     _shoppingButton.frame=CGRectMake(self.width-44, _descriptionLabel.bottom, 44, 44);
-    [_shoppingButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    _shoppingButton.tintColor=ThemeRed;
     [_shoppingButton setImage:[UIImage imageNamed:@"home_shopping"] forState:UIControlStateNormal];
+    [_shoppingButton setImage:[[UIImage imageNamed:@"home_shopping"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
     [_shoppingButton addTarget:self action:@selector(shoppingButton:) forControlEvents:UIControlEventTouchUpInside];
     
     //购买数量
@@ -131,6 +132,8 @@
     NSString *count=[UserData objectForKey:[NSString stringWithFormat:@"sid_%@",[self.dic objectForKey:@"sid"]]];
     _countLabel.text=count ? count : @"";
     _countLabel.hidden=count ? NO : YES;
+    
+    _shoppingButton.selected=!_countLabel.isHidden;
     
     //本店零售价
     _price1Label.frame=CGRectMake(_nameLabel.left, _price2Label.top-22-10, _nameLabel.width-_shoppingButton.width, 22);
@@ -156,7 +159,7 @@
     //构造参数
     NSString *url=@"add_to_car";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":@"95",
+                               @"uid":@"113",
                                @"gid":[self.dic objectForKey:@"sid"],
                                @"isLogin":@"1"};
     
@@ -164,7 +167,12 @@
         
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
+            
+            //添加购物车成功
             self.ShoppingBlock([self.dic objectForKey:@"sid"],[dic objectForKey:@"count"],[self.dic objectForKey:@"fid"]);
+            
+            //发送添加购物车通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"add_shopping_cart" object:nil];
         }
         else{
             [CAlertView alertMessage:error];

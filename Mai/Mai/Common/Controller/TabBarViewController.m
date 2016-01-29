@@ -24,6 +24,7 @@
 }
 
 @property(nonatomic,strong) UIView *tabBarView;//tabBar视图
+@property(nonatomic,strong) UILabel *countLabel;//购买数量
 
 @end
 
@@ -41,6 +42,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //注册添加购物车通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddShoppingCart:) name:@"add_shopping_cart" object:nil];
     
     //菜单栏名称
     _tabBarTiTleArray=@[@"首页",@"限时购",@"购物车",@"我的"];
@@ -102,6 +106,24 @@
         if (i==0) {
             [self tabBarButton:btn];
         }
+        
+        //添加购物车数量标志
+        if (i==2) {
+            //购买数量
+            self.countLabel=[[UILabel alloc] initWithFrame:CGRectMake(title.right, 6, 16, 16)];
+            self.countLabel.font=[UIFont systemFontOfSize:10.0];
+            self.countLabel.textColor=[UIColor whiteColor];
+            self.countLabel.textAlignment=NSTextAlignmentCenter;
+            self.countLabel.backgroundColor=[UIColor redColor];
+            self.countLabel.layer.masksToBounds=YES;
+            self.countLabel.layer.cornerRadius=_countLabel.width/2;
+            [btn addSubview:self.countLabel];
+            
+            //获取商品购物车数量
+            NSString *count=[UserData objectForKey:@"total_shopping_cart"];
+            self.countLabel.text=count ? count : @"";
+            self.countLabel.hidden=count ? NO : YES;
+        }
     }
 }
 
@@ -148,6 +170,18 @@
             title.textColor=ThemeGray;
         }
     }
+}
+
+/**
+ *  添加购物车通知回调
+ *
+ *  @param notification 通知信息
+ */
+-(void)AddShoppingCart:(NSNotification *)notification{
+    //获取商品购物车数量
+    NSString *count=[UserData objectForKey:@"total_shopping_cart"];
+    self.countLabel.text=count ? count : @"";
+    self.countLabel.hidden=count ? NO : YES;
 }
 
 @end

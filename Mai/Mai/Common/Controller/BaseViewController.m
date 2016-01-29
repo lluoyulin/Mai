@@ -127,12 +127,32 @@
     
     [UserData setObject:[self toJSonWithNSArrayOrNSDictionary:array] forKey:@"fid_list"];
     [UserData synchronize];
+    
+    //添加购物车商品数量
+    [self addShoppingCount];
 }
 
 /**
- *  清除购物车商品数量
+ *  添加购物车商品数量
  */
--(void)clearShoppingCount{
+-(void)addShoppingCount{
+    NSString *sum=[UserData objectForKey:@"total_shopping_cart"];//商品类型总数量
+    if (sum) {
+        NSInteger sumCount=[sum integerValue]+1;
+        sum=[NSString stringWithFormat:@"%ld",(long)sumCount];
+    }
+    else{
+        sum=@"1";
+    }
+    
+    [UserData setObject:sum forKey:@"total_shopping_cart"];
+    [UserData synchronize];
+}
+
+/**
+ *  清除购物车
+ */
+-(void)clearShoppingCart{
     //清除商品id集合
     NSString *goodsJson=[UserData objectForKey:@"sid_list"];
     if (goodsJson) {
@@ -141,7 +161,6 @@
             [UserData setObject:nil forKey:key];
         }
         [UserData setObject:nil forKey:@"sid_list"];
-        [UserData synchronize];
     }
     
     //清除商品类型集合
@@ -152,8 +171,11 @@
             [UserData setObject:nil forKey:key];
         }
         [UserData setObject:nil forKey:@"fid_list"];
-        [UserData synchronize];
     }
+    
+    //清除商品总数量
+    [UserData setObject:nil forKey:@"total_shopping_cart"];
+    [UserData synchronize];
 }
 
 - (void)didReceiveMemoryWarning {
