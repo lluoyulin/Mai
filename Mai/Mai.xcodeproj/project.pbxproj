@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */; };
+		E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732531C5CA422008061A5 /* HGoodsDescriptionsViewController.m */; };
+		E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732561C5CA449008061A5 /* HGoodsImageInfoViewController.m */; };
 		E65B0B351C4F7A24002262F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0B341C4F7A24002262F1 /* main.m */; };
 		E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0B371C4F7A24002262F1 /* AppDelegate.m */; };
 		E65B0B401C4F7A24002262F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E65B0B3F1C4F7A24002262F1 /* Assets.xcassets */; };
@@ -78,6 +81,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E647324C1C5CA0DF008061A5 /* CSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSlidingViewController.h; sourceTree = "<group>"; };
+		E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSlidingViewController.m; sourceTree = "<group>"; };
+		E64732521C5CA422008061A5 /* HGoodsDescriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsDescriptionsViewController.h; sourceTree = "<group>"; };
+		E64732531C5CA422008061A5 /* HGoodsDescriptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGoodsDescriptionsViewController.m; sourceTree = "<group>"; };
+		E64732551C5CA449008061A5 /* HGoodsImageInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsImageInfoViewController.h; sourceTree = "<group>"; };
+		E64732561C5CA449008061A5 /* HGoodsImageInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGoodsImageInfoViewController.m; sourceTree = "<group>"; };
 		E65B0B301C4F7A24002262F1 /* Mai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65B0B341C4F7A24002262F1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E65B0B361C4F7A24002262F1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -502,6 +511,8 @@
 				E66397391C53967800E5F593 /* Const.h */,
 				E66397371C53967800E5F593 /* CAlertView.h */,
 				E66397381C53967800E5F593 /* CAlertView.m */,
+				E647324C1C5CA0DF008061A5 /* CSlidingViewController.h */,
+				E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -551,6 +562,10 @@
 				E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */,
 				E6BA82121C50C3BB00A5C16F /* HGoodsDetailsViewController.h */,
 				E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */,
+				E64732521C5CA422008061A5 /* HGoodsDescriptionsViewController.h */,
+				E64732531C5CA422008061A5 /* HGoodsDescriptionsViewController.m */,
+				E64732551C5CA449008061A5 /* HGoodsImageInfoViewController.h */,
+				E64732561C5CA449008061A5 /* HGoodsImageInfoViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -746,7 +761,9 @@
 				E6BA81EE1C508C9D00A5C16F /* HHomeViewController.m in Sources */,
 				E65B0BA11C4F84C4002262F1 /* MJRefreshBackStateFooter.m in Sources */,
 				E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */,
+				E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */,
 				E65B0BDF1C4F8584002262F1 /* MBProgressHUD.m in Sources */,
+				E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */,
 				E65B0BD51C4F84CE002262F1 /* UIButton+WebCache.m in Sources */,
 				E65B0BD11C4F84CE002262F1 /* SDWebImageDownloader.m in Sources */,
 				E65B0BD81C4F84CE002262F1 /* UIImage+WebP.m in Sources */,
@@ -769,6 +786,7 @@
 				E6BA81F71C508D0100A5C16F /* UCUserCenterViewController.m in Sources */,
 				E6BA82021C508D6500A5C16F /* BackViewTransition.m in Sources */,
 				E65B0B971C4F84C4002262F1 /* MJRefreshAutoFooter.m in Sources */,
+				E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */,
 				E65B0BCD1C4F84CE002262F1 /* NSData+ImageContentType.m in Sources */,
 				E65B0BD91C4F84CE002262F1 /* UIImageView+HighlightedWebCache.m in Sources */,
 				E65B0B351C4F7A24002262F1 /* main.m in Sources */,

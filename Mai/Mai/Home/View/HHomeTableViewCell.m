@@ -9,7 +9,6 @@
 #import "HHomeTableViewCell.h"
 
 #import "Const.h"
-#import "UIView+Frame.h"
 #import "UILabel+AutoFrame.h"
 
 @implementation HHomeTableViewCell{

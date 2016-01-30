@@ -20,9 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    self.edgesForExtendedLayout=UIRectEdgeNone;
+//    self.extendedLayoutIncludesOpaqueBars=YES;
+    
     self.navigationController.navigationBar.barTintColor=ThemeYellow;
     self.navigationController.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:ThemeBlack};
-    [self.navigationController.navigationBar setTranslucent:NO];
+//    [self.navigationController.navigationBar setTranslucent:NO];
 }
 
 /**

@@ -9,7 +9,6 @@
 #import "HHomeDetailsTableViewCell.h"
 
 #import "Const.h"
-#import "UIView+Frame.h"
 #import "UILabel+AutoFrame.h"
 #import "NSObject+HttpTask.h"
 #import "CAlertView.h"

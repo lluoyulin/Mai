@@ -9,12 +9,12 @@
 #import "HHomeDetailsViewController.h"
 
 #import "Const.h"
-#import "UIView+Frame.h"
 #import "NSObject+DataConvert.h"
 #import "NSObject+HttpTask.h"
 #import "UILabel+AutoFrame.h"
 
 #import "HHomeDetailsTableViewCell.h"
+#import "HGoodsDetailsViewController.h"
 
 #import "MJRefresh.h"
 #import "ImagePlayerView.h"
@@ -231,7 +231,7 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"失败:%@",error);
+        NSLog(@"请求失败:%@",error);
         
     }];
 }
@@ -307,7 +307,7 @@
         
         [self.tableView.mj_header endRefreshing];
         
-        NSLog(@"失败:%@",error);
+        NSLog(@"请求失败:%@",error);
         
     }];
 }
@@ -361,7 +361,7 @@
         
         [self.tableView.mj_footer endRefreshing];
         
-        NSLog(@"失败:%@",error);
+        NSLog(@"请求失败:%@",error);
         
     }];
 }
@@ -565,10 +565,10 @@
 
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //    NSString *location=[NSString stringWithFormat:@"%@-%@",self.title,[_locationDetailList[indexPath.row] objectForKey:@"name"]];
-    //
-    //    //发送选中地址通知
-    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectLocation" object:nil userInfo:@{@"cid":[_locationDetailList[indexPath.row] objectForKey:@"id"],@"location":location}];
+    HGoodsDetailsViewController *vc=[HGoodsDetailsViewController new];
+    vc.gid=_sortList.count>0 ? [_sortList[indexPath.row] objectForKey:@"sid"] : [_goodsList[indexPath.row] objectForKey:@"sid"];
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark ZHLocationListViewControllerDelegate动作委托

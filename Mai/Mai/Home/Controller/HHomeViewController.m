@@ -9,7 +9,6 @@
 #import "HHomeViewController.h"
 
 #import "Const.h"
-#import "UIView+Frame.h"
 #import "NSObject+DataConvert.h"
 #import "NSObject+HttpTask.h"
 
@@ -18,7 +17,6 @@
 #import "HHomeDetailsViewController.h"
 
 #import "MJRefresh.h"
-#import "MBProgressHUD.h"
 
 @interface HHomeViewController (){
     NSMutableArray *_typeList;//列表数据源
@@ -44,7 +42,7 @@
     
     _selectIndex=0;
     
-    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)];
+    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.backgroundColor=UIColorFromRGB(0xf6f6f6);
@@ -112,7 +110,7 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"失败:%@",error);
+        NSLog(@"请求失败:%@",error);
         
     }];
 }
