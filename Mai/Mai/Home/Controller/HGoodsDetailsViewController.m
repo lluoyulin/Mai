@@ -57,9 +57,9 @@
     self.view.backgroundColor=[UIColor whiteColor];
     
     //商品详情容器
-    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
+    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-50)];
     self.scrollView.backgroundColor=UIColorFromRGB(0xf5f5f5);
-//    self.scrollView.scrollEnabled=NO;
+    self.scrollView.scrollEnabled=NO;
     [self.view addSubview:self.scrollView];
     
     //初始化幻灯片数据源

@@ -42,7 +42,7 @@
     
     _selectIndex=0;
     
-    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 64, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)];
+    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, 80, SCREEN_HEIGHT-TAB_BAR_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.backgroundColor=UIColorFromRGB(0xf6f6f6);
