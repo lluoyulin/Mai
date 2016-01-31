@@ -18,6 +18,7 @@
 #import "CSlidingViewController.h"
 #import "HGoodsDescriptionsViewController.h"
 #import "HGoodsImageInfoViewController.h"
+#import "SCShoppingCartViewController.h"
 
 #import "ImagePlayerView.h"
 #import "UIImageView+WebCache.h"
@@ -298,7 +299,11 @@
  *  @param sender 按钮对象
  */
 -(void)buyButton:(UIButton *)sender{
-    NSLog(@"立即购买");
+    //添加到购物车
+    [self addShoppingCart];
+    
+    SCShoppingCartViewController *vc=[SCShoppingCartViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /**
@@ -316,7 +321,8 @@
  *  @param sender 按钮对象
  */
 -(void)navigationShoppingButton:(UIButton *)sender{
-    NSLog(@"添加购物车");
+    SCShoppingCartViewController *vc=[SCShoppingCartViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 自定义方法

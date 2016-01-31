@@ -44,7 +44,7 @@
     [super viewDidLoad];
     
     //注册添加购物车通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddShoppingCart:) name:@"add_shopping_cart" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addShoppingCart:) name:@"add_shopping_cart" object:nil];
     
     //菜单栏名称
     _tabBarTiTleArray=@[@"首页",@"限时购",@"购物车",@"我的"];
@@ -177,7 +177,7 @@
  *
  *  @param notification 通知信息
  */
--(void)AddShoppingCart:(NSNotification *)notification{
+-(void)addShoppingCart:(NSNotification *)notification{
     //获取商品购物车数量
     NSString *count=[UserData objectForKey:@"total_shopping_cart"];
     self.countLabel.text=count ? count : @"";
