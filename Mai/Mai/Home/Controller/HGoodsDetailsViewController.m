@@ -21,7 +21,7 @@
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
 
-@interface HGoodsDetailsViewController ()<ImagePlayerViewDelegate>{
+@interface HGoodsDetailsViewController ()<ImagePlayerViewDelegate,HGoodsDescriptionsViewControllerDelegate,HGoodsImageInfoViewControllerDelegate>{
     NSMutableArray *_imagePlayerList;//幻灯片数据源
     NSDictionary *_resultDic;//商品信息数据
 }
@@ -188,7 +188,7 @@
  */
 -(void)initSelectTabView{
     //选项卡视图
-    self.selectTabView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, self.goodsInfoView.bottom+10, self.goodsInfoView.width, self.scrollView.height-self.goodsInfoView.bottom-10)];
+    self.selectTabView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsInfoView.bottom+10, self.goodsInfoView.width, self.scrollView.height-self.goodsInfoView.bottom-10)];
     self.selectTabView.layer.masksToBounds=YES;
     [self.scrollView addSubview:self.selectTabView];
     
@@ -196,11 +196,13 @@
     self.goodsDescriptionsVC=[[HGoodsDescriptionsViewController alloc] initWithHeight:self.selectTabView.height-39];
     self.goodsDescriptionsVC.title=@"商品信息";
     self.goodsDescriptionsVC.dic=_resultDic;
+    self.goodsDescriptionsVC.delegate=self;
     
     //商品图文信息VC
     self.goodsImageInfoVC=[[HGoodsImageInfoViewController alloc] initWithHeight:self.selectTabView.height-39];
     self.goodsImageInfoVC.title=@"图文详情";
     self.goodsImageInfoVC.dic=_resultDic;
+    self.goodsImageInfoVC.delegate=self;
     
     //选项卡
     self.slidingVC=[CSlidingViewController new];
@@ -211,6 +213,7 @@
     
     [self.selectTabView addSubview:self.slidingVC.view];
     
+    //计算scrollView的contentSize
     CGRect rect=CGRectZero;
     for (UIView *subview in self.scrollView.subviews) {
         rect=CGRectUnion(rect, subview.frame);
@@ -299,6 +302,38 @@
  */
 -(void)starButton:(UIButton *)sender{
     NSLog(@"收藏");
+}
+
+#pragma mark 商品信息委托
+-(void)changeGoodsDescriptionsScrollViewContentOffset:(CGFloat)offsetY{
+    if (self.scrollView.contentOffset.y>=self.selectTabView.frame.origin.y) {
+        self.scrollView.contentOffset=CGPointMake(0, self.selectTabView.frame.origin.y);
+    }
+    else{
+        self.scrollView.contentOffset=CGPointMake(0, offsetY);
+    }
+}
+
+-(void)setGoodsDescriptionsScrollViewContentOffset:(CGFloat)offsetY{
+    if (offsetY>10) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.scrollView.contentOffset=CGPointMake(0, self.selectTabView.frame.origin.y);
+        }];
+    }
+    else if(offsetY<-20){
+        [UIView animateWithDuration:0.4 animations:^{
+            self.scrollView.contentOffset=CGPointZero;
+        }];
+    }
+}
+
+#pragma mark 商品图文信息委托
+-(void)changeGoodsImageInfoScrollViewContentOffset:(CGFloat)offsetY{
+    [self changeGoodsDescriptionsScrollViewContentOffset:offsetY];
+}
+
+-(void)setGoodsImageInfoScrollViewContentOffset:(CGFloat)offsetY{
+    [self setGoodsDescriptionsScrollViewContentOffset:offsetY];
 }
 
 #pragma mark ImagePlayerViewDelegate
