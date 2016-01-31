@@ -8,6 +8,8 @@
 
 #import "HGoodsDetailsViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "Const.h"
 #import "NSObject+HttpTask.h"
 #import "CAlertView.h"
@@ -28,6 +30,7 @@
 
 @property(nonatomic,strong) UIButton *navigationShoppingButton;//导航栏上购物车按钮
 @property(nonatomic,strong) UILabel *navigationShoppingCountLabel;//导航栏上购物车数量
+@property(nonatomic,strong) UIImageView *shoppingAnimationImage;//加入购物车动画图片
 
 @property(nonatomic,strong) UIScrollView *scrollView;//商品详情容器
 @property(nonatomic,strong) UIView *operateView;//操作栏视图
@@ -251,7 +254,72 @@
     [self.selectTabView addSubview:self.slidingVC.view];
 }
 
-#pragma mark 获取数据
+#pragma mark UIButton 按钮事件
+/**
+ *  加入购物车
+ *
+ *  @param sender 按钮对象
+ */
+-(void)addShoppingCartButton:(UIButton *)sender{
+    //添加到购物车
+    [self addShoppingCart];
+    
+    //加入购物车动画
+    if (!self.shoppingAnimationImage) {
+        //加入购物车动画图片
+        self.shoppingAnimationImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+        self.shoppingAnimationImage.layer.masksToBounds=YES;
+        self.shoppingAnimationImage.layer.cornerRadius=5.0;
+        [self.shoppingAnimationImage sd_setImageWithURL:[NSURL URLWithString:_imagePlayerList.count>0 ? [_imagePlayerList[0] objectForKey:@"pic"] : @""] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    }
+    [self.navigationController.view addSubview:self.shoppingAnimationImage];
+    
+    CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    pathAnimation.calculationMode = kCAAnimationPaced;
+    pathAnimation.fillMode = kCAFillModeForwards;
+    pathAnimation.removedOnCompletion = NO;
+    pathAnimation.duration = 0.4;
+    pathAnimation.repeatCount = 1;
+    pathAnimation.delegate=self;
+    
+    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    CGPathMoveToPoint(curvedPath, NULL, SCREEN_WIDTH/4, SCREEN_HEIGHT-self.addShoppingCartButton.height/2);
+    CGPathAddQuadCurveToPoint(curvedPath, NULL,SCREEN_WIDTH/4, SCREEN_HEIGHT/2, self.navigationShoppingButton.left+30, 40);
+    
+    pathAnimation.path = curvedPath;
+    CGPathRelease(curvedPath);
+    
+    [self.shoppingAnimationImage.layer addAnimation:pathAnimation forKey:@"moveTheSquare"];
+}
+
+/**
+ *  立即购买
+ *
+ *  @param sender 按钮对象
+ */
+-(void)buyButton:(UIButton *)sender{
+    NSLog(@"立即购买");
+}
+
+/**
+ *  收藏
+ *
+ *  @param sender 按钮对象
+ */
+-(void)starButton:(UIButton *)sender{
+    NSLog(@"收藏");
+}
+
+/**
+ *  导航栏上购物车按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)navigationShoppingButton:(UIButton *)sender{
+    NSLog(@"添加购物车");
+}
+
+#pragma mark 自定义方法
 /**
  *  获取数据
  */
@@ -305,41 +373,41 @@
     }];
 }
 
-#pragma mark UIButton 按钮事件
 /**
- *  添加购物车
- *
- *  @param sender 按钮对象
+ *  添加到购物车
  */
--(void)addShoppingCartButton:(UIButton *)sender{
-    NSLog(@"添加购物车");
-}
-
-/**
- *  立即购买
- *
- *  @param sender 按钮对象
- */
--(void)buyButton:(UIButton *)sender{
-    NSLog(@"立即购买");
-}
-
-/**
- *  收藏
- *
- *  @param sender 按钮对象
- */
--(void)starButton:(UIButton *)sender{
-    NSLog(@"收藏");
-}
-
-/**
- *  导航栏上购物车按钮
- *
- *  @param sender 按钮对象
- */
--(void)navigationShoppingButton:(UIButton *)sender{
-    NSLog(@"添加购物车");
+-(void)addShoppingCart{
+    //构造参数
+    NSString *url=@"add_to_car";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":@"113",
+                               @"gid":self.gid,
+                               @"isLogin":@"1"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
+            //设置购物车商品数量
+            [self setShoppingCount:[dic objectForKey:@"count"] sid:self.gid fid:self.fid];
+            
+            //获取商品购物车数量
+            NSString *count=[UserData objectForKey:@"total_shopping_cart"];
+            self.navigationShoppingCountLabel.text=count ? count : @"";
+            self.navigationShoppingCountLabel.hidden=count ? NO : YES;
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+        NSLog(@"失败:%@",error);
+        
+    }];
 }
 
 #pragma mark 商品信息委托
@@ -372,6 +440,14 @@
 
 -(void)setGoodsImageInfoScrollViewContentOffset:(CGFloat)offsetY{
     [self setGoodsDescriptionsScrollViewContentOffset:offsetY];
+}
+
+#pragma mark CAKeyframeAnimation委托
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    if (flag) {
+        [self.shoppingAnimationImage removeFromSuperview];
+    }
 }
 
 #pragma mark ImagePlayerViewDelegate

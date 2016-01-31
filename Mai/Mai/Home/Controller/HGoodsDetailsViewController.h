@@ -11,5 +11,6 @@
 @interface HGoodsDetailsViewController : BaseViewController
 
 @property(nonatomic,strong) NSString *gid;//商品id
+@property(nonatomic,strong) NSString *fid;//分类id
 
 @end

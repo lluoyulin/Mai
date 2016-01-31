@@ -567,6 +567,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HGoodsDetailsViewController *vc=[HGoodsDetailsViewController new];
     vc.gid=_sortList.count>0 ? [_sortList[indexPath.row] objectForKey:@"sid"] : [_goodsList[indexPath.row] objectForKey:@"sid"];
+    vc.fid=_sortList.count>0 ? [_sortList[indexPath.row] objectForKey:@"fid"] : [_goodsList[indexPath.row] objectForKey:@"fid"];
     
     [self.navigationController pushViewController:vc animated:YES];
 }
