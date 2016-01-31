@@ -42,7 +42,6 @@
         [leftButton addTarget:self action:@selector(leftButton:) forControlEvents:UIControlEventTouchUpInside];
         
         UIBarButtonItem *leftItem=[[UIBarButtonItem alloc] initWithCustomView:leftButton];
-        
         self.navigationItem.leftBarButtonItem=leftItem;
     }
 }

@@ -40,7 +40,7 @@
     
     self.webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, _height)];
     self.webView.backgroundColor=UIColorFromRGB(0xf5f5f5);
-    self.webView.scalesPageToFit=NO;
+    self.webView.scalesPageToFit=YES;
     self.webView.scrollView.delegate=self;
     [self.view addSubview:self.webView];
     

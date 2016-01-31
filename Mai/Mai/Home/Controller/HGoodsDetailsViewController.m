@@ -26,6 +26,9 @@
     NSDictionary *_resultDic;//商品信息数据
 }
 
+@property(nonatomic,strong) UIButton *navigationShoppingButton;//导航栏上购物车按钮
+@property(nonatomic,strong) UILabel *navigationShoppingCountLabel;//导航栏上购物车数量
+
 @property(nonatomic,strong) UIScrollView *scrollView;//商品详情容器
 @property(nonatomic,strong) UIView *operateView;//操作栏视图
 @property(nonatomic,strong) UIButton *addShoppingCartButton;//添加购物车按钮
@@ -56,6 +59,9 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
+    //初始化导航栏
+    [self initNavigationBar];
+    
     //商品详情容器
     self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-50)];
     self.scrollView.backgroundColor=UIColorFromRGB(0xf5f5f5);
@@ -76,6 +82,37 @@
 }
 
 #pragma mark 初始化视图
+/**
+ *  初始化导航栏
+ */
+-(void)initNavigationBar{
+    //导航栏上购物车按钮
+    self.navigationShoppingButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.navigationShoppingButton.frame=CGRectMake(0, 0, 44, 44);
+    [self.navigationShoppingButton setImageEdgeInsets:UIEdgeInsetsMake(0, 26, 0, 0)];
+    [self.navigationShoppingButton setImage:[UIImage imageNamed:@"navigation_shopping"] forState:UIControlStateNormal];
+    [self.navigationShoppingButton addTarget:self action:@selector(navigationShoppingButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *right=[[UIBarButtonItem alloc] initWithCustomView:self.navigationShoppingButton];
+    self.navigationItem.rightBarButtonItem=right;
+    
+    //导航栏上购物车数量
+    self.navigationShoppingCountLabel=[UILabel new];
+    self.navigationShoppingCountLabel.frame=CGRectMake(35, 5, 14, 14);
+    self.navigationShoppingCountLabel.font=[UIFont systemFontOfSize:10.0];
+    self.navigationShoppingCountLabel.textColor=[UIColor whiteColor];
+    self.navigationShoppingCountLabel.textAlignment=NSTextAlignmentCenter;
+    self.navigationShoppingCountLabel.backgroundColor=[UIColor redColor];
+    self.navigationShoppingCountLabel.layer.masksToBounds=YES;
+    self.navigationShoppingCountLabel.layer.cornerRadius=self.navigationShoppingCountLabel.width/2;
+    [self.navigationShoppingButton addSubview:self.navigationShoppingCountLabel];
+    
+    //获取商品购物车数量
+    NSString *count=[UserData objectForKey:@"total_shopping_cart"];
+    self.navigationShoppingCountLabel.text=count ? count : @"";
+    self.navigationShoppingCountLabel.hidden=count ? NO : YES;
+}
+
 /**
  *  初始化操作栏
  */
@@ -188,7 +225,7 @@
  */
 -(void)initSelectTabView{
     //选项卡视图
-    self.selectTabView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsInfoView.bottom+10, self.goodsInfoView.width, self.scrollView.height-self.goodsInfoView.bottom-10)];
+    self.selectTabView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsInfoView.bottom+10, self.goodsInfoView.width, self.scrollView.height)];
     self.selectTabView.layer.masksToBounds=YES;
     [self.scrollView addSubview:self.selectTabView];
     
@@ -212,14 +249,6 @@
     [self.slidingVC didMoveToParentViewController:self];
     
     [self.selectTabView addSubview:self.slidingVC.view];
-    
-    //计算scrollView的contentSize
-    CGRect rect=CGRectZero;
-    for (UIView *subview in self.scrollView.subviews) {
-        rect=CGRectUnion(rect, subview.frame);
-    }
-    
-    self.scrollView.contentSize=CGSizeMake(self.scrollView.width, rect.size.height);
 }
 
 #pragma mark 获取数据
@@ -302,6 +331,15 @@
  */
 -(void)starButton:(UIButton *)sender{
     NSLog(@"收藏");
+}
+
+/**
+ *  导航栏上购物车按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)navigationShoppingButton:(UIButton *)sender{
+    NSLog(@"添加购物车");
 }
 
 #pragma mark 商品信息委托
