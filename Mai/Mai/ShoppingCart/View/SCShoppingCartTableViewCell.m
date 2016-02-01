@@ -130,7 +130,7 @@
     _price2Label.frame=CGRectMake(_nameLabel.left, _price1Label.top-5-22, 100, 22);
     
     //改变字体大小
-    NSMutableAttributedString *price2AttributedString=[[NSMutableAttributedString alloc] initWithString:_price1Label.text];
+    NSMutableAttributedString *price2AttributedString=[[NSMutableAttributedString alloc] initWithString:_price2Label.text];
     [price2AttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
     
     _price2Label.attributedText=price2AttributedString;
