@@ -302,7 +302,7 @@
     //添加到购物车
     [self addShoppingCart];
     
-    SCShoppingCartViewController *vc=[SCShoppingCartViewController new];
+    SCShoppingCartViewController *vc=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleDefault];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -321,7 +321,7 @@
  *  @param sender 按钮对象
  */
 -(void)navigationShoppingButton:(UIButton *)sender{
-    SCShoppingCartViewController *vc=[SCShoppingCartViewController new];
+    SCShoppingCartViewController *vc=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleDefault];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

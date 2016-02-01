@@ -137,8 +137,8 @@
     TLTimeLimitViewController *timeLimit=[TLTimeLimitViewController new];
     timeLimit.title=@"限时购";
     
-    SCShoppingCartViewController *shoppingCart=[SCShoppingCartViewController new];
-    shoppingCart.title=@"限时购";
+    SCShoppingCartViewController *shoppingCart=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleInTabBar];
+    shoppingCart.title=@"购物车";
     
     UCUserCenterViewController *userCenter=[UCUserCenterViewController new];
     userCenter.title=@"我的";

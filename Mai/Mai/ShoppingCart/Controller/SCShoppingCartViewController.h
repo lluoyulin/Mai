@@ -8,6 +8,13 @@
 
 #import "BaseViewController.h"
 
-@interface SCShoppingCartViewController : BaseViewController
+typedef NS_ENUM(NSInteger,ShoppingCartStyle) {
+    ShoppingCartStyleDefault,
+    ShoppingCartStyleInTabBar
+};
+
+@interface SCShoppingCartViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
+
+-(instancetype)initWithStyle:(ShoppingCartStyle)style;
 
 @end
