@@ -89,6 +89,7 @@
     [_selectButton setImage:[UIImage imageNamed:@"shopping_cart_list_no_select"] forState:UIControlStateNormal];
     [_selectButton setImage:[[UIImage imageNamed:@"shopping_cart_list_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
     [_selectButton addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];
+    _selectButton.selected=[[self.dic objectForKey:@"isselect"] isEqualToString:@"0"] ? NO : YES;
     
     //商品图片
     _goodsImage.frame=CGRectMake(_selectButton.right-6, 15, 80, 80);
@@ -134,11 +135,39 @@
     
     _price2Label.attributedText=price2AttributedString;
     
-    //相减
-    
     //相加
+    _addButton.frame=CGRectMake(self.width-27-10, self.height-27-10, 27, 27);
+    _addButton.titleLabel.font=[UIFont systemFontOfSize:11.0];
+    _addButton.layer.masksToBounds=YES;
+    _addButton.layer.cornerRadius=2;
+    _addButton.layer.borderColor=[ThemeGray CGColor];
+    _addButton.layer.borderWidth=0.5;
+    [_addButton setTitleColor:ThemeGray forState:UIControlStateNormal];
+    [_addButton setTitleColor:UIColorFromRGB(0xcccccc) forState:UIControlStateDisabled];
+    [_addButton setTitle:@"＋" forState:UIControlStateNormal];
+    [_addButton addTarget:self action:@selector(addButton:) forControlEvents:UIControlEventTouchUpInside];
     
     //商品数量
+    _countLabel.frame=CGRectMake(_addButton.left-40, _addButton.top, 40, 27);
+    _countLabel.font=[UIFont systemFontOfSize:16.0];
+    _countLabel.textColor=ThemeRed;
+    _countLabel.textAlignment=NSTextAlignmentCenter;
+    _countLabel.layer.masksToBounds=YES;
+    _countLabel.layer.borderColor=[ThemeGray CGColor];
+    _countLabel.layer.borderWidth=0.5;
+    _countLabel.text=[self.dic objectForKey:@"num"];
+    
+    //相减
+    _subtractButton.frame=CGRectMake(_countLabel.left-27, _addButton.top, _addButton.width, _addButton.height);
+    _subtractButton.titleLabel.font=[UIFont systemFontOfSize:11.0];
+    _subtractButton.layer.masksToBounds=YES;
+    _subtractButton.layer.cornerRadius=2;
+    _subtractButton.layer.borderColor=[ThemeGray CGColor];
+    _subtractButton.layer.borderWidth=0.5;
+    [_subtractButton setTitleColor:ThemeGray forState:UIControlStateNormal];
+    [_subtractButton setTitleColor:UIColorFromRGB(0xcccccc) forState:UIControlStateDisabled];
+    [_subtractButton setTitle:@"－" forState:UIControlStateNormal];
+    [_subtractButton addTarget:self action:@selector(subtractButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 /**
@@ -148,6 +177,26 @@
  */
 -(void)selectButton:(UIButton *)sender{
     sender.selected=sender.isSelected ? NO : YES;
+    
+    [self.dic setObject:sender.isSelected ? @"1" : @"0" forKey:@"isselect"];
+}
+
+/**
+ *  相加按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)addButton:(UIButton *)sender{
+    NSLog(@"相加");
+}
+
+/**
+ *  相减按钮
+ *
+ *  @param sender 按钮对象
+ */
+-(void)subtractButton:(UIButton *)sender{
+    NSLog(@"相减");
 }
 
 @end

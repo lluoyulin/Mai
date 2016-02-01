@@ -10,6 +10,6 @@
 
 @interface SCShoppingCartTableViewCell : UITableViewCell
 
-@property(nonatomic,strong) NSDictionary *dic;
+@property(nonatomic,strong) NSMutableDictionary *dic;
 
 @end
