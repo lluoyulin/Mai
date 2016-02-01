@@ -178,6 +178,28 @@
     [UserData synchronize];
 }
 
+/**
+ *  是否登录
+ *
+ *  @return 登录返回yes，未登录返回no
+ */
+-(BOOL)isLogin{
+    [UserData setObject:@"1" forKey:@"islogin"];
+    [UserData synchronize];
+    return [UserData objectForKey:@"islogin"] ? YES : NO;
+}
+
+/**
+ *  获取用户id
+ *
+ *  @return 用户id
+ */
+-(NSString *)getUid{
+    [UserData setObject:@"113" forKey:@"uid"];
+    [UserData synchronize];
+    return [UserData objectForKey:@"uid"] ? [UserData objectForKey:@"uid"] : @"";
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

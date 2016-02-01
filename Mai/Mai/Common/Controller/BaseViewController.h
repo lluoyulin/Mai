@@ -26,4 +26,18 @@
  */
 -(void)clearShoppingCart;
 
+/**
+ *  是否登录
+ *
+ *  @return 登录返回yes，未登录返回no
+ */
+-(BOOL)isLogin;
+
+/**
+ *  获取用户id
+ *
+ *  @return 用户id
+ */
+-(NSString *)getUid;
+
 @end

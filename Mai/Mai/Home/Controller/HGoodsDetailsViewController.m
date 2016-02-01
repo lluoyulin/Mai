@@ -386,9 +386,9 @@
     //构造参数
     NSString *url=@"add_to_car";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":@"113",
+                               @"uid":[self getUid],
                                @"gid":self.gid,
-                               @"isLogin":@"1"};
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
