@@ -8,7 +8,7 @@
 
 #import "BackViewTransition.h"
 
-@interface BackViewTransition ()
+@interface BackViewTransition ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) BOOL shouldComplete;
 
@@ -23,6 +23,7 @@
 
 - (void)prepareGestureRecognizerInView:(UIView*)view {
     UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    gesture.delegate=self;
     [view addGestureRecognizer:gesture];
 }
 
@@ -65,6 +66,18 @@
         default:
             break;
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    // 输出点击的view的类名
+//    NSLog(@"所点击view的类名：%@", NSStringFromClass([touch.view class]));
+    
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

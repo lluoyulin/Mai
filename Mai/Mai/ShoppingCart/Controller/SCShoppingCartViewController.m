@@ -17,7 +17,7 @@
 
 #import "MBProgressHUD.h"
 
-@interface SCShoppingCartViewController (){
+@interface SCShoppingCartViewController ()<UIGestureRecognizerDelegate,UIActionSheetDelegate>{
     ShoppingCartStyle _style;
     NSMutableArray *_goodsList;//列表数据源
 }
@@ -125,6 +125,7 @@
     [self.selectAllButton setImage:[UIImage imageNamed:@"shopping_cart_list_no_select"] forState:UIControlStateNormal];
     [self.selectAllButton setImage:[[UIImage imageNamed:@"shopping_cart_list_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
     [self.selectAllButton addTarget:self action:@selector(selectAllButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.selectAllButton.enabled=YES;
     [self.operateView addSubview:self.selectAllButton];
     
     //全选文字
@@ -173,7 +174,28 @@
  *  @param sender 按钮对象
  */
 -(void)navigationDeleteButton:(UIButton *)sender{
+    NSMutableArray *array=[[NSMutableArray alloc] init];
     
+    for (NSMutableDictionary *dic in _goodsList) {
+        if ([[dic objectForKey:@"isselect"] isEqualToString:@"1"]) {
+            [array addObject:[dic objectForKey:@"sid"]];
+        }
+    }
+    
+    if (array.count==0) {
+        [CAlertView alertMessage:@"至少选择一个商品"];
+        return;
+    }
+    
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"删除选中商品" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+        //删除购物车商品
+        [self deleteShoppingCart:array];
+        
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /**
@@ -223,18 +245,17 @@
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             NSArray *array=[dic objectForKey:@"list"];//添加到购物车中的商品列表
-            if (array.count>0) {
-                [_goodsList removeAllObjects];//移除所有数据
+            
+            [_goodsList removeAllObjects];//移除所有数据
+            
+            for (NSDictionary *dicList in array) {
+                NSMutableDictionary *mutableDic=[NSMutableDictionary dictionaryWithDictionary:dicList];
+                [mutableDic setObject:@"1" forKey:@"isselect"];//动态添加一个key
                 
-                for (NSDictionary *dicList in array) {
-                    NSMutableDictionary *mutableDic=[NSMutableDictionary dictionaryWithDictionary:dicList];
-                    [mutableDic setObject:@"1" forKey:@"isselect"];//动态添加一个key
-                    
-                    [_goodsList addObject:mutableDic];//添加到列表数据源
-                }
-                
-                [self.tableView reloadData];//刷新tableView
+                [_goodsList addObject:mutableDic];//添加到列表数据源
             }
+            
+            [self.tableView reloadData];//刷新tableView
             
             //总价
             self.totalLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"zongjia"] floatValue]];
@@ -249,7 +270,8 @@
             [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%lu)",(unsigned long)_goodsList.count] forState:UIControlStateNormal];
             
             //全选
-            self.selectAllButton.selected=YES;
+            self.selectAllButton.enabled=_goodsList.count>0 ? YES : NO;
+            self.selectAllButton.selected=_goodsList.count>0 ? YES : NO;
         }
         else{
             [CAlertView alertMessage:error];
@@ -299,6 +321,59 @@
     
     //去结算
     [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%ld)",(long)count] forState:UIControlStateNormal];
+}
+
+/**
+ *  删除购物车商品
+ *
+ *  @param array 商品id集合
+ */
+-(void)deleteShoppingCart:(NSArray *)array{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"提交中...";
+    
+    //解析商品id集合商品id集合
+    NSMutableString *sidList=[[NSMutableString alloc] init];
+    for (NSString *sid in array) {
+        [sidList appendFormat:@",%@",sid];
+    }
+    
+    //构造参数
+    NSString *url=@"clear_chose_cart";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0",
+                               @"sid":[sidList substringFromIndex:1]};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            //清空购物车
+            if (_goodsList.count==array.count) {
+                [self clearShoppingCart];
+            }
+            
+            //获取数据
+            [self loadData];
+            
+            hud.mode=MBProgressHUDModeText;
+            hud.labelText=@"删除成功";
+            [hud hide:YES afterDelay:1.5];
+        }
+        else{
+            [hud hide:YES];
+            
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
 }
 
 #pragma mark 表格数据源委托
@@ -360,6 +435,33 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 110;
+}
+
+#pragma mark 表格编辑
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle==UITableViewCellEditingStyleDelete) {//删除
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"删除选中商品" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            
+            //删除购物车商品
+            [self deleteShoppingCart:@[[_goodsList[indexPath.row] objectForKey:@"sid"]]];
+            
+        }]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 #pragma mark tableView动作委托

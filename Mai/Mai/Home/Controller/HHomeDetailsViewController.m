@@ -61,6 +61,9 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
+    //注册添加购物车通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addShoppingCart:) name:@"add_shopping_cart" object:nil];
+    
     //初始化表格
     [self initTableView];
     
@@ -441,6 +444,15 @@
     }];
     
     return tempArray;
+}
+
+/**
+ *  添加购物车通知回调
+ *
+ *  @param notification 通知信息
+ */
+-(void)addShoppingCart:(NSNotification *)notification{
+    [self.tableView reloadData];//刷新tableView
 }
 
 #pragma mark 按钮事件

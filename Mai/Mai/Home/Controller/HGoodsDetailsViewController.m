@@ -64,6 +64,9 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
+    //注册添加购物车通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addShoppingCart:) name:@"add_shopping_cart" object:nil];
+    
     //初始化导航栏
     [self initNavigationBar];
     
@@ -411,6 +414,18 @@
         [CAlertView alertMessage:NetErrorMessage];
         
     }];
+}
+
+/**
+ *  添加购物车通知回调
+ *
+ *  @param notification 通知信息
+ */
+-(void)addShoppingCart:(NSNotification *)notification{
+    //获取商品购物车数量
+    NSString *count=[UserData objectForKey:@"total_shopping_cart"];
+    self.navigationShoppingCountLabel.text=count ? count : @"";
+    self.navigationShoppingCountLabel.hidden=count ? NO : YES;
 }
 
 #pragma mark 商品信息委托

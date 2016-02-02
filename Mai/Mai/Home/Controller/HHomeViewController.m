@@ -37,6 +37,9 @@
     
     self.showMenu=YES;
     
+    //注册添加购物车通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addShoppingCart:) name:@"add_shopping_cart" object:nil];
+    
     //初始化数据
     [self initData];
     
@@ -68,12 +71,6 @@
     homeDetailListViewVC.RefreshShoppingCartBlock=^(){
         [self.tableView reloadData];//刷新tableView
     };
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    [self.tableView reloadData];//刷新tableView
 }
 
 /**
@@ -117,6 +114,15 @@
     } failure:^(NSError *error) {
         
     }];
+}
+
+/**
+ *  添加购物车通知回调
+ *
+ *  @param notification 通知信息
+ */
+-(void)addShoppingCart:(NSNotification *)notification{
+    [self.tableView reloadData];//刷新tableView
 }
 
 #pragma mark 表格数据源委托

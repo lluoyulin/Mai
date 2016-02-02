@@ -105,6 +105,9 @@
     
     [UserData setObject:sum forKey:@"total_shopping_cart"];
     [UserData synchronize];
+    
+    //发送添加购物车通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"add_shopping_cart" object:nil];
 }
 
 /**
@@ -134,6 +137,9 @@
     //清除商品总数量
     [UserData setObject:nil forKey:@"total_shopping_cart"];
     [UserData synchronize];
+    
+    //发送添加购物车通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"add_shopping_cart" object:nil];
 }
 
 /**

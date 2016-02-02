@@ -170,9 +170,6 @@
             
             //添加购物车成功
             self.ShoppingBlock([self.dic objectForKey:@"sid"],[dic objectForKey:@"count"],[self.dic objectForKey:@"fid"]);
-            
-            //发送添加购物车通知
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"add_shopping_cart" object:nil];
         }
         else{
             [CAlertView alertMessage:error];
