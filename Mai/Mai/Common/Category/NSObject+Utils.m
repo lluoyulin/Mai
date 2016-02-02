@@ -67,7 +67,7 @@
         sum=@"1";
     }
     
-    [UserData setObject:sum forKey:key];
+    [UserData setObject:[sum isEqualToString:@"0"] ? nil : sum forKey:key];
     
     //缓存购物车中商品类型id集合数据
     NSMutableArray *array=[[NSMutableArray alloc] init];
@@ -103,7 +103,7 @@
         sum=@"1";
     }
     
-    [UserData setObject:sum forKey:@"total_shopping_cart"];
+    [UserData setObject:[sum isEqualToString:@"0"] ? nil : sum forKey:@"total_shopping_cart"];
     [UserData synchronize];
     
     //发送添加购物车通知
