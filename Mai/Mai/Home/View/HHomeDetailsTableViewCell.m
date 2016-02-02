@@ -98,11 +98,11 @@
     //零售价
     _price2Label.font=[UIFont systemFontOfSize:11.0];
     _price2Label.textColor=ThemeGray;
-    [_price2Label setTextWidth:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price1"]] size:CGSizeMake(40, 13)];
+    [_price2Label setTextWidth:[NSString stringWithFormat:@"¥%.2f",[[self.dic objectForKey:@"price1"] floatValue]] size:CGSizeMake(40, 13)];
     _price2Label.frame=CGRectMake(_nameLabel.left, _goodsImage.bottom-13, _price2Label.width, 13);
     
     //添加删除线
-    NSMutableAttributedString *price2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price1"]]];
+    NSMutableAttributedString *price2 = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥%.2f",[[self.dic objectForKey:@"price1"] floatValue]]];
     [price2 addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, price2.length)];
     _price2Label.attributedText = price2;
     
@@ -141,7 +141,7 @@
     _price1Label.textColor=ThemeRed;
     
     //修改字体大小
-    NSMutableAttributedString *price1=[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"price2"]]];
+    NSMutableAttributedString *price1=[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%.2f",[[self.dic objectForKey:@"price2"] floatValue]]];
     [price1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
     _price1Label.attributedText=price1;
     

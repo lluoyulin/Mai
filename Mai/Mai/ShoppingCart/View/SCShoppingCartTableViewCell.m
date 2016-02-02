@@ -117,7 +117,7 @@
     //零售价
     _price1Label.font=[UIFont systemFontOfSize:11.0];
     _price1Label.textColor=ThemeGray;
-    [_price1Label setTextWidth:[NSString stringWithFormat:@"¥%@",[[self.dic objectForKey:@"gs"] objectForKey:@"price1"]] size:CGSizeMake(100, 13)];
+    [_price1Label setTextWidth:[NSString stringWithFormat:@"¥%.2f",[[[self.dic objectForKey:@"gs"] objectForKey:@"price1"] floatValue]] size:CGSizeMake(100, 13)];
     _price1Label.frame=CGRectMake(_nameLabel.left, self.height-13-15, _price1Label.width, 13);
     
     //添加删除线
@@ -129,7 +129,7 @@
     //本店零售价
     _price2Label.font=[UIFont systemFontOfSize:20.0];
     _price2Label.textColor=ThemeRed;
-    _price2Label.text=[NSString stringWithFormat:@"¥%@",[[self.dic objectForKey:@"gs"] objectForKey:@"price2"]];
+    _price2Label.text=[NSString stringWithFormat:@"¥%.2f",[[[self.dic objectForKey:@"gs"] objectForKey:@"price2"] floatValue]];
     _price2Label.frame=CGRectMake(_nameLabel.left, _price1Label.top-5-22, 100, 22);
     
     //改变字体大小
@@ -202,10 +202,10 @@
             _countLabel.text=[[dic objectForKey:@"count"] stringValue];
             
             //修改数据列表中的值
-            [self.dic setObject:[dic objectForKey:@"count"] forKey:@"num"];
+            [self.dic setObject:_countLabel.text forKey:@"num"];
             
             //设置购物车商品数量
-//            [self setShoppingCount:[dic objectForKey:@"count"] sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:YES];
+//            [self setShoppingCount:_countLabel.text sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:YES];
             
             //商品相加block
             [self addGoodsBlock];
@@ -248,10 +248,10 @@
             _countLabel.text=[[dic objectForKey:@"count"] stringValue];
             
             //修改数据列表中的值
-            [self.dic setObject:[dic objectForKey:@"count"] forKey:@"num"];
+            [self.dic setObject:_countLabel.text forKey:@"num"];
             
             //设置购物车商品数量
-//            [self setShoppingCount:[dic objectForKey:@"count"] sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:NO];
+//            [self setShoppingCount:_countLabel.text sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:NO];
             
             //商品相减block
             self.subtractGoodsBlock();

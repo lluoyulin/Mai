@@ -146,17 +146,17 @@
     [self.operateView addSubview:self.payButton];
     
     //合计文字
-    self.totalTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.allTagLabel.right+20, (self.operateView.height-16)/2, 51, 18)];
-    self.totalTagLabel.font=[UIFont systemFontOfSize:16.0];
+    self.totalTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.allTagLabel.right+20, (self.operateView.height-15)/2, 30, 15)];
+    self.totalTagLabel.font=[UIFont systemFontOfSize:13.0];
     self.totalTagLabel.textColor=[UIColor blackColor];
-    self.totalTagLabel.text=@"合计：";
+    self.totalTagLabel.text=@"合计:";
     [self.operateView addSubview:self.totalTagLabel];
     
     //总价
-    self.totalLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.totalTagLabel.right,(self.operateView.height-24)/2,self.operateView.width-self.totalTagLabel.right-10-self.payButton.width-15,24)];
-    self.totalLabel.font=[UIFont systemFontOfSize:22.0];
+    self.totalLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.totalTagLabel.right,(self.operateView.height-22)/2,self.operateView.width-self.totalTagLabel.right-10-self.payButton.width-15,22)];
+    self.totalLabel.font=[UIFont systemFontOfSize:20.0];
     self.totalLabel.textColor=ThemeRed;
-    self.totalLabel.text=@"¥0";
+    self.totalLabel.text=@"¥0.00";
     [self.operateView addSubview:self.totalLabel];
     
     //修改字体大小
@@ -188,7 +188,10 @@
         [dic setObject:sender.isSelected ? @"1" : @"0" forKey:@"isselect"];
     }
     
-    [self.tableView reloadData];
+    [self.tableView reloadData];//刷新tableView
+    
+    //计算总价
+    [self calculateTotal];
 }
 
 /**
@@ -234,10 +237,19 @@
             }
             
             //总价
-            self.totalLabel.text=[NSString stringWithFormat:@"¥%@",[dic objectForKey:@"zongjia"]];
+            self.totalLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"zongjia"] floatValue]];
+            
+            //修改字体大小
+            NSMutableAttributedString *totalAttributedString=[[NSMutableAttributedString alloc] initWithString:self.totalLabel.text];
+            [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
+            
+            self.totalLabel.attributedText=totalAttributedString;
             
             //商品数量
             [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%lu)",(unsigned long)_goodsList.count] forState:UIControlStateNormal];
+            
+            //全选
+            self.selectAllButton.selected=YES;
         }
         else{
             [CAlertView alertMessage:error];
@@ -258,12 +270,35 @@
  *  计算总价
  */
 -(void)calculateTotal{
-    CGFloat total=0;
+    float total=0;//总价
+    NSInteger count=0;//选中商品数量
     for (NSMutableDictionary *dic in _goodsList) {
-//        NSNumber num=[[dic objectForKey:@"num"] integerValue];//商品数量
-//        CGFloat price=cgfloat;//商品价格
-//        total+=num*price;
+        if ([[dic objectForKey:@"isselect"] isEqualToString:@"1"]) {
+            NSInteger num=[[dic objectForKey:@"num"] integerValue];//商品数量
+            float price=[[[dic objectForKey:@"gs"] objectForKey:@"price2"] floatValue];//商品价格
+            
+            total+=num*price;
+            
+            count++;
+        }
     }
+    
+    //全选
+    if (count==_goodsList.count) {
+        self.selectAllButton.selected=YES;
+    }
+    
+    //总价
+    self.totalLabel.text=[NSString stringWithFormat:@"¥%.2f",total];
+    
+    //修改字体大小
+    NSMutableAttributedString *totalAttributedString=[[NSMutableAttributedString alloc] initWithString:self.totalLabel.text];
+    [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
+    
+    self.totalLabel.attributedText=totalAttributedString;
+    
+    //去结算
+    [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%ld)",(long)count] forState:UIControlStateNormal];
 }
 
 #pragma mark 表格数据源委托
@@ -285,6 +320,9 @@
         //选择商品block
         cell.SelectBlock=^(){
             self.selectAllButton.selected=NO;
+            
+            //计算总价
+            [self calculateTotal];
         };
         
         //商品相加block
