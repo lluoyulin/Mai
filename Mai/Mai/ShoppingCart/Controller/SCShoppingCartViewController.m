@@ -11,6 +11,7 @@
 #import "Const.h"
 #import "CAlertView.h"
 #import "NSObject+HttpTask.h"
+#import "NSObject+Utils.h"
 
 #import "SCShoppingCartTableViewCell.h"
 
@@ -172,7 +173,7 @@
  *  @param sender 按钮对象
  */
 -(void)navigationDeleteButton:(UIButton *)sender{
-
+    
 }
 
 /**
@@ -182,6 +183,12 @@
  */
 -(void)selectAllButton:(UIButton *)sender{
     sender.selected=sender.isSelected ? NO : YES;
+    
+    for (NSMutableDictionary *dic in _goodsList) {
+        [dic setObject:sender.isSelected ? @"1" : @"0" forKey:@"isselect"];
+    }
+    
+    [self.tableView reloadData];
 }
 
 /**
@@ -218,7 +225,7 @@
                 
                 for (NSDictionary *dicList in array) {
                     NSMutableDictionary *mutableDic=[NSMutableDictionary dictionaryWithDictionary:dicList];
-                    [mutableDic setObject:@"0" forKey:@"isselect"];//动态添加一个key
+                    [mutableDic setObject:@"1" forKey:@"isselect"];//动态添加一个key
                     
                     [_goodsList addObject:mutableDic];//添加到列表数据源
                 }
@@ -244,9 +251,19 @@
         
         [CAlertView alertMessage:NetErrorMessage];
         
-        NSLog(@"失败:%@",error);
-        
     }];
+}
+
+/**
+ *  计算总价
+ */
+-(void)calculateTotal{
+    CGFloat total=0;
+    for (NSMutableDictionary *dic in _goodsList) {
+//        NSNumber num=[[dic objectForKey:@"num"] integerValue];//商品数量
+//        CGFloat price=cgfloat;//商品价格
+//        total+=num*price;
+    }
 }
 
 #pragma mark 表格数据源委托
@@ -264,6 +281,23 @@
     SCShoppingCartTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:tableViewCellIdentifier];
     if (cell==nil) {
         cell=[[SCShoppingCartTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
+        
+        //选择商品block
+        cell.SelectBlock=^(){
+            self.selectAllButton.selected=NO;
+        };
+        
+        //商品相加block
+        cell.addGoodsBlock=^(){
+            //计算总价
+            [self calculateTotal];
+        };
+        
+        //商品相减block
+        cell.subtractGoodsBlock=^(){
+            //计算总价
+            [self calculateTotal];
+        };
     }
     
     cell.dic=_goodsList[indexPath.row];

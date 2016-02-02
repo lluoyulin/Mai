@@ -12,6 +12,7 @@
 #import "NSObject+DataConvert.h"
 #import "NSObject+HttpTask.h"
 #import "UILabel+AutoFrame.h"
+#import "NSObject+Utils.h"
 
 #import "HHomeDetailsTableViewCell.h"
 #import "HGoodsDetailsViewController.h"
@@ -237,8 +238,6 @@
         
     } failure:^(NSError *error) {
         
-        NSLog(@"请求失败:%@",error);
-        
     }];
 }
 
@@ -313,8 +312,6 @@
         
         [self.tableView.mj_header endRefreshing];
         
-        NSLog(@"请求失败:%@",error);
-        
     }];
 }
 
@@ -366,8 +363,6 @@
     } failure:^(NSError *error) {
         
         [self.tableView.mj_footer endRefreshing];
-        
-        NSLog(@"请求失败:%@",error);
         
     }];
 }
@@ -536,7 +531,7 @@
         cell.ShoppingBlock=^(NSString *sid,NSString *count,NSString *fid){
             
             //设置商品购物车数量
-            [self setShoppingCount:count sid:sid fid:fid];
+            [self setShoppingCount:count sid:sid fid:fid isAdd:YES];
             
             //刷新购物车block
             self.RefreshShoppingCartBlock();

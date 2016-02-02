@@ -14,6 +14,7 @@
 #import "NSObject+HttpTask.h"
 #import "CAlertView.h"
 #import "UILabel+AutoFrame.h"
+#import "NSObject+Utils.h"
 
 #import "CSlidingViewController.h"
 #import "HGoodsDescriptionsViewController.h"
@@ -374,8 +375,6 @@
         
         [CAlertView alertMessage:NetErrorMessage];
         
-        NSLog(@"请求失败:%@",error);
-        
     }];
 }
 
@@ -396,7 +395,7 @@
             NSDictionary *dic=(NSDictionary *)result;
             
             //设置购物车商品数量
-            [self setShoppingCount:[dic objectForKey:@"count"] sid:self.gid fid:self.fid];
+            [self setShoppingCount:[dic objectForKey:@"count"] sid:self.gid fid:self.fid isAdd:YES];
             
             //获取商品购物车数量
             NSString *count=[UserData objectForKey:@"total_shopping_cart"];
@@ -410,8 +409,6 @@
     } failure:^(NSError *error) {
         
         [CAlertView alertMessage:NetErrorMessage];
-        
-        NSLog(@"失败:%@",error);
         
     }];
 }

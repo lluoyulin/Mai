@@ -12,4 +12,19 @@
 
 @property(nonatomic,strong) NSMutableDictionary *dic;
 
+/**
+ *  选择商品block
+ */
+@property(nonatomic,copy) void(^SelectBlock)(void);
+
+/**
+ *  商品相加block
+ */
+@property(nonatomic,copy) void(^addGoodsBlock)(void);
+
+/**
+ *  商品相减block
+ */
+@property(nonatomic,copy) void(^subtractGoodsBlock)(void);
+
 @end

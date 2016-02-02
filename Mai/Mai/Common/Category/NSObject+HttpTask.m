@@ -56,6 +56,8 @@ static NSString *const HttpUrl=@"http://chulai-mai.com/index.php?m=Home&c=App&a=
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
+        NSLog(@"请求失败:%@",error);
+        
         onFailure(error);
         
     }];

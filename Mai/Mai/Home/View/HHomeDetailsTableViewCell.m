@@ -12,6 +12,7 @@
 #import "UILabel+AutoFrame.h"
 #import "NSObject+HttpTask.h"
 #import "CAlertView.h"
+#import "NSObject+Utils.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -158,9 +159,9 @@
     //构造参数
     NSString *url=@"add_to_car";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":[UserData objectForKey:@"uid"] ? [UserData objectForKey:@"uid"] : @"",
+                               @"uid":[self getUid],
                                @"gid":[self.dic objectForKey:@"sid"],
-                               @"isLogin":[UserData objectForKey:@"islogin"] ? @"1" : @"0"};
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
@@ -180,8 +181,6 @@
     } failure:^(NSError *error) {
         
         [CAlertView alertMessage:NetErrorMessage];
-        
-        NSLog(@"失败:%@",error);
         
     }];
 }

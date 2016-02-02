@@ -72,6 +72,7 @@
 		E6BA82041C508D6500A5C16F /* SwipeBackNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA82001C508D6500A5C16F /* SwipeBackNavigationViewController.m */; };
 		E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA820A1C50B9E700A5C16F /* TabBarViewController.m */; };
 		E6BA82141C50C3BB00A5C16F /* HGoodsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */; };
+		E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */; };
 		E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
 		E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */; };
@@ -214,6 +215,8 @@
 		E6BA820A1C50B9E700A5C16F /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		E6BA82121C50C3BB00A5C16F /* HGoodsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsDetailsViewController.h; sourceTree = "<group>"; };
 		E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGoodsDetailsViewController.m; sourceTree = "<group>"; };
+		E6E4C48F1C605F4000B15B20 /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
+		E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		E6ED93F41C5EEF7300127DC7 /* SCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
 		E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCShoppingCartTableViewCell.m; sourceTree = "<group>"; };
 		E6F3CE091C522FEA001A3670 /* NSObject+DataConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DataConvert.h"; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				E6F3CE191C5274C1001A3670 /* NSObject+HttpTask.m */,
 				E66397331C53926100E5F593 /* NSString+Utils.h */,
 				E66397341C53926100E5F593 /* NSString+Utils.m */,
+				E6E4C48F1C605F4000B15B20 /* NSObject+Utils.h */,
+				E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -787,6 +792,7 @@
 				E65B0BCC1C4F84CE002262F1 /* MKAnnotationView+WebCache.m in Sources */,
 				E65B0BA31C4F84C4002262F1 /* MJRefreshNormalHeader.m in Sources */,
 				E65B0B551C4F8205002262F1 /* UILabel+AutoFrame.m in Sources */,
+				E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */,
 				E65B0B9E1C4F84C4002262F1 /* MJRefreshAutoStateFooter.m in Sources */,
 				E6BA82011C508D6500A5C16F /* BackViewAnimation.m in Sources */,
 				E6BA81F71C508D0100A5C16F /* UCUserCenterViewController.m in Sources */,

@@ -70,6 +70,12 @@
     };
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];//刷新tableView
+}
+
 /**
  *  初始化数据
  */
@@ -101,7 +107,7 @@
                 [_typeList addObject:@{@"id":@"",@"name":@"所有商品",@"stank":@""}];
                 [_typeList addObjectsFromArray:array];//把返回的数据添加到数据源中
                 
-                [self.tableView reloadData];
+                [self.tableView reloadData];//刷新tableView
             }
         }
         else{
@@ -109,8 +115,6 @@
         }
         
     } failure:^(NSError *error) {
-        
-        NSLog(@"请求失败:%@",error);
         
     }];
 }

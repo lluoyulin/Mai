@@ -10,6 +10,9 @@
 
 #import "Const.h"
 #import "UILabel+AutoFrame.h"
+#import "NSObject+HttpTask.h"
+#import "CAlertView.h"
+#import "NSObject+Utils.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -138,14 +141,11 @@
     //相加
     _addButton.frame=CGRectMake(self.width-27-10, self.height-27-10, 27, 27);
     _addButton.titleLabel.font=[UIFont systemFontOfSize:11.0];
-    _addButton.layer.masksToBounds=YES;
-    _addButton.layer.cornerRadius=2;
-    _addButton.layer.borderColor=[ThemeGray CGColor];
-    _addButton.layer.borderWidth=0.5;
+    [_addButton setBackgroundImage:[UIImage imageNamed:@"add_btn"] forState:UIControlStateNormal];
     [_addButton setTitleColor:ThemeGray forState:UIControlStateNormal];
-    [_addButton setTitleColor:UIColorFromRGB(0xcccccc) forState:UIControlStateDisabled];
     [_addButton setTitle:@"＋" forState:UIControlStateNormal];
     [_addButton addTarget:self action:@selector(addButton:) forControlEvents:UIControlEventTouchUpInside];
+    _addButton.selected=YES;
     
     //商品数量
     _countLabel.frame=CGRectMake(_addButton.left-40, _addButton.top, 40, 27);
@@ -160,12 +160,8 @@
     //相减
     _subtractButton.frame=CGRectMake(_countLabel.left-27, _addButton.top, _addButton.width, _addButton.height);
     _subtractButton.titleLabel.font=[UIFont systemFontOfSize:11.0];
-    _subtractButton.layer.masksToBounds=YES;
-    _subtractButton.layer.cornerRadius=2;
-    _subtractButton.layer.borderColor=[ThemeGray CGColor];
-    _subtractButton.layer.borderWidth=0.5;
+    [_subtractButton setBackgroundImage:[UIImage imageNamed:@"minus_btn"] forState:UIControlStateNormal];
     [_subtractButton setTitleColor:ThemeGray forState:UIControlStateNormal];
-    [_subtractButton setTitleColor:UIColorFromRGB(0xcccccc) forState:UIControlStateDisabled];
     [_subtractButton setTitle:@"－" forState:UIControlStateNormal];
     [_subtractButton addTarget:self action:@selector(subtractButton:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -179,6 +175,9 @@
     sender.selected=sender.isSelected ? NO : YES;
     
     [self.dic setObject:sender.isSelected ? @"1" : @"0" forKey:@"isselect"];
+    
+    //选择商品block
+    self.SelectBlock();
 }
 
 /**
@@ -187,7 +186,39 @@
  *  @param sender 按钮对象
  */
 -(void)addButton:(UIButton *)sender{
-    NSLog(@"相加");
+    //构造参数
+    NSString *url=@"cart_jia";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"sid":[self.dic objectForKey:@"sid"],
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
+            //设置商品数量
+            _countLabel.text=[[dic objectForKey:@"count"] stringValue];
+            
+            //修改数据列表中的值
+            [self.dic setObject:[dic objectForKey:@"count"] forKey:@"num"];
+            
+            //设置购物车商品数量
+//            [self setShoppingCount:[dic objectForKey:@"count"] sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:YES];
+            
+            //商品相加block
+            [self addGoodsBlock];
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
 }
 
 /**
@@ -196,7 +227,44 @@
  *  @param sender 按钮对象
  */
 -(void)subtractButton:(UIButton *)sender{
-    NSLog(@"相减");
+    if ([_countLabel.text isEqualToString:@"1"]) {
+        [CAlertView alertMessage:@"商品数量至少1个"];
+        return;
+    }
+    
+    //构造参数
+    NSString *url=@"cart_jian";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[UserData objectForKey:@"uid"] ? [UserData objectForKey:@"uid"] : @"",
+                               @"sid":[self.dic objectForKey:@"sid"],
+                               @"isLogin":[UserData objectForKey:@"islogin"] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
+            //设置商品数量
+            _countLabel.text=[[dic objectForKey:@"count"] stringValue];
+            
+            //修改数据列表中的值
+            [self.dic setObject:[dic objectForKey:@"count"] forKey:@"num"];
+            
+            //设置购物车商品数量
+//            [self setShoppingCount:[dic objectForKey:@"count"] sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:NO];
+            
+            //商品相减block
+            self.subtractGoodsBlock();
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
 }
 
 @end
