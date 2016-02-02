@@ -349,9 +349,13 @@
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
-            //清空购物车
-            if (_goodsList.count==array.count) {
+            if (_goodsList.count==array.count) {//清空购物车
                 [self clearShoppingCart];
+            }
+            else{//设置购物车商品数量
+                for (NSString *sid in array) {
+//                    [self setShoppingCount:nil sid:sid fid:@"" isAdd:NO];
+                }
             }
             
             //获取数据
