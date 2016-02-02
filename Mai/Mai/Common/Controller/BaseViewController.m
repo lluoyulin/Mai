@@ -12,6 +12,8 @@
 
 @interface BaseViewController ()
 
+@property(nonatomic,strong) UIButton *navigationBarLeftButton;//导航栏左边按钮
+
 @end
 
 @implementation BaseViewController
@@ -23,6 +25,24 @@
     
     self.navigationController.navigationBar.barTintColor=ThemeYellow;
     self.navigationController.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:ThemeBlack};
+    
+    //初始化导航栏按钮
+    [self initnavigationBarButton];
+}
+
+/**
+ *  初始化导航栏按钮
+ */
+-(void)initnavigationBarButton{
+    //导航栏左边按钮
+    self.navigationBarLeftButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.navigationBarLeftButton.frame=CGRectMake(0, 0, 44, 44);
+    [self.navigationBarLeftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 26)];
+    [self.navigationBarLeftButton setImage:[UIImage imageNamed:@"navigation_back"] forState:UIControlStateNormal];
+    [self.navigationBarLeftButton addTarget:self action:@selector(navigationBarLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc] initWithCustomView:self.navigationBarLeftButton];
+    self.navigationItem.leftBarButtonItem=leftItem;
 }
 
 /**
@@ -34,14 +54,8 @@
     _showMenu=showMenu;
     
     if (self.isShowMenu) {
-        UIButton *leftButton=[UIButton buttonWithType:UIButtonTypeCustom];
-        leftButton.frame=CGRectMake(0, 0, 44, 44);
-        [leftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 22)];
-        [leftButton setImage:[UIImage imageNamed:@"navigation_menu"] forState:UIControlStateNormal];
-        [leftButton addTarget:self action:@selector(leftButton:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem *leftItem=[[UIBarButtonItem alloc] initWithCustomView:leftButton];
-        self.navigationItem.leftBarButtonItem=leftItem;
+        [self.navigationBarLeftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 22)];
+        [self.navigationBarLeftButton setImage:[UIImage imageNamed:@"navigation_menu"] forState:UIControlStateNormal];
     }
 }
 
@@ -50,10 +64,13 @@
  *
  *  @param sender 按钮对象
  */
--(void)leftButton:(UIButton *)sender{
+-(void)navigationBarLeftButton:(UIButton *)sender{
     if (self.isShowMenu) {
         //点击汉堡包发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showmenu" object:nil];
+    }
+    else{
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
