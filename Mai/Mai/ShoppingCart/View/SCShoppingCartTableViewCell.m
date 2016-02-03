@@ -141,7 +141,7 @@
     //相加
     _addButton.frame=CGRectMake(self.width-27-10, self.height-27-10, 27, 27);
     _addButton.titleLabel.font=[UIFont systemFontOfSize:11.0];
-    [_addButton setBackgroundImage:[UIImage imageNamed:@"add_btn"] forState:UIControlStateNormal];
+    [_addButton setBackgroundImage:[UIImage imageNamed:@"shopping_cart_add_btn"] forState:UIControlStateNormal];
     [_addButton setTitleColor:ThemeGray forState:UIControlStateNormal];
     [_addButton setTitle:@"＋" forState:UIControlStateNormal];
     [_addButton addTarget:self action:@selector(addButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -160,7 +160,7 @@
     //相减
     _subtractButton.frame=CGRectMake(_countLabel.left-27, _addButton.top, _addButton.width, _addButton.height);
     _subtractButton.titleLabel.font=[UIFont systemFontOfSize:11.0];
-    [_subtractButton setBackgroundImage:[UIImage imageNamed:@"minus_btn"] forState:UIControlStateNormal];
+    [_subtractButton setBackgroundImage:[UIImage imageNamed:@"shopping_cart_minus_btn"] forState:UIControlStateNormal];
     [_subtractButton setTitleColor:ThemeGray forState:UIControlStateNormal];
     [_subtractButton setTitle:@"－" forState:UIControlStateNormal];
     [_subtractButton addTarget:self action:@selector(subtractButton:) forControlEvents:UIControlEventTouchUpInside];
