@@ -205,6 +205,7 @@
             [self.dic setObject:_countLabel.text forKey:@"num"];
             
             //设置购物车商品数量
+            NSString *fid=@"需要接口返回商品分类id";
 //            [self setShoppingCount:_countLabel.text sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:YES];
             
             //商品相加block
@@ -251,6 +252,7 @@
             [self.dic setObject:_countLabel.text forKey:@"num"];
             
             //设置购物车商品数量
+            NSString *fid=@"需要接口返回商品分类id";
 //            [self setShoppingCount:_countLabel.text sid:[self.dic objectForKey:@"sid"] fid:@"" isAdd:NO];
             
             //商品相减block

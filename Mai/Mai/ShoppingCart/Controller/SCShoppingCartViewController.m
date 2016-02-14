@@ -354,6 +354,7 @@
             }
             else{//设置购物车商品数量
                 for (NSString *sid in array) {
+                    NSString *fid=@"需要接口返回商品分类id";
 //                    [self setShoppingCount:nil sid:sid fid:@"" isAdd:NO];
                 }
             }
