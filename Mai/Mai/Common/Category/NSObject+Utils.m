@@ -94,7 +94,7 @@
  *  @param isAdd 是否为添加
  */
 -(void)addShoppingCountIsAdd:(BOOL)isAdd{
-    NSString *sum=[UserData objectForKey:@"total_shopping_cart"];//商品类型总数量
+    NSString *sum=[UserData objectForKey:@"total_shopping_cart"];//商品总数量
     if (sum) {
         NSInteger sumCount=[sum integerValue]+(isAdd ? 1 : -1);
         sum=[NSString stringWithFormat:@"%ld",(long)sumCount];
@@ -136,6 +136,34 @@
     
     //清除商品总数量
     [UserData setObject:nil forKey:@"total_shopping_cart"];
+    [UserData synchronize];
+    
+    //发送添加购物车通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"add_shopping_cart" object:nil];
+}
+
+/**
+ *  清除购物车中一个商品
+ *
+ *  @param sid 商品id
+ *  @param fid 商品累心id
+ *  @param count 购物车数量
+ */
+-(void)clearShoppingCartWithId:(NSString *)sid fid:(NSString *)fid count:(NSString *)count{
+    //清除商品缓存
+    NSString *key_sid=[NSString stringWithFormat:@"sid_%@",sid];//生成对应商品id的缓存key
+    [UserData setObject:nil forKey:key_sid];
+    
+    //清除商品类型总数量
+    NSString *key_fid=[NSString stringWithFormat:@"fid_%@",fid];//生成商品所属类型id的缓存key
+    NSString *sum_fid=[UserData objectForKey:key_fid];//商品类型总数量
+    sum_fid=[NSString stringWithFormat:@"%ld",[sum_fid integerValue]-[count integerValue]];
+    [UserData setObject:[sum_fid isEqualToString:@"0"] ? nil : sum_fid forKey:key_fid];
+    
+    //清除商品总数量
+    NSString *sum=[UserData objectForKey:@"total_shopping_cart"];//商品总数量
+    sum=[NSString stringWithFormat:@"%ld",(long)[sum integerValue]-[count integerValue]];
+    [UserData setObject:[sum isEqualToString:@"0"] ? nil : sum forKey:@"total_shopping_cart"];
     [UserData synchronize];
     
     //发送添加购物车通知

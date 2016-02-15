@@ -26,6 +26,15 @@
 -(void)clearShoppingCart;
 
 /**
+ *  清除购物车中一个商品
+ *
+ *  @param sid 商品id
+ *  @param fid 商品累心id
+ *  @param count 购物车数量
+ */
+-(void)clearShoppingCartWithId:(NSString *)sid fid:(NSString *)fid count:(NSString *)count;
+
+/**
  *  是否登录
  *
  *  @return 登录返回yes，未登录返回no

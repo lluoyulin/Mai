@@ -180,7 +180,9 @@
     
     for (NSMutableDictionary *dic in _goodsList) {
         if ([[dic objectForKey:@"isselect"] isEqualToString:@"1"]) {
-            [array addObject:@{@"sid":[dic objectForKey:@"sid"],@"fid":[[dic objectForKey:@"gs"] objectForKey:@"fid"]}];
+            [array addObject:@{@"sid":[dic objectForKey:@"sid"],
+                               @"fid":[[dic objectForKey:@"gs"] objectForKey:@"fid"],
+                               @"num":[dic objectForKey:@"num"]}];
         }
     }
     
@@ -357,7 +359,7 @@
             }
             else{//设置购物车商品数量
                 for (NSDictionary *dic in array) {
-                    [self setShoppingCount:nil sid:[dic objectForKey:@"sid"] fid:[dic objectForKey:@"fid"] isAdd:NO];
+                    [self clearShoppingCartWithId:[dic objectForKey:@"sid"] fid:[dic objectForKey:@"fid"] count:[dic objectForKey:@"num"]];
                 }
             }
             
