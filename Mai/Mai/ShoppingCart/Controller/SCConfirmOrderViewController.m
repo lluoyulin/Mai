@@ -10,6 +10,8 @@
 
 #import "Const.h"
 
+#import "SCGoodsListViewController.h"
+
 static const CGFloat PayViewHeight=50.0;
 
 @interface SCConfirmOrderViewController ()
@@ -23,6 +25,23 @@ static const CGFloat PayViewHeight=50.0;
 @property(nonatomic,strong) UILabel *consigneeAddressLabel;//收货地址
 
 @property(nonatomic,strong) UIView *goodsView;//商品视图
+
+@property(nonatomic,strong) UIView *payWayView;//支付方式视图
+@property(nonatomic,strong) UILabel *onlinePayTagLabel;//在线支付标签
+@property(nonatomic,strong) UIButton *onlinePayButton;//在线支付按钮
+@property(nonatomic,strong) UILabel *offlinePayTagLabel;//线下支付标签
+@property(nonatomic,strong) UIButton *offlinePayButton;//线下支付按钮
+
+@property(nonatomic,strong) UIView *orderInfoView;//订单信息视图
+@property(nonatomic,strong) UILabel *sumTagLabel;//商品总价标签
+@property(nonatomic,strong) UILabel *sumLabel;//商品总价
+@property(nonatomic,strong) UILabel *tipTagLabel;//服务费标签
+@property(nonatomic,strong) UILabel *tipLabel;//服务费
+@property(nonatomic,strong) UILabel *nonTipTagLabel;//减免服务费标签
+@property(nonatomic,strong) UILabel *nonTipLabel;//减免服务费
+@property(nonatomic,strong) UILabel *payTagLabel;//实付款标签
+@property(nonatomic,strong) UILabel *payLabel;//实付款
+@property(nonatomic,strong) UITextField *remarkText;//备注
 
 @property(nonatomic,strong) UIView *payView;//支付操作视图
 
@@ -42,6 +61,19 @@ static const CGFloat PayViewHeight=50.0;
     
     //初始化支付操作视图
     [self initPayView];
+    
+    //初始化支付方式视图
+    [self initPayWayView];
+    
+    //初始化订单信息视图
+    [self initOrderInfoView];
+    
+    //计算scrollView内容高度
+    CGRect rect=CGRectZero;
+    for (UIView *subView in self.scrollView.subviews) {
+        rect=CGRectUnion(rect, subView.frame);
+    }
+    self.scrollView.contentSize=CGSizeMake(self.scrollView.width, rect.size.height);
 }
 
 #pragma mark 初始化视图
@@ -52,7 +84,6 @@ static const CGFloat PayViewHeight=50.0;
     //订单信息视图
     self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-10-PayViewHeight)];
     self.scrollView.backgroundColor=UIColorFromRGB(0xf5f5f5);
-    self.scrollView.contentSize=CGSizeMake(self.scrollView.width, self.scrollView.height);
     [self.view addSubview:self.scrollView];
     
     //初始化地址视图
@@ -87,7 +118,7 @@ static const CGFloat PayViewHeight=50.0;
     self.consigneeLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.addressFlagImage.right+10, (self.addressButton.height-16-8-15)/2, self.addressButton.width-self.addressFlagImage.right-10-10-self.selectAddressImage.width-15, 16)];
     self.consigneeLabel.font=[UIFont systemFontOfSize:14.0];
     self.consigneeLabel.textColor=ThemeBlack;
-    self.consigneeLabel.text=@"收货人：罗玉林（男）| 18608515145";
+    self.consigneeLabel.text=@"收货人：罗玉林(男) | 18608515145";
     [self.addressButton addSubview:self.consigneeLabel];
     
     //收货地址
@@ -105,7 +136,148 @@ static const CGFloat PayViewHeight=50.0;
     //商品视图
     self.goodsView=[[UIView alloc] initWithFrame:CGRectMake(0, self.addressButton.bottom+10, self.addressButton.width, 90)];
     self.goodsView.backgroundColor=ThemeWhite;
+    self.goodsView.layer.masksToBounds=YES;
     [self.scrollView addSubview:self.goodsView];
+    
+    //商品列表
+    SCGoodsListViewController *goodsListVC=[SCGoodsListViewController new];
+    [self addChildViewController:goodsListVC];
+    [goodsListVC didMoveToParentViewController:self];
+    
+    [self.goodsView addSubview:goodsListVC.view];
+    
+    //顶部分割线
+    UIView *topLine=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.goodsView.width, 0.5)];
+    topLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.goodsView addSubview:topLine];
+    
+    //底部分割线
+    UIView *bottomLine=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsView.height-0.5, self.goodsView.width, 0.5)];
+    bottomLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.goodsView addSubview:bottomLine];
+}
+
+/**
+ *  初始化支付方式视图
+ */
+-(void)initPayWayView{
+    //支付方式视图
+    self.payWayView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsView.bottom+10, self.goodsView.width, 83)];
+    self.payWayView.backgroundColor=ThemeWhite;
+    [self.scrollView addSubview:self.payWayView];
+    
+    //顶部分割线
+    UIView *topLine=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.payWayView.width, 0.5)];
+    topLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.payWayView addSubview:topLine];
+    
+    //底部分割线
+    UIView *bottomLine=[[UIView alloc] initWithFrame:CGRectMake(0, self.payWayView.height-0.5, self.payWayView.width, 0.5)];
+    bottomLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.payWayView addSubview:bottomLine];
+    
+    //在线支付标签
+    self.onlinePayTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, 15, 60, 16)];
+    self.onlinePayTagLabel.font=[UIFont systemFontOfSize:14.0];
+    self.onlinePayTagLabel.textColor=ThemeBlack;
+    self.onlinePayTagLabel.text=@"在线支付";
+    [self.payWayView addSubview:self.onlinePayTagLabel];
+    
+    //在线支付按钮
+    self.onlinePayButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.onlinePayButton.frame=CGRectMake(self.payWayView.width-44-2, 0, 44, 40);
+    self.onlinePayButton.tintColor=ThemeRed;
+    [self.onlinePayButton setImage:[UIImage imageNamed:@"order_pay_select"] forState:UIControlStateNormal];
+    [self.onlinePayButton setImage:[[UIImage imageNamed:@"order_pay_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
+    [self.onlinePayButton addTarget:self action:@selector(onlinePayButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.onlinePayButton.selected=YES;
+    [self.payWayView addSubview:self.onlinePayButton];
+    
+    //线下支付标签
+    self.offlinePayTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.onlinePayTagLabel.left, self.onlinePayTagLabel.bottom+20, self.onlinePayTagLabel.width, self.onlinePayTagLabel.height)];
+    self.offlinePayTagLabel.font=[UIFont systemFontOfSize:14.0];
+    self.offlinePayTagLabel.textColor=ThemeBlack;
+    self.offlinePayTagLabel.text=@"货到付款";
+    [self.payWayView addSubview:self.offlinePayTagLabel];
+    
+    //线下支付按钮
+    self.offlinePayButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.offlinePayButton.frame=CGRectMake(self.onlinePayButton.left, self.onlinePayButton.bottom+3, self.onlinePayButton.width, self.onlinePayButton.height);
+    self.offlinePayButton.tintColor=ThemeRed;
+    [self.offlinePayButton setImage:[UIImage imageNamed:@"order_pay_select"] forState:UIControlStateNormal];
+    [self.offlinePayButton setImage:[[UIImage imageNamed:@"order_pay_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
+    [self.offlinePayButton addTarget:self action:@selector(offlinePayButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.payWayView addSubview:self.offlinePayButton];
+}
+
+/**
+ *  初始化订单信息视图
+ */
+-(void)initOrderInfoView{
+    //订单信息视图
+    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.payWayView.bottom+10, self.payWayView.width, 236)];
+    self.orderInfoView.backgroundColor=ThemeWhite;
+    [self.scrollView addSubview:self.orderInfoView];
+    
+    //顶部分割线
+    UIView *topLine=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.orderInfoView.width, 0.5)];
+    topLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.orderInfoView addSubview:topLine];
+    
+    //底部分割线
+    UIView *bottomLine=[[UIView alloc] initWithFrame:CGRectMake(0, self.orderInfoView.height-0.5, self.orderInfoView.width, 0.5)];
+    bottomLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.orderInfoView addSubview:bottomLine];
+    
+    //商品总价标签
+    self.sumTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, 14, 80, 16)];
+    self.sumTagLabel.font=[UIFont systemFontOfSize:14.0];
+    self.sumTagLabel.textColor=ThemeBlack;
+    self.sumTagLabel.text=@"商品总价";
+    [self.orderInfoView addSubview:self.sumTagLabel];
+    
+    //商品总价
+    self.sumLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.orderInfoView.width-100-15, self.sumTagLabel.top, 100, self.sumTagLabel.height)];
+    self.sumLabel.font=self.sumTagLabel.font;
+    self.sumLabel.textColor=self.sumTagLabel.textColor;
+    self.sumLabel.text=@"¥12";
+    self.sumLabel.textAlignment=NSTextAlignmentRight;
+    [self.orderInfoView addSubview:self.sumLabel];
+    
+    //商品总价分割线
+    UIView *sumLine=[[UIView alloc] initWithFrame:CGRectMake(self.sumTagLabel.left, self.sumTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
+    sumLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.orderInfoView addSubview:sumLine];
+    
+    //服务费标签
+    self.tipTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumTagLabel.left, sumLine.bottom+14, self.sumTagLabel.width, self.sumTagLabel.height)];
+    self.tipTagLabel.font=self.sumTagLabel.font;
+    self.tipTagLabel.textColor=self.sumTagLabel.textColor;
+    self.tipTagLabel.text=@"服务费";
+    [self.orderInfoView addSubview:self.tipTagLabel];
+    
+    //服务费
+    self.tipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.tipTagLabel.top, 100, self.tipTagLabel.height)];
+    self.tipLabel.font=self.tipTagLabel.font;
+    self.tipLabel.textColor=self.tipTagLabel.textColor;
+    self.tipLabel.text=@"¥12";
+    self.tipLabel.textAlignment=NSTextAlignmentRight;
+    [self.orderInfoView addSubview:self.tipLabel];
+    
+    //服务费分割线
+    UIView *tipLine=[[UIView alloc] initWithFrame:CGRectMake(self.tipTagLabel.left, self.tipTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
+    tipLine.backgroundColor=sumLine.backgroundColor;
+    [self.orderInfoView addSubview:tipLine];
+    
+    //减免服务费标签
+    
+    //减免服务费
+    
+    //实付款标签
+    
+    //实付款
+    
+    //备注
 }
 
 /**
@@ -126,6 +298,30 @@ static const CGFloat PayViewHeight=50.0;
  */
 -(void)addressButton:(UIButton *)sender{
     
+}
+
+/**
+ *  在线支付按钮
+ *
+ *  @param sender
+ */
+-(void)onlinePayButton:(UIButton *)sender{
+    if (!sender.isSelected) {
+        self.onlinePayButton.selected=YES;
+        self.offlinePayButton.selected=NO;
+    }
+}
+
+/**
+ *  线下支付按钮
+ *
+ *  @param sender
+ */
+-(void)offlinePayButton:(UIButton *)sender{
+    if (!sender.isSelected) {
+        self.onlinePayButton.selected=NO;
+        self.offlinePayButton.selected=YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
