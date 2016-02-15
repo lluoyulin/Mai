@@ -9,6 +9,8 @@
 #import "SCConfirmOrderViewController.h"
 
 #import "Const.h"
+#import "CKeyboardToolBar.h"
+#import "UILabel+AutoFrame.h"
 
 #import "SCGoodsListViewController.h"
 
@@ -44,6 +46,9 @@ static const CGFloat PayViewHeight=50.0;
 @property(nonatomic,strong) UITextField *remarkText;//备注
 
 @property(nonatomic,strong) UIView *payView;//支付操作视图
+@property(nonatomic,strong) UILabel *countLabel;//商品数量
+@property(nonatomic,strong) UILabel *totalLabel;//订单总价
+@property(nonatomic,strong) UIButton *payButton;//支付按钮
 
 @end
 
@@ -56,24 +61,12 @@ static const CGFloat PayViewHeight=50.0;
     
     self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];//注册键盘弹出通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];//注册键盘消失通知
+    
     //初始化订单信息视图
     [self initScrollView];
-    
-    //初始化支付操作视图
-    [self initPayView];
-    
-    //初始化支付方式视图
-    [self initPayWayView];
-    
-    //初始化订单信息视图
-    [self initOrderInfoView];
-    
-    //计算scrollView内容高度
-    CGRect rect=CGRectZero;
-    for (UIView *subView in self.scrollView.subviews) {
-        rect=CGRectUnion(rect, subView.frame);
-    }
-    self.scrollView.contentSize=CGSizeMake(self.scrollView.width, rect.size.height);
 }
 
 #pragma mark 初始化视图
@@ -91,6 +84,22 @@ static const CGFloat PayViewHeight=50.0;
     
     //初始化商品视图
     [self initGoodsView];
+    
+    //初始化支付方式视图
+    [self initPayWayView];
+    
+    //初始化订单信息视图
+    [self initOrderInfoView];
+    
+    //初始化支付操作视图
+    [self initPayView];
+    
+    //计算scrollView内容高度
+    CGRect rect=CGRectZero;
+    for (UIView *subView in self.scrollView.subviews) {
+        rect=CGRectUnion(rect, subView.frame);
+    }
+    self.scrollView.contentSize=CGSizeMake(self.scrollView.width, rect.size.height);
 }
 
 /**
@@ -240,7 +249,7 @@ static const CGFloat PayViewHeight=50.0;
     self.sumLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.orderInfoView.width-100-15, self.sumTagLabel.top, 100, self.sumTagLabel.height)];
     self.sumLabel.font=self.sumTagLabel.font;
     self.sumLabel.textColor=self.sumTagLabel.textColor;
-    self.sumLabel.text=@"¥12";
+    self.sumLabel.text=@"¥12.00";
     self.sumLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.sumLabel];
     
@@ -260,7 +269,7 @@ static const CGFloat PayViewHeight=50.0;
     self.tipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.tipTagLabel.top, 100, self.tipTagLabel.height)];
     self.tipLabel.font=self.tipTagLabel.font;
     self.tipLabel.textColor=self.tipTagLabel.textColor;
-    self.tipLabel.text=@"¥12";
+    self.tipLabel.text=@"¥12.00";
     self.tipLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.tipLabel];
     
@@ -270,14 +279,58 @@ static const CGFloat PayViewHeight=50.0;
     [self.orderInfoView addSubview:tipLine];
     
     //减免服务费标签
+    self.nonTipTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.tipTagLabel.left, tipLine.bottom+14, self.tipTagLabel.width, self.tipTagLabel.height)];
+    self.nonTipTagLabel.font=self.tipTagLabel.font;
+    self.nonTipTagLabel.textColor=self.tipTagLabel.textColor;
+    self.nonTipTagLabel.text=@"减免服务费";
+    [self.orderInfoView addSubview:self.nonTipTagLabel];
     
     //减免服务费
+    self.nonTipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.nonTipTagLabel.top, 100, self.nonTipTagLabel.height)];
+    self.nonTipLabel.font=self.nonTipTagLabel.font;
+    self.nonTipLabel.textColor=self.nonTipTagLabel.textColor;
+    self.nonTipLabel.text=@"-¥12.00";
+    self.nonTipLabel.textAlignment=NSTextAlignmentRight;
+    [self.orderInfoView addSubview:self.nonTipLabel];
+    
+    //减免服务费分割线
+    UIView *nonTipLine=[[UIView alloc] initWithFrame:CGRectMake(self.nonTipTagLabel.left, self.nonTipTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
+    nonTipLine.backgroundColor=sumLine.backgroundColor;
+    [self.orderInfoView addSubview:nonTipLine];
     
     //实付款标签
+    self.payTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.nonTipTagLabel.left, nonTipLine.bottom+14, self.nonTipTagLabel.width, self.nonTipTagLabel.height)];
+    self.payTagLabel.font=self.tipTagLabel.font;
+    self.payTagLabel.textColor=self.tipTagLabel.textColor;
+    self.payTagLabel.text=@"实付款";
+    [self.orderInfoView addSubview:self.payTagLabel];
     
     //实付款
+    self.payLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.payTagLabel.top, 100, self.payTagLabel.height)];
+    self.payLabel.font=self.nonTipTagLabel.font;
+    self.payLabel.textColor=self.nonTipTagLabel.textColor;
+    self.payLabel.text=@"¥12.00";
+    self.payLabel.textAlignment=NSTextAlignmentRight;
+    [self.orderInfoView addSubview:self.payLabel];
+    
+    //减免服务费分割线
+    UIView *payLine=[[UIView alloc] initWithFrame:CGRectMake(self.payTagLabel.left, self.payTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
+    payLine.backgroundColor=sumLine.backgroundColor;
+    [self.orderInfoView addSubview:payLine];
     
     //备注
+    self.remarkText=[[UITextField alloc] initWithFrame:CGRectMake(self.payTagLabel.left, payLine.bottom, payLine.width, 60)];
+    self.remarkText.placeholder=@"给卖家留言...";
+    self.remarkText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    [self.orderInfoView addSubview:self.remarkText];
+    
+    //添加键盘工具栏
+    CKeyboardToolBar *keyboardToolBar=[CKeyboardToolBar new];
+    keyboardToolBar.resignKeyboardBlock=^(){
+        [self.remarkText resignFirstResponder];
+    };
+    
+    self.remarkText.inputAccessoryView=keyboardToolBar;
 }
 
 /**
@@ -288,6 +341,14 @@ static const CGFloat PayViewHeight=50.0;
     self.payView=[[UIView alloc] initWithFrame:CGRectMake(0, self.scrollView.bottom+10, self.scrollView.width, PayViewHeight)];
     self.payView.backgroundColor=ThemeWhite;
     [self.view addSubview:self.payView];
+    
+    //商品数量
+    self.countLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, (self.payView.height-16)/2, 0, 16)];
+    self.countLabel.font=[UIFont systemFontOfSize:14.0];
+    
+    //订单总价
+    
+    //支付按钮
 }
 
 #pragma mark 按钮事件
@@ -322,6 +383,43 @@ static const CGFloat PayViewHeight=50.0;
         self.onlinePayButton.selected=NO;
         self.offlinePayButton.selected=YES;
     }
+}
+
+/**
+ *  支付按钮
+ *
+ *  @param sender
+ */
+-(void)payButton:(UIButton *)sender{
+}
+
+#pragma mark 键盘弹出和隐藏通知方法
+/**
+ *  键盘弹出回调
+ *
+ *  @param notification 通知信息
+ */
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    //自适应代码
+    CGFloat offset=self.scrollView.height-kbSize.height;
+    [UIView animateWithDuration:0.4 animations:^{
+        self.scrollView.transform=CGAffineTransformMakeTranslation(0, -offset-60);
+    }];
+}
+
+/**
+ *  键盘消失回调
+ *
+ *  @param notification 通知信息
+ */
+- (void)keyboardWillHide:(NSNotification *)notification{
+    //自适应代码
+    [UIView animateWithDuration:0.4 animations:^{
+        self.scrollView.transform=CGAffineTransformIdentity;
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

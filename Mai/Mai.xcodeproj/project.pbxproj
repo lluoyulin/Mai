@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */; };
 		E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */; };
 		E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732531C5CA422008061A5 /* HGoodsDescriptionsViewController.m */; };
 		E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732561C5CA449008061A5 /* HGoodsImageInfoViewController.m */; };
@@ -85,6 +86,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E61CCE741C7201B100CAF626 /* CKeyboardToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKeyboardToolBar.h; sourceTree = "<group>"; };
+		E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKeyboardToolBar.m; sourceTree = "<group>"; };
 		E647324C1C5CA0DF008061A5 /* CSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSlidingViewController.h; sourceTree = "<group>"; };
 		E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSlidingViewController.m; sourceTree = "<group>"; };
 		E64732521C5CA422008061A5 /* HGoodsDescriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsDescriptionsViewController.h; sourceTree = "<group>"; };
@@ -527,6 +530,8 @@
 				E66397381C53967800E5F593 /* CAlertView.m */,
 				E647324C1C5CA0DF008061A5 /* CSlidingViewController.h */,
 				E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */,
+				E61CCE741C7201B100CAF626 /* CKeyboardToolBar.h */,
+				E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -773,6 +778,7 @@
 				E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */,
 				E65B0B691C4F84B8002262F1 /* AFURLSessionManager.m in Sources */,
 				E6BA82031C508D6500A5C16F /* PushViewAnimation.m in Sources */,
+				E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */,
 				E65B0BD61C4F84CE002262F1 /* UIImage+GIF.m in Sources */,
 				E65B0BA91C4F84C4002262F1 /* UIView+MJExtension.m in Sources */,
 				E65B0B681C4F84B8002262F1 /* AFURLResponseSerialization.m in Sources */,
