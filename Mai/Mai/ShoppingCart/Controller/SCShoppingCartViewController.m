@@ -14,6 +14,7 @@
 #import "NSObject+Utils.h"
 
 #import "SCShoppingCartTableViewCell.h"
+#import "SCConfirmOrderViewController.h"
 
 #import "MBProgressHUD.h"
 
@@ -144,6 +145,7 @@
     self.payButton.backgroundColor=ThemeRed;
     [self.payButton setTitleColor:ThemeWhite forState:UIControlStateNormal];
     [self.payButton setTitle:@"去结算(0)" forState:UIControlStateNormal];
+    [self.payButton addTarget:self action:@selector(payButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.operateView addSubview:self.payButton];
     
     //合计文字
@@ -178,7 +180,7 @@
     
     for (NSMutableDictionary *dic in _goodsList) {
         if ([[dic objectForKey:@"isselect"] isEqualToString:@"1"]) {
-            [array addObject:[dic objectForKey:@"sid"]];
+            [array addObject:@{@"sid":[dic objectForKey:@"sid"],@"fid":[[dic objectForKey:@"gs"] objectForKey:@"fid"]}];
         }
     }
     
@@ -222,7 +224,8 @@
  *  @param sender 按钮对象
  */
 -(void)payButton:(UIButton *)sender{
-    
+    SCConfirmOrderViewController *vc=[SCConfirmOrderViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 自定义方法
@@ -335,8 +338,8 @@
     
     //解析商品id集合商品id集合
     NSMutableString *sidList=[[NSMutableString alloc] init];
-    for (NSString *sid in array) {
-        [sidList appendFormat:@",%@",sid];
+    for (NSDictionary *dic in array) {
+        [sidList appendFormat:@",%@",[dic objectForKey:@"sid"]];
     }
     
     //构造参数
@@ -353,9 +356,8 @@
                 [self clearShoppingCart];
             }
             else{//设置购物车商品数量
-                for (NSString *sid in array) {
-                    NSString *fid=@"需要接口返回商品分类id";
-//                    [self setShoppingCount:nil sid:sid fid:@"" isAdd:NO];
+                for (NSDictionary *dic in array) {
+                    [self setShoppingCount:nil sid:[dic objectForKey:@"sid"] fid:[dic objectForKey:@"fid"] isAdd:NO];
                 }
             }
             

@@ -45,7 +45,7 @@
     
     if (![fid isEqualToString:@""]) {//不是所有商品类型
         //设置购物车中商品所属类型总数量
-        [self setTypeWithFid:fid isAdd:YES];
+        [self setTypeWithFid:fid isAdd:isAdd];
     }
 }
 
