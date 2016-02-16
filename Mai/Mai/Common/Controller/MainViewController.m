@@ -78,7 +78,7 @@
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
 }
 
 - (void)didReceiveMemoryWarning {

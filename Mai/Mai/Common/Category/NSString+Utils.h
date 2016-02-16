@@ -17,4 +17,11 @@
  */
 -(NSString *)md5;
 
+/**
+ *  验证手机格式
+ *
+ *  @return 是或否
+ */
+-(BOOL)isValidPhoneNumber;
+
 @end

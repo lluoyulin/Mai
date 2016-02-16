@@ -30,4 +30,16 @@
             ];
 }
 
+/**
+ *  验证手机格式
+ *
+ *  @return 是或否
+ */
+-(BOOL)isValidPhoneNumber{
+    NSString * MOBILE = @"^1\\d{10}$";
+    
+    NSPredicate *predicateMO = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+    return [predicateMO evaluateWithObject:self];
+}
+
 @end

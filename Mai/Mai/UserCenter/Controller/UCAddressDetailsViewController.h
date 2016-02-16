@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
-@interface UCAddressDetailsViewController : BaseViewController
+@interface UCAddressDetailsViewController : BaseViewController<UIPickerViewDataSource,UIPickerViewDelegate>
+
+@property(nonatomic,strong) NSDictionary *dic;//地址信息
 
 @end

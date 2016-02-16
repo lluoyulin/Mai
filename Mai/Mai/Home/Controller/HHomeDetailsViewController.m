@@ -607,6 +607,8 @@
     [self.imagePlayerView stopTimer];
     self.imagePlayerView.imagePlayerViewDelegate = nil;
     self.imagePlayerView = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
 }
 
 - (void)didReceiveMemoryWarning {

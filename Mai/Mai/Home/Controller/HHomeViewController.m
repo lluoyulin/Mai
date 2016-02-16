@@ -176,4 +176,8 @@
     [self.delegate selectType:[_typeList[indexPath.row] objectForKey:@"id"]];
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
+}
+
 @end

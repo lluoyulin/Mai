@@ -141,7 +141,7 @@
     //构造参数
     NSString *url=@"address_list";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":@"1",
+                               @"uid":[self getUid],
                                @"isLogin":[self isLogin] ? @"1" : @"0"};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
@@ -171,6 +171,48 @@
         }
         
         [hud hide:YES];
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+/**
+ *  删除地址
+ *
+ *  @param aid 地址id
+ */
+-(void)deleteAddress:(NSString *)aid{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"提交中...";
+    
+    //构造参数
+    NSString *url=@"address_del";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0",
+                               @"id":aid};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            hud.mode=MBProgressHUDModeText;
+            hud.labelText=@"删除成功";
+            [hud hide:YES afterDelay:1.5];
+            
+            //获取数据
+            [self loadData];
+        }
+        else{
+            [hud hide:YES];
+            
+            [CAlertView alertMessage:error];
+        }
         
     } failure:^(NSError *error) {
         
@@ -272,7 +314,8 @@
         [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
-            
+            //删除地址
+            [self deleteAddress:[_addressList[indexPath.row] objectForKey:@"id"]];
             
         }]];
         [self presentViewController:alert animated:YES completion:nil];
@@ -283,6 +326,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UCAddressDetailsViewController *vc=[UCAddressDetailsViewController new];
     vc.title=@"修改地址";
+    vc.dic=_addressList[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

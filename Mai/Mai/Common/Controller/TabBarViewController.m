@@ -184,4 +184,8 @@
     self.countLabel.hidden=count ? NO : YES;
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
+}
+
 @end

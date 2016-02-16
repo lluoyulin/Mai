@@ -455,6 +455,10 @@ static const CGFloat PayViewHeight=50.0;
     }];
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
