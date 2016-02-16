@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E61ADDFE1C72BFF0009D0324 /* UCUserAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */; };
+		E61ADE011C72D813009D0324 /* UCAddressDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */; };
 		E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */; };
 		E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */; };
 		E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732531C5CA422008061A5 /* HGoodsDescriptionsViewController.m */; };
@@ -86,6 +88,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E61ADDFC1C72BFF0009D0324 /* UCUserAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCUserAddressViewController.h; sourceTree = "<group>"; };
+		E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCUserAddressViewController.m; sourceTree = "<group>"; };
+		E61ADDFF1C72D813009D0324 /* UCAddressDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCAddressDetailsViewController.h; sourceTree = "<group>"; };
+		E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCAddressDetailsViewController.m; sourceTree = "<group>"; };
 		E61CCE741C7201B100CAF626 /* CKeyboardToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKeyboardToolBar.h; sourceTree = "<group>"; };
 		E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKeyboardToolBar.m; sourceTree = "<group>"; };
 		E647324C1C5CA0DF008061A5 /* CSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSlidingViewController.h; sourceTree = "<group>"; };
@@ -643,6 +649,10 @@
 			children = (
 				E6BA81F51C508D0100A5C16F /* UCUserCenterViewController.h */,
 				E6BA81F61C508D0100A5C16F /* UCUserCenterViewController.m */,
+				E61ADDFC1C72BFF0009D0324 /* UCUserAddressViewController.h */,
+				E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */,
+				E61ADDFF1C72D813009D0324 /* UCAddressDetailsViewController.h */,
+				E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -784,6 +794,7 @@
 				E65B0B681C4F84B8002262F1 /* AFURLResponseSerialization.m in Sources */,
 				E65B0B651C4F84B8002262F1 /* AFNetworkReachabilityManager.m in Sources */,
 				E65B0BDA1C4F84CE002262F1 /* UIImageView+WebCache.m in Sources */,
+				E61ADDFE1C72BFF0009D0324 /* UCUserAddressViewController.m in Sources */,
 				E6BA81E81C508AC800A5C16F /* BaseViewController.m in Sources */,
 				E6BA81EE1C508C9D00A5C16F /* HHomeViewController.m in Sources */,
 				E65B0BA11C4F84C4002262F1 /* MJRefreshBackStateFooter.m in Sources */,
@@ -803,6 +814,7 @@
 				E65B0B9B1C4F84C4002262F1 /* MJRefreshHeader.m in Sources */,
 				E6BA82141C50C3BB00A5C16F /* HGoodsDetailsViewController.m in Sources */,
 				E65B0BCF1C4F84CE002262F1 /* SDWebImageCompat.m in Sources */,
+				E61ADE011C72D813009D0324 /* UCAddressDetailsViewController.m in Sources */,
 				E65B0BA01C4F84C4002262F1 /* MJRefreshBackNormalFooter.m in Sources */,
 				E65B0BD01C4F84CE002262F1 /* SDWebImageDecoder.m in Sources */,
 				E6F3CE141C523387001A3670 /* HHomeDetailsTableViewCell.m in Sources */,

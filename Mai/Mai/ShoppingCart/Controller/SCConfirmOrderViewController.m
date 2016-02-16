@@ -12,6 +12,7 @@
 #import "CKeyboardToolBar.h"
 
 #import "SCGoodsListViewController.h"
+#import "UCUserAddressViewController.h"
 
 static const CGFloat PayViewHeight=50.0;
 
@@ -389,7 +390,8 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)addressButton:(UIButton *)sender{
-    
+    UCUserAddressViewController *vc=[UCUserAddressViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /**
