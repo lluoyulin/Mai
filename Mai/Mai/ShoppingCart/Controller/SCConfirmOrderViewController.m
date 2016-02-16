@@ -10,7 +10,6 @@
 
 #import "Const.h"
 #import "CKeyboardToolBar.h"
-#import "UILabel+AutoFrame.h"
 
 #import "SCGoodsListViewController.h"
 
@@ -46,8 +45,8 @@ static const CGFloat PayViewHeight=50.0;
 @property(nonatomic,strong) UITextField *remarkText;//备注
 
 @property(nonatomic,strong) UIView *payView;//支付操作视图
-@property(nonatomic,strong) UILabel *countLabel;//商品数量
-@property(nonatomic,strong) UILabel *totalLabel;//订单总价
+@property(nonatomic,strong) UILabel *totalTagLabel;//合计文字
+@property(nonatomic,strong) UILabel *totalLabel;//总价
 @property(nonatomic,strong) UIButton *payButton;//支付按钮
 
 @end
@@ -322,6 +321,8 @@ static const CGFloat PayViewHeight=50.0;
     self.remarkText=[[UITextField alloc] initWithFrame:CGRectMake(self.payTagLabel.left, payLine.bottom, payLine.width, 60)];
     self.remarkText.placeholder=@"给卖家留言...";
     self.remarkText.clearButtonMode=UITextFieldViewModeWhileEditing;
+    self.remarkText.font=[UIFont systemFontOfSize:14.0];
+    self.remarkText.textColor=ThemeGray;
     [self.orderInfoView addSubview:self.remarkText];
     
     //添加键盘工具栏
@@ -342,13 +343,42 @@ static const CGFloat PayViewHeight=50.0;
     self.payView.backgroundColor=ThemeWhite;
     [self.view addSubview:self.payView];
     
-    //商品数量
-    self.countLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, (self.payView.height-16)/2, 0, 16)];
-    self.countLabel.font=[UIFont systemFontOfSize:14.0];
+    //顶部线
+    UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.payView.width, 0.5)];
+    line.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.payView addSubview:line];
     
-    //订单总价
+    //去结算按钮
+    self.payButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.payButton.frame=CGRectMake(self.payView.width-90-15, (self.payView.height-39)/2, 90, 39);
+    self.payButton.layer.masksToBounds=YES;
+    self.payButton.layer.cornerRadius=2;
+    self.payButton.titleLabel.font=[UIFont systemFontOfSize:14.0];
+    self.payButton.backgroundColor=ThemeRed;
+    [self.payButton setTitleColor:ThemeWhite forState:UIControlStateNormal];
+    [self.payButton setTitle:@"去结算(100)" forState:UIControlStateNormal];
+    [self.payButton addTarget:self action:@selector(payButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.payView addSubview:self.payButton];
     
-    //支付按钮
+    //合计文字
+    self.totalTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, (self.payView.height-16)/2, 60, 16)];
+    self.totalTagLabel.font=[UIFont systemFontOfSize:14.0];
+    self.totalTagLabel.textColor=ThemeGray;
+    self.totalTagLabel.text=@"实付款：";
+    [self.payView addSubview:self.totalTagLabel];
+    
+    //总价
+    self.totalLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.totalTagLabel.right,(self.payView.height-24)/2,self.payView.width-self.totalTagLabel.right-10-self.payButton.width-15,24)];
+    self.totalLabel.font=[UIFont systemFontOfSize:22.0];
+    self.totalLabel.textColor=ThemeRed;
+    self.totalLabel.text=@"¥100.00";
+    [self.payView addSubview:self.totalLabel];
+    
+    //修改字体大小
+    NSMutableAttributedString *totalAttributedString=[[NSMutableAttributedString alloc] initWithString:self.totalLabel.text];
+    [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(0, 1)];
+    
+    self.totalLabel.attributedText=totalAttributedString;
 }
 
 #pragma mark 按钮事件
