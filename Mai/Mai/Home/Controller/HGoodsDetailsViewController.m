@@ -137,6 +137,7 @@
     [self.addShoppingCartButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.addShoppingCartButton setTitle:@"加入购物车" forState:UIControlStateNormal];
     [self.addShoppingCartButton addTarget:self action:@selector(addShoppingCartButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.addShoppingCartButton.showsTouchWhenHighlighted=YES;
     [self.operateView addSubview:self.addShoppingCartButton];
     
     //立即购买按钮
@@ -147,6 +148,7 @@
     [self.buyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.buyButton setTitle:@"立即购买" forState:UIControlStateNormal];
     [self.buyButton addTarget:self action:@selector(buyButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.buyButton.showsTouchWhenHighlighted=YES;
     [self.operateView addSubview:self.buyButton];
 }
 

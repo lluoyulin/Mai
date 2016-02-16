@@ -146,6 +146,7 @@
     [self.payButton setTitleColor:ThemeWhite forState:UIControlStateNormal];
     [self.payButton setTitle:@"去结算(0)" forState:UIControlStateNormal];
     [self.payButton addTarget:self action:@selector(payButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.payButton.showsTouchWhenHighlighted=YES;
     [self.operateView addSubview:self.payButton];
     
     //合计文字
