@@ -376,6 +376,7 @@ static const CGFloat PayViewHeight=50.0;
     [self.payButton setTitle:@"去结算(0)" forState:UIControlStateNormal];
     [self.payButton addTarget:self action:@selector(payButton:) forControlEvents:UIControlEventTouchUpInside];
     self.payButton.showsTouchWhenHighlighted=YES;
+    self.payButton.enabled=NO;
     [self.payView addSubview:self.payButton];
     
     //合计文字
@@ -430,6 +431,9 @@ static const CGFloat PayViewHeight=50.0;
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             
+            //设置支付可用
+            self.payButton.enabled=YES;
+            
             //更新收货地址
             [self updateAddress:[dic objectForKey:@"address"]];
             
@@ -475,6 +479,7 @@ static const CGFloat PayViewHeight=50.0;
     
     //收货地址
     self.consigneeAddressLabel.text=[NSString stringWithFormat:@"收货地址：%@",[address objectForKey:@"address"]];
+    self.consigneeAddressLabel.accessibilityValue=[address objectForKey:@"id"];//地址id
 }
 
 /**
@@ -500,6 +505,83 @@ static const CGFloat PayViewHeight=50.0;
     
     //去结算按钮
     [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%@)",[self.dic objectForKey:@"count"]] forState:UIControlStateNormal];
+}
+
+/**
+ *  提交订单
+ */
+-(void)submitOrder{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"提交中...";
+    
+    //封装商品id集合
+    NSMutableString *sidList=[[NSMutableString alloc] init];
+    for (NSDictionary *dic in [self.dic objectForKey:@"list"]) {
+        [sidList appendFormat:@",%@",[dic objectForKey:@"sid"]];
+    }
+    
+    //封装商品数量集合
+    NSMutableString *numList=[[NSMutableString alloc] init];
+    for (NSDictionary *dic in [self.dic objectForKey:@"list"]) {
+        [numList appendFormat:@",%@",[dic objectForKey:@"num"]];
+    }
+    
+    
+    //构造参数
+    NSString *url=@"order_save";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0",
+                               @"address_id":self.consigneeAddressLabel.accessibilityValue,
+                               @"payment":self.onlinePayButton.isSelected ? @"1" : @"2",
+                               @"remark":[self.remarkText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]],
+                               @"zongjia":[self.sumLabel.text substringFromIndex:1],
+                               @"fuwufei":[self.tipLabel.text substringFromIndex:1],
+                               @"jianmian":[self.nonTipLabel.text substringFromIndex:2],
+                               @"totalprice":[self.totalLabel.text substringFromIndex:1],
+                               @"goods":[sidList substringFromIndex:1],
+                               @"num":[numList substringFromIndex:1]};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
+            NSDictionary *dicOrder=@{@"order":[dic objectForKey:@"order"],
+                                     @"list":[self.dic objectForKey:@"list"],
+                                     @"consignee":self.consigneeLabel.text,
+                                     @"consigneeAddressLabel":self.consigneeAddressLabel.text};//封装订单信息
+            //清除购物车缓存
+            [self clearCacheShoppingCart];
+            
+            UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
+            vc.dic=dicOrder;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+        [hud hide:YES];
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+/**
+ *  清除购物车缓存
+ */
+-(void)clearCacheShoppingCart{
+    for (NSDictionary *dic in [self.dic objectForKey:@"list"]) {
+        //清除购物车中一个商品
+        [self clearShoppingCartWithId:[dic objectForKey:@"sid"] fid:[[dic objectForKey:@"gs"] objectForKey:@"fid"] count:[dic objectForKey:@"num"]];
+    }
 }
 
 #pragma mark 按钮事件
@@ -543,9 +625,8 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
-    UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
-    vc.dic=self.dic;
-    [self.navigationController pushViewController:vc animated:YES];
+    //提交订单
+    [self submitOrder];
 }
 
 #pragma mark 键盘弹出和隐藏通知方法

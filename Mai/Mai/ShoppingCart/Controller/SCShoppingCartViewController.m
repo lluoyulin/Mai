@@ -361,7 +361,7 @@
     hud.animationType=MBProgressHUDAnimationZoom;
     hud.labelText=@"提交中...";
     
-    //解析商品id集合商品id集合
+    //封装商品id集合
     NSMutableString *sidList=[[NSMutableString alloc] init];
     for (NSDictionary *dic in array) {
         [sidList appendFormat:@",%@",[dic objectForKey:@"sid"]];

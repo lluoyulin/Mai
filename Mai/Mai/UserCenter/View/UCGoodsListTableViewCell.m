@@ -67,31 +67,33 @@
     logoImage.layer.borderColor=[UIColorFromRGB(0xdddddd) CGColor];
     logoImage.layer.borderWidth=0.5;
     logoImage.layer.cornerRadius=3;
-    [logoImage sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    [logoImage sd_setImageWithURL:[NSURL URLWithString:[[self.dic objectForKey:@"gs"] objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
     
     //商品名称
     nameLabel.frame=CGRectMake(logoImage.right+10, 20, self.width-logoImage.right-10-15, 16);
     nameLabel.font=[UIFont systemFontOfSize:14.0];
     nameLabel.textColor=ThemeBlack;
-    nameLabel.text=@"大法师的法师按时爱施德";
+    nameLabel.text=[[self.dic objectForKey:@"gs"] objectForKey:@"title"];
     
     //商品价格
-    priceLabel.frame=CGRectMake(nameLabel.left, nameLabel.bottom+8, 0, 14);
-    priceLabel.font=[UIFont systemFontOfSize:12.0];
+    priceLabel.frame=CGRectMake(nameLabel.left, nameLabel.bottom+8, 0, 15);
+    priceLabel.font=[UIFont systemFontOfSize:13.0];
     priceLabel.textColor=ThemeGray;
-    [priceLabel setTextWidth:[NSString stringWithFormat:@"¥%@",@"12.00"] size:CGSizeMake(100, 14)];
+    [priceLabel setTextWidth:[NSString stringWithFormat:@"¥%.2f",[[[self.dic objectForKey:@"gs"] objectForKey:@"price2"] floatValue]] size:CGSizeMake(100, 15)];
     
     //商品数量
-    numLabel.frame=CGRectMake(priceLabel.right+10, priceLabel.top-2, self.width-priceLabel.right-10-15, 18);
-    numLabel.font=[UIFont systemFontOfSize:16.0];
+    numLabel.frame=CGRectMake(priceLabel.right+10, priceLabel.top, self.width-priceLabel.right-10-15, 15);
+    numLabel.font=[UIFont systemFontOfSize:13.0];
     numLabel.textColor=ThemeRed;
-    numLabel.text=[NSString stringWithFormat:@"X %@",@"2"];
     
-    //修改字体大小
-    NSMutableAttributedString *numlAttributedString=[[NSMutableAttributedString alloc] initWithString:numLabel.text];
-    [numlAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(2, 1)];
+    NSString *num=[self.dic objectForKey:@"num"];
+    numLabel.text=[NSString stringWithFormat:@"X %@",num];
     
-    numLabel.attributedText=numlAttributedString;
+//    //修改字体大小
+//    NSMutableAttributedString *numlAttributedString=[[NSMutableAttributedString alloc] initWithString:numLabel.text];
+//    [numlAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(2, num.length)];
+//    
+//    numLabel.attributedText=numlAttributedString;
     
     //分割线
     line.frame=CGRectMake(15, self.height-0.5, self.width-15-15, 0.5);

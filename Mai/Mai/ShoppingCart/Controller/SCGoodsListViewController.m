@@ -87,7 +87,7 @@
     
     //商品数量
     UILabel *countLabel=(UILabel *)[cell viewWithTag:2];
-    countLabel.text=[UserData objectForKey:[NSString stringWithFormat:@"sid_%@",[_goodsList[indexPath.row] objectForKey:@"sid"]]];
+    countLabel.text=[_goodsList[indexPath.row] objectForKey:@"num"];
     
     //商品价格
     UILabel *priceLabel=(UILabel *)[logoImage viewWithTag:3];

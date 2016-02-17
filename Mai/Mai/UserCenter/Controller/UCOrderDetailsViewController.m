@@ -75,7 +75,7 @@ static const CGFloat PayViewHeight=50.0;
  */
 -(void)initScrollView{
     //订单信息视图
-    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-10-PayViewHeight)];
+    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-([[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1 ? 10+PayViewHeight : 0))];
     self.scrollView.backgroundColor=UIColorFromRGB(0xf5f5f5);
     [self.view addSubview:self.scrollView];
     
@@ -120,7 +120,7 @@ static const CGFloat PayViewHeight=50.0;
     self.orderNOLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, (self.orderNOView.height-16)/2, self.orderNOView.width-15-15, 16)];
     self.orderNOLabel.font=[UIFont systemFontOfSize:14.0];
     self.orderNOLabel.textColor=ThemeGray;
-    self.orderNOLabel.text=[NSString stringWithFormat:@"订单号：%@",@"1231312312312312"];
+    self.orderNOLabel.text=[NSString stringWithFormat:@"订单号：%@",@""];
     [self.orderNOView addSubview:self.orderNOLabel];
 }
 
@@ -200,7 +200,7 @@ static const CGFloat PayViewHeight=50.0;
  */
 -(void)initOrderInfoView{
     //订单信息视图
-    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsView.bottom+10, self.goodsView.width, 293)];
+    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsView.bottom+10, self.goodsView.width, 290)];
     self.orderInfoView.backgroundColor=ThemeWhite;
     [self.scrollView addSubview:self.orderInfoView];
     
@@ -225,7 +225,6 @@ static const CGFloat PayViewHeight=50.0;
     self.payWayLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.orderInfoView.width-100-15, self.payWayTagLabel.top, 100, 16)];
     self.payWayLabel.font=self.payWayTagLabel.font;
     self.payWayLabel.textColor=self.payWayTagLabel.textColor;
-    self.payWayLabel.text=@"在线支付";
     self.payWayLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.payWayLabel];
     
@@ -245,7 +244,6 @@ static const CGFloat PayViewHeight=50.0;
     self.sumLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.orderInfoView.width-100-15, self.sumTagLabel.top, 100, self.sumTagLabel.height)];
     self.sumLabel.font=self.sumTagLabel.font;
     self.sumLabel.textColor=self.sumTagLabel.textColor;
-    self.sumLabel.text=@"¥0.00";
     self.sumLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.sumLabel];
     
@@ -265,7 +263,6 @@ static const CGFloat PayViewHeight=50.0;
     self.tipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.tipTagLabel.top, 100, self.tipTagLabel.height)];
     self.tipLabel.font=self.tipTagLabel.font;
     self.tipLabel.textColor=self.tipTagLabel.textColor;
-    self.tipLabel.text=@"¥0.00";
     self.tipLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.tipLabel];
     
@@ -285,7 +282,6 @@ static const CGFloat PayViewHeight=50.0;
     self.nonTipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.nonTipTagLabel.top, 100, self.nonTipTagLabel.height)];
     self.nonTipLabel.font=self.nonTipTagLabel.font;
     self.nonTipLabel.textColor=self.nonTipTagLabel.textColor;
-    self.nonTipLabel.text=@"-¥0.00";
     self.nonTipLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.nonTipLabel];
     
@@ -296,18 +292,18 @@ static const CGFloat PayViewHeight=50.0;
     
     //实付款
     self.payLabel=[UILabel new];
-    self.payLabel.font=self.nonTipTagLabel.font;
+    self.payLabel.font=[UIFont systemFontOfSize:14.0];
     self.payLabel.textColor=ThemeRed;
-    [self.payLabel setTextWidth:[NSString stringWithFormat:@"实付款：¥%@",@"0.00"] size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
-    self.payLabel.frame=CGRectMake(self.orderInfoView.width-self.payLabel.width-15, nonTipLine.bottom+15, self.payLabel.width, self.nonTipTagLabel.height);
+    [self.payLabel setTextWidth:@"实付款：" size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
+    self.payLabel.frame=CGRectMake(self.orderInfoView.width-self.payLabel.width-15, nonTipLine.bottom+15, self.payLabel.width, 16);
     [self.orderInfoView addSubview:self.payLabel];
     
     //订单时间
     self.orderDateLabel=[UILabel new];
     self.orderDateLabel.font=[UIFont systemFontOfSize:11.0];
     self.orderDateLabel.textColor=ThemeGray;
-    [self.orderDateLabel setTextWidth:[NSString stringWithFormat:@"下单时间：2014-12-12 12:12:12"] size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
-    self.orderDateLabel.frame=CGRectMake(self.orderInfoView.width-self.orderDateLabel.width-15, self.payLabel.bottom+15, self.orderDateLabel.width, 13);
+    [self.orderDateLabel setTextWidth:@"下单时间：" size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
+    self.orderDateLabel.frame=CGRectMake(self.orderInfoView.width-self.orderDateLabel.width-15, self.payLabel.bottom+5, self.orderDateLabel.width, 13);
     [self.orderInfoView addSubview:self.orderDateLabel];
     
     //实付款分割线
@@ -320,14 +316,7 @@ static const CGFloat PayViewHeight=50.0;
     self.remarkLabel.font=[UIFont systemFontOfSize:14.0];
     self.remarkLabel.textColor=ThemeGray;
     self.remarkLabel.numberOfLines=2;
-    self.remarkLabel.text=[NSString stringWithFormat:@"我的留言：萨达是打发斯蒂芬撒旦法阿斯蒂芬阿斯蒂芬阿斯蒂芬啊暗室逢灯"];
     [self.orderInfoView addSubview:self.remarkLabel];
-    
-    //修改备注字体颜色
-    NSMutableAttributedString *remarkAttributedString=[[NSMutableAttributedString alloc] initWithString:self.remarkLabel.text];
-    [remarkAttributedString addAttribute:NSForegroundColorAttributeName value:ThemeBlack range:NSMakeRange(0, 5)];
-    
-    self.remarkLabel.attributedText=remarkAttributedString;
 }
 
 /**
@@ -344,13 +333,14 @@ static const CGFloat PayViewHeight=50.0;
     line.backgroundColor=UIColorFromRGB(0xdddddd);
     [self.payView addSubview:line];
     
-    //取消支付
+    //取消支付按钮
     self.cancelButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.cancelButton.frame=CGRectMake(0, 0, self.payView.width/2, self.payView.height);
     self.cancelButton.backgroundColor=ThemeYellow;
     self.cancelButton.titleLabel.font=[UIFont systemFontOfSize:14.0];
     [self.cancelButton setTitleColor:ThemeBlack forState:UIControlStateNormal];
     [self.cancelButton setTitle:@"取消订单" forState:UIControlStateNormal];
+    [self.cancelButton addTarget:self action:@selector(cancelButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.payView addSubview:self.cancelButton];
     
     //去结算按钮
@@ -370,53 +360,81 @@ static const CGFloat PayViewHeight=50.0;
  *  初始化数据
  */
 -(void)initData{
-    //更新总价
-    [self updateTotal:[self.dic objectForKey:@"total"]];
+    //订单号
+    self.orderNOLabel.text=[NSString stringWithFormat:@"订单号：%@",[[self.dic objectForKey:@"order"] objectForKey:@"orderno"]];
+    
+    //收货人
+    self.consigneeLabel.text=[self.dic objectForKey:@"consignee"];
+    
+    //收货地址
+    self.consigneeAddressLabel.text=[self.dic objectForKey:@"consigneeAddressLabel"];
+    
+    //支付方式
+    self.payWayLabel.text=[[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1 ? @"在线支付" : @"货到付款";
+    
+    //商品总价
+    self.sumLabel.text=[NSString stringWithFormat:@"¥%.2f",[[[self.dic objectForKey:@"order"] objectForKey:@"zongjia"] floatValue]];
+    
+    //服务费
+    self.tipLabel.text=[NSString stringWithFormat:@"¥%.2f",[[[self.dic objectForKey:@"order"] objectForKey:@"fuwufei"] floatValue]];
+    
+    //减免服务费
+    self.nonTipLabel.text=[NSString stringWithFormat:@"-¥%.2f",[[[self.dic objectForKey:@"order"] objectForKey:@"jianmian"] floatValue]];
+    
+    //实付款
+    [self.payLabel setTextWidth:[NSString stringWithFormat:@"实付款：¥%@",[NSString stringWithFormat:@"%.2f",[[[self.dic objectForKey:@"order"] objectForKey:@"totalprice"] floatValue]]] size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
+    self.payLabel.frame=CGRectMake(self.orderInfoView.width-self.payLabel.width-15, self.payLabel.top, self.payLabel.width, self.payLabel.height);
+    
+    //订单时间
+    [self.orderDateLabel setTextWidth:[NSString stringWithFormat:@"下单时间：%@",[[self.dic objectForKey:@"order"] objectForKey:@"date"]] size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
+    self.orderDateLabel.frame=CGRectMake(self.orderInfoView.width-self.orderDateLabel.width-15, self.orderDateLabel.top ,self.orderDateLabel.width, 13);
+    
+    //备注
+    self.remarkLabel.text=[NSString stringWithFormat:@"我的留言：%@",[[self.dic objectForKey:@"order"] objectForKey:@"remark"]];
+    
+    //修改备注字体颜色
+    NSMutableAttributedString *remarkAttributedString=[[NSMutableAttributedString alloc] initWithString:self.remarkLabel.text];
+    [remarkAttributedString addAttribute:NSForegroundColorAttributeName value:ThemeBlack range:NSMakeRange(0, 5)];
+    
+    self.remarkLabel.attributedText=remarkAttributedString;
+    
+    //是否显示支付操作视图
+    if ([[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1) {//在线支付
+        self.payView.hidden=NO;
+    }
+    else{//货到付款
+        self.payView.hidden=YES;
+    }
 }
 
 /**
- *  获取数据
+ *  取消订单
  */
--(void)loadData{
+-(void)cancelOrder{
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.animationType=MBProgressHUDAnimationZoom;
-    hud.labelText=@"获取中...";
+    hud.labelText=@"提交中...";
     
     //构造参数
-    NSString *url=@"order_show";
+    NSString *url=@"order_cancel";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":[self getUid],
+                               @"orderid":[[self.dic objectForKey:@"order"] objectForKey:@"orderno"],
                                @"isLogin":[self isLogin] ? @"1" : @"0"};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
-            NSDictionary *dic=(NSDictionary *)result;
+            hud.mode=MBProgressHUDModeText;
+            hud.labelText=@"提交成功";
             
-            //更新收货地址
-            [self updateAddress:[dic objectForKey:@"address"]];
-            
-            //更新服务费
-            self.tipLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"fuwu"] floatValue]];
-            self.nonTipLabel.text=[NSString stringWithFormat:@"-¥%.2f",[[dic objectForKey:@"fuwu"] floatValue]];
-            
-            //更新总价
-            CGFloat total=[[self.dic objectForKey:@"total"] floatValue];//总价
-            
-            if ([[dic objectForKey:@"free"] integerValue]==0) {//不免服务费
-                if (total<[[dic objectForKey:@"man"] floatValue]) {//商品总价小于了每单免服务费金额
-                    self.nonTipLabel.text=@"-¥0.00";
-                    total=total+[[dic objectForKey:@"fuwu"] floatValue];
-                }
-            }
-            
-            [self updateTotal:[NSString stringWithFormat:@"%.2f",total]];
+            //延迟1.5s执行方法
+            [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
         }
         else{
+            [hud hide:YES];
+            
             [CAlertView alertMessage:error];
         }
-        
-        [hud hide:YES];
         
     } failure:^(NSError *error) {
         
@@ -428,33 +446,23 @@ static const CGFloat PayViewHeight=50.0;
 }
 
 /**
- *  更新收货地址
- *
- *  @param address 收货地址
+ *  返回上层
  */
--(void)updateAddress:(NSDictionary *)address{
-    //收货人
-    self.consigneeLabel.text=[NSString stringWithFormat:@"收货人：%@(%@) | %@",[address objectForKey:@"name"],[[address objectForKey:@"sex"] integerValue]==1 ? @"男" : @"女",[address objectForKey:@"mobile"]];
-    
-    //收货地址
-    self.consigneeAddressLabel.text=[NSString stringWithFormat:@"收货地址：%@",[address objectForKey:@"address"]];
+-(void)popViewController{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark 按钮事件取
 /**
- *  更新总价
+ *  消支付按钮
  *
- *  @param total 总价
+ *  @param sender
  */
--(void)updateTotal:(NSString *)total{
-    //商品总价
-    self.sumLabel.text=[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"total"]];
-    
-    //实付款
-    [self.payLabel setTextWidth:[NSString stringWithFormat:@"实付款：¥%@",total] size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
-    self.payLabel.frame=CGRectMake(self.orderInfoView.width-self.payLabel.width-15, self.payLabel.top, self.payLabel.width, self.payLabel.height);
+-(void)cancelButton:(UIButton *)sender{
+    //取消订单
+    [self cancelOrder];
 }
 
-#pragma mark 按钮事件
 /**
  *  支付按钮
  *
