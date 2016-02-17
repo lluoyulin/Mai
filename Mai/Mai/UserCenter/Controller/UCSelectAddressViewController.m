@@ -1,29 +1,28 @@
 //
-//  UCUserAddressViewController.m
+//  UCSelectAddressViewController.m
 //  Mai
 //
-//  Created by freedom on 16/2/16.
+//  Created by freedom on 16/2/17.
 //  Copyright © 2016年 freedom_luo. All rights reserved.
 //
 
-#import "UCUserAddressViewController.h"
+#import "UCSelectAddressViewController.h"
 
 #import "Const.h"
 #import "NSObject+HttpTask.h"
-#import "NSObject+DataConvert.h"
-#import "NSObject+Utils.h"
 #import "CAlertView.h"
+#import "NSObject+Utils.h"
 
+#import "UCUserAddressViewController.h"
 #import "UCAddressDetailsViewController.h"
 
-#import "MJRefresh.h"
 #import "MBProgressHUD.h"
 
-@interface UCUserAddressViewController (){
+@interface UCSelectAddressViewController (){
     NSMutableArray *_addressList;
 }
 
-@property(nonatomic,strong) UIButton *navigationAddButton;//添加地址按钮
+@property(nonatomic,strong) UIButton *navigationManagerButton;//管理地址按钮
 
 @property(nonatomic,strong) UITableView *tableView;
 
@@ -34,12 +33,12 @@
 
 @end
 
-@implementation UCUserAddressViewController
+@implementation UCSelectAddressViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title=@"管理收货地址";
+    self.title=@"选择收货地址";
     
     self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
     
@@ -118,14 +117,14 @@
  */
 -(void)initNavigationBar{
     //导航栏删除按钮
-    self.navigationAddButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    self.navigationAddButton.frame=CGRectMake(0, 0, 44, 44);
-    [self.navigationAddButton setImageEdgeInsets:UIEdgeInsetsMake(0, 26, 0, 0)];
-    [self.navigationAddButton setImage:[UIImage imageNamed:@"navigation_add"] forState:UIControlStateNormal];
-    [self.navigationAddButton addTarget:self action:@selector(navigationAddButton:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationAddButton.hidden=YES;
+    self.navigationManagerButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.navigationManagerButton.frame=CGRectMake(0, 0, 44, 44);
+    [self.navigationManagerButton setTitleColor:ThemeBlack forState:UIControlStateNormal];
+    [self.navigationManagerButton setTitle:@"管理" forState:UIControlStateNormal];
+    [self.navigationManagerButton addTarget:self action:@selector(navigationManagerButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationManagerButton.hidden=YES;
     
-    UIBarButtonItem *rightBarButton=[[UIBarButtonItem alloc] initWithCustomView:self.navigationAddButton];
+    UIBarButtonItem *rightBarButton=[[UIBarButtonItem alloc] initWithCustomView:self.navigationManagerButton];
     self.navigationItem.rightBarButtonItem=rightBarButton;
 }
 
@@ -156,14 +155,14 @@
             if (_addressList.count>0) {
                 self.tableView.hidden=NO;
                 self.addAddressView.hidden=YES;
-                self.navigationAddButton.hidden=NO;
+                self.navigationManagerButton.hidden=NO;
                 
                 [self.tableView reloadData];//刷新tableView
             }
             else{
                 self.tableView.hidden=YES;
                 self.addAddressView.hidden=NO;
-                self.navigationAddButton.hidden=YES;
+                self.navigationManagerButton.hidden=YES;
             }
         }
         else{
@@ -171,48 +170,6 @@
         }
         
         [hud hide:YES];
-        
-    } failure:^(NSError *error) {
-        
-        [hud hide:YES];
-        
-        [CAlertView alertMessage:NetErrorMessage];
-        
-    }];
-}
-
-/**
- *  删除地址
- *
- *  @param aid 地址id
- */
--(void)deleteAddress:(NSString *)aid{
-    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.animationType=MBProgressHUDAnimationZoom;
-    hud.labelText=@"提交中...";
-    
-    //构造参数
-    NSString *url=@"address_del";
-    NSDictionary *parameters=@{@"token":Token,
-                               @"uid":[self getUid],
-                               @"isLogin":[self isLogin] ? @"1" : @"0",
-                               @"id":aid};
-    
-    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
-        
-        if (isSuccess) {
-            hud.mode=MBProgressHUDModeText;
-            hud.labelText=@"删除成功";
-            [hud hide:YES afterDelay:1.5];
-            
-            //获取数据
-            [self loadData];
-        }
-        else{
-            [hud hide:YES];
-            
-            [CAlertView alertMessage:error];
-        }
         
     } failure:^(NSError *error) {
         
@@ -236,13 +193,12 @@
 }
 
 /**
- *  添加地址按钮
+ *  管理地址按钮
  *
  *  @param sender
  */
--(void)navigationAddButton:(UIButton *)sender{
-    UCAddressDetailsViewController *vc=[UCAddressDetailsViewController new];
-    vc.title=@"添加地址";
+-(void)navigationManagerButton:(UIButton *)sender{
+    UCUserAddressViewController *vc=[UCUserAddressViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -295,39 +251,14 @@
     return 50;
 }
 
-#pragma mark 表格编辑
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    return YES;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return @"删除";
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
-}
-
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle==UITableViewCellEditingStyleDelete) {//删除
-        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"删除选中地址" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            
-            //删除地址
-            [self deleteAddress:[_addressList[indexPath.row] objectForKey:@"id"]];
-            
-        }]];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-}
-
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    UCAddressDetailsViewController *vc=[UCAddressDetailsViewController new];
-    vc.title=@"修改地址";
-    vc.dic=_addressList[indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSDictionary *address=_addressList[indexPath.row];
+    
+    //发送选择地址通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"select_address" object:nil userInfo:address];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

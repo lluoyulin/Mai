@@ -12,7 +12,7 @@
 #import "CKeyboardToolBar.h"
 
 #import "SCGoodsListViewController.h"
-#import "UCUserAddressViewController.h"
+#import "UCSelectAddressViewController.h"
 
 static const CGFloat PayViewHeight=50.0;
 
@@ -61,9 +61,14 @@ static const CGFloat PayViewHeight=50.0;
     
     self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];//注册键盘弹出通知
+    //注册键盘弹出通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];//注册键盘消失通知
+    //注册键盘消失通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    //注册选择地址通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectAddress:) name:@"select_address" object:nil];
     
     //初始化订单信息视图
     [self initScrollView];
@@ -127,14 +132,14 @@ static const CGFloat PayViewHeight=50.0;
     self.consigneeLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.addressFlagImage.right+10, (self.addressButton.height-16-8-15)/2, self.addressButton.width-self.addressFlagImage.right-10-10-self.selectAddressImage.width-15, 16)];
     self.consigneeLabel.font=[UIFont systemFontOfSize:14.0];
     self.consigneeLabel.textColor=ThemeBlack;
-    self.consigneeLabel.text=@"收货人：罗玉林(男) | 18608515145";
+    self.consigneeLabel.text=@"收货人：无";
     [self.addressButton addSubview:self.consigneeLabel];
     
     //收货地址
     self.consigneeAddressLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.consigneeLabel.left, self.consigneeLabel.bottom+8, self.consigneeLabel.width, 15)];
     self.consigneeAddressLabel.font=[UIFont systemFontOfSize:13.0];
     self.consigneeAddressLabel.textColor=ThemeGray;
-    self.consigneeAddressLabel.text=@"收货地址：贵大10号楼103室";
+    self.consigneeAddressLabel.text=@"收货地址：无";
     [self.addressButton addSubview:self.consigneeAddressLabel];
 }
 
@@ -390,7 +395,7 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)addressButton:(UIButton *)sender{
-    UCUserAddressViewController *vc=[UCUserAddressViewController new];
+    UCSelectAddressViewController *vc=[UCSelectAddressViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -453,6 +458,21 @@ static const CGFloat PayViewHeight=50.0;
     [UIView animateWithDuration:0.4 animations:^{
         self.scrollView.transform=CGAffineTransformIdentity;
     }];
+}
+
+/**
+ *  选择地址回调
+ *
+ *  @param notification 通知信息
+ */
+-(void)selectAddress:(NSNotification *)notification{
+    NSDictionary *dic=notification.userInfo;
+    
+    //收货人
+    self.consigneeLabel.text=[NSString stringWithFormat:@"收货人：%@(%@) | %@",[dic objectForKey:@"name"],[[dic objectForKey:@"sex"] integerValue]==1 ? @"男" : @"女",[dic objectForKey:@"mobile"]];
+    
+    //收货地址
+    self.consigneeAddressLabel.text=[NSString stringWithFormat:@"收货地址：%@",[dic objectForKey:@"address"]];
 }
 
 -(void)dealloc{
