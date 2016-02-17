@@ -62,6 +62,9 @@
 		E65B0BDB1C4F84CE002262F1 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0BCB1C4F84CE002262F1 /* UIView+WebCacheOperation.m */; };
 		E65B0BDF1C4F8584002262F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E65B0BDE1C4F8584002262F1 /* MBProgressHUD.m */; };
 		E65F9BE21C73F7FA0047A8E5 /* UCSelectAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E65F9BE11C73F7FA0047A8E5 /* UCSelectAddressViewController.m */; };
+		E65F9BE51C7417750047A8E5 /* UCOrderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E65F9BE41C7417750047A8E5 /* UCOrderDetailsViewController.m */; };
+		E65F9BE81C74192C0047A8E5 /* UCGoodsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E65F9BE71C74192C0047A8E5 /* UCGoodsListViewController.m */; };
+		E65F9BEB1C7419490047A8E5 /* UCGoodsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E65F9BEA1C7419490047A8E5 /* UCGoodsListTableViewCell.m */; };
 		E66397351C53926100E5F593 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E66397341C53926100E5F593 /* NSString+Utils.m */; };
 		E663973A1C53967800E5F593 /* CAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E66397381C53967800E5F593 /* CAlertView.m */; };
 		E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81D81C5083DF00A5C16F /* MainViewController.m */; };
@@ -200,6 +203,12 @@
 		E65B0BDE1C4F8584002262F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E65F9BE01C73F7FA0047A8E5 /* UCSelectAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCSelectAddressViewController.h; sourceTree = "<group>"; };
 		E65F9BE11C73F7FA0047A8E5 /* UCSelectAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCSelectAddressViewController.m; sourceTree = "<group>"; };
+		E65F9BE31C7417750047A8E5 /* UCOrderDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCOrderDetailsViewController.h; sourceTree = "<group>"; };
+		E65F9BE41C7417750047A8E5 /* UCOrderDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCOrderDetailsViewController.m; sourceTree = "<group>"; };
+		E65F9BE61C74192C0047A8E5 /* UCGoodsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCGoodsListViewController.h; sourceTree = "<group>"; };
+		E65F9BE71C74192C0047A8E5 /* UCGoodsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCGoodsListViewController.m; sourceTree = "<group>"; };
+		E65F9BE91C7419490047A8E5 /* UCGoodsListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCGoodsListTableViewCell.h; sourceTree = "<group>"; };
+		E65F9BEA1C7419490047A8E5 /* UCGoodsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCGoodsListTableViewCell.m; sourceTree = "<group>"; };
 		E66397331C53926100E5F593 /* NSString+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utils.h"; sourceTree = "<group>"; };
 		E66397341C53926100E5F593 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		E66397371C53967800E5F593 /* CAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAlertView.h; sourceTree = "<group>"; };
@@ -658,6 +667,10 @@
 				E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */,
 				E61ADDFF1C72D813009D0324 /* UCAddressDetailsViewController.h */,
 				E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */,
+				E65F9BE31C7417750047A8E5 /* UCOrderDetailsViewController.h */,
+				E65F9BE41C7417750047A8E5 /* UCOrderDetailsViewController.m */,
+				E65F9BE61C74192C0047A8E5 /* UCGoodsListViewController.h */,
+				E65F9BE71C74192C0047A8E5 /* UCGoodsListViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -665,6 +678,8 @@
 		E6BA81E51C508A8900A5C16F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E65F9BE91C7419490047A8E5 /* UCGoodsListTableViewCell.h */,
+				E65F9BEA1C7419490047A8E5 /* UCGoodsListTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -781,16 +796,19 @@
 				E65B0BA21C4F84C4002262F1 /* MJRefreshGifHeader.m in Sources */,
 				E65B0B9F1C4F84C4002262F1 /* MJRefreshBackGifFooter.m in Sources */,
 				E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */,
+				E65F9BE51C7417750047A8E5 /* UCOrderDetailsViewController.m in Sources */,
 				E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */,
 				E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */,
 				E6BA81F41C508CF200A5C16F /* SCShoppingCartViewController.m in Sources */,
 				E65B0BA41C4F84C4002262F1 /* MJRefreshStateHeader.m in Sources */,
 				E65B0B521C4F8005002262F1 /* UIView+Frame.m in Sources */,
 				E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */,
+				E65F9BE81C74192C0047A8E5 /* UCGoodsListViewController.m in Sources */,
 				E65B0B9D1C4F84C4002262F1 /* MJRefreshAutoNormalFooter.m in Sources */,
 				E65B0B991C4F84C4002262F1 /* MJRefreshComponent.m in Sources */,
 				E6F455901C574A6400B69D29 /* ImagePlayerView.m in Sources */,
 				E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */,
+				E65F9BEB1C7419490047A8E5 /* UCGoodsListTableViewCell.m in Sources */,
 				E65B0B691C4F84B8002262F1 /* AFURLSessionManager.m in Sources */,
 				E65F9BE21C73F7FA0047A8E5 /* UCSelectAddressViewController.m in Sources */,
 				E6BA82031C508D6500A5C16F /* PushViewAnimation.m in Sources */,
@@ -946,7 +964,7 @@
 				INFOPLIST_FILE = Mai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.freedom.Mai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chulaimai.Mai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -959,7 +977,7 @@
 				INFOPLIST_FILE = Mai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.freedom.Mai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chulaimai.Mai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

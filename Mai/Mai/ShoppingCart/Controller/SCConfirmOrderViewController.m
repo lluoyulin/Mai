@@ -16,6 +16,7 @@
 
 #import "SCGoodsListViewController.h"
 #import "UCSelectAddressViewController.h"
+#import "UCOrderDetailsViewController.h"
 
 #import "MBProgressHUD.h"
 
@@ -430,7 +431,7 @@ static const CGFloat PayViewHeight=50.0;
             NSDictionary *dic=(NSDictionary *)result;
             
             //更新收货地址
-            [self updateAddress:[dic objectForKey:@"address"][0]];
+            [self updateAddress:[dic objectForKey:@"address"]];
             
             //更新服务费
             self.tipLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"fuwu"] floatValue]];
@@ -542,6 +543,9 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
+    UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
+    vc.dic=self.dic;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 键盘弹出和隐藏通知方法
