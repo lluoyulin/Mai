@@ -227,7 +227,21 @@
  *  @param sender 按钮对象
  */
 -(void)payButton:(UIButton *)sender{
+    //通过谓词筛选数据
+    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"isselect=='1'"];
+    NSArray *selectArray=[_goodsList filteredArrayUsingPredicate:predicate];//获取选中商品数据
+    
+    NSDictionary *dic=@{@"total":[self.totalLabel.text substringFromIndex:1],
+                        @"list":selectArray,
+                        @"count":[NSString stringWithFormat:@"%lu",(unsigned long)selectArray.count]};//封装购买商品信息
+    
+    if (selectArray.count==0) {
+        [CAlertView alertMessage:@"请至少选择一个商品"];
+        return;
+    }
+    
     SCConfirmOrderViewController *vc=[SCConfirmOrderViewController new];
+    vc.dic=dic;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -298,17 +312,25 @@
  *  计算总价
  */
 -(void)calculateTotal{
+    //通过谓词筛选数据
+    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"isselect=='1'"];
+    NSArray *selectArray=[_goodsList filteredArrayUsingPredicate:predicate];//获取选中商品数据
+    
     float total=0;//总价
     NSInteger count=0;//选中商品数量
-    for (NSMutableDictionary *dic in _goodsList) {
-        if ([[dic objectForKey:@"isselect"] isEqualToString:@"1"]) {
-            NSInteger num=[[dic objectForKey:@"num"] integerValue];//商品数量
-            float price=[[[dic objectForKey:@"gs"] objectForKey:@"price2"] floatValue];//商品价格
-            
-            total+=num*price;
-            
-            count++;
+    for (NSMutableDictionary *dic in selectArray) {
+        NSInteger num=[[dic objectForKey:@"num"] integerValue];//商品数量
+        float price=[[[dic objectForKey:@"gs"] objectForKey:@"price2"] floatValue];//商品价格
+        float specialPrice=[[[dic objectForKey:@"gs"] objectForKey:@"tejia"] floatValue];//商品特价
+        
+        if ([[[dic objectForKey:@"gs"] objectForKey:@"cuxiao"] integerValue]==2 && [[[dic objectForKey:@"gs"] objectForKey:@"cxlx"] integerValue]==1) {//促销商品
+            total+=num*specialPrice;
         }
+        else{//正常商品
+            total+=num*price;
+        }
+        
+        count++;
     }
     
     //全选

@@ -10,9 +10,14 @@
 
 #import "Const.h"
 #import "CKeyboardToolBar.h"
+#import "NSObject+HttpTask.h"
+#import "NSObject+Utils.h"
+#import "CAlertView.h"
 
 #import "SCGoodsListViewController.h"
 #import "UCSelectAddressViewController.h"
+
+#import "MBProgressHUD.h"
 
 static const CGFloat PayViewHeight=50.0;
 
@@ -72,6 +77,9 @@ static const CGFloat PayViewHeight=50.0;
     
     //初始化订单信息视图
     [self initScrollView];
+    
+    //初始化数据
+    [self initData];
 }
 
 #pragma mark 初始化视图
@@ -155,6 +163,8 @@ static const CGFloat PayViewHeight=50.0;
     
     //商品列表
     SCGoodsListViewController *goodsListVC=[SCGoodsListViewController new];
+    goodsListVC.goodsList=[self.dic objectForKey:@"list"];
+    
     [self addChildViewController:goodsListVC];
     [goodsListVC didMoveToParentViewController:self];
     
@@ -254,7 +264,7 @@ static const CGFloat PayViewHeight=50.0;
     self.sumLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.orderInfoView.width-100-15, self.sumTagLabel.top, 100, self.sumTagLabel.height)];
     self.sumLabel.font=self.sumTagLabel.font;
     self.sumLabel.textColor=self.sumTagLabel.textColor;
-    self.sumLabel.text=@"¥12.00";
+    self.sumLabel.text=@"¥0.00";
     self.sumLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.sumLabel];
     
@@ -274,7 +284,7 @@ static const CGFloat PayViewHeight=50.0;
     self.tipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.tipTagLabel.top, 100, self.tipTagLabel.height)];
     self.tipLabel.font=self.tipTagLabel.font;
     self.tipLabel.textColor=self.tipTagLabel.textColor;
-    self.tipLabel.text=@"¥12.00";
+    self.tipLabel.text=@"¥0.00";
     self.tipLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.tipLabel];
     
@@ -294,7 +304,7 @@ static const CGFloat PayViewHeight=50.0;
     self.nonTipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.nonTipTagLabel.top, 100, self.nonTipTagLabel.height)];
     self.nonTipLabel.font=self.nonTipTagLabel.font;
     self.nonTipLabel.textColor=self.nonTipTagLabel.textColor;
-    self.nonTipLabel.text=@"-¥12.00";
+    self.nonTipLabel.text=@"-¥0.00";
     self.nonTipLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.nonTipLabel];
     
@@ -314,7 +324,7 @@ static const CGFloat PayViewHeight=50.0;
     self.payLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.payTagLabel.top, 100, self.payTagLabel.height)];
     self.payLabel.font=self.nonTipTagLabel.font;
     self.payLabel.textColor=self.nonTipTagLabel.textColor;
-    self.payLabel.text=@"¥12.00";
+    self.payLabel.text=@"¥0.00";
     self.payLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.payLabel];
     
@@ -362,7 +372,7 @@ static const CGFloat PayViewHeight=50.0;
     self.payButton.titleLabel.font=[UIFont systemFontOfSize:14.0];
     self.payButton.backgroundColor=ThemeRed;
     [self.payButton setTitleColor:ThemeWhite forState:UIControlStateNormal];
-    [self.payButton setTitle:@"去结算(100)" forState:UIControlStateNormal];
+    [self.payButton setTitle:@"去结算(0)" forState:UIControlStateNormal];
     [self.payButton addTarget:self action:@selector(payButton:) forControlEvents:UIControlEventTouchUpInside];
     self.payButton.showsTouchWhenHighlighted=YES;
     [self.payView addSubview:self.payButton];
@@ -378,7 +388,7 @@ static const CGFloat PayViewHeight=50.0;
     self.totalLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.totalTagLabel.right,(self.payView.height-24)/2,self.payView.width-self.totalTagLabel.right-10-self.payButton.width-15,24)];
     self.totalLabel.font=[UIFont systemFontOfSize:22.0];
     self.totalLabel.textColor=ThemeRed;
-    self.totalLabel.text=@"¥100.00";
+    self.totalLabel.text=@"¥0.00";
     [self.payView addSubview:self.totalLabel];
     
     //修改字体大小
@@ -386,6 +396,109 @@ static const CGFloat PayViewHeight=50.0;
     [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(0, 1)];
     
     self.totalLabel.attributedText=totalAttributedString;
+}
+
+#pragma mark 自定方法
+/**
+ *  初始化数据
+ */
+-(void)initData{
+    //获取数据
+    [self loadData];
+    
+    //更新总价
+    [self updateTotal:[self.dic objectForKey:@"total"]];
+}
+
+/**
+ *  获取数据
+ */
+-(void)loadData{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"获取中...";
+    
+    //构造参数
+    NSString *url=@"order_show";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
+            //更新收货地址
+            [self updateAddress:[dic objectForKey:@"address"][0]];
+            
+            //更新服务费
+            self.tipLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"fuwu"] floatValue]];
+            self.nonTipLabel.text=[NSString stringWithFormat:@"-¥%.2f",[[dic objectForKey:@"fuwu"] floatValue]];
+            
+            //更新总价
+            CGFloat total=[[self.dic objectForKey:@"total"] floatValue];//总价
+            
+            if ([[dic objectForKey:@"free"] integerValue]==0) {//不免服务费
+                if (total<[[dic objectForKey:@"man"] floatValue]) {//商品总价小于了每单免服务费金额
+                    self.nonTipLabel.text=@"-¥0.00";
+                    total=total+[[dic objectForKey:@"fuwu"] floatValue];
+                }
+            }
+            
+            [self updateTotal:[NSString stringWithFormat:@"%.2f",total]];
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+        [hud hide:YES];
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+/**
+ *  更新收货地址
+ *
+ *  @param address 收货地址
+ */
+-(void)updateAddress:(NSDictionary *)address{
+    //收货人
+    self.consigneeLabel.text=[NSString stringWithFormat:@"收货人：%@(%@) | %@",[address objectForKey:@"name"],[[address objectForKey:@"sex"] integerValue]==1 ? @"男" : @"女",[address objectForKey:@"mobile"]];
+    
+    //收货地址
+    self.consigneeAddressLabel.text=[NSString stringWithFormat:@"收货地址：%@",[address objectForKey:@"address"]];
+}
+
+/**
+ *  更新总价
+ *
+ *  @param total 总价
+ */
+-(void)updateTotal:(NSString *)total{
+    //商品总价
+    self.sumLabel.text=[NSString stringWithFormat:@"¥%@",[self.dic objectForKey:@"total"]];
+    
+    //实付款
+    self.payLabel.text=[NSString stringWithFormat:@"¥%@",total];
+    
+    //总价
+    self.totalLabel.text=[NSString stringWithFormat:@"¥%@",total];
+    
+    //修改字体大小
+    NSMutableAttributedString *totalAttributedString=[[NSMutableAttributedString alloc] initWithString:self.totalLabel.text];
+    [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.0] range:NSMakeRange(0, 1)];
+    
+    self.totalLabel.attributedText=totalAttributedString;
+    
+    //去结算按钮
+    [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%@)",[self.dic objectForKey:@"count"]] forState:UIControlStateNormal];
 }
 
 #pragma mark 按钮事件
@@ -466,13 +579,8 @@ static const CGFloat PayViewHeight=50.0;
  *  @param notification 通知信息
  */
 -(void)selectAddress:(NSNotification *)notification{
-    NSDictionary *dic=notification.userInfo;
-    
-    //收货人
-    self.consigneeLabel.text=[NSString stringWithFormat:@"收货人：%@(%@) | %@",[dic objectForKey:@"name"],[[dic objectForKey:@"sex"] integerValue]==1 ? @"男" : @"女",[dic objectForKey:@"mobile"]];
-    
-    //收货地址
-    self.consigneeAddressLabel.text=[NSString stringWithFormat:@"收货地址：%@",[dic objectForKey:@"address"]];
+    //更新收货地址
+    [self updateAddress:notification.userInfo];
 }
 
 -(void)dealloc{

@@ -12,9 +12,7 @@
 
 #import "UIImageView+WebCache.h"
 
-@interface SCGoodsListViewController (){
-    NSMutableArray *_goodsList;//视频列表数据源
-}
+@interface SCGoodsListViewController ()
 
 @property(nonatomic,strong) UICollectionView *collectionView;
 
@@ -24,17 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _goodsList=[[NSMutableArray alloc] init];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
-    [_goodsList addObject:@""];
     
     UICollectionViewFlowLayout *flowLayout=[UICollectionViewFlowLayout new];
     flowLayout.scrollDirection=UICollectionViewScrollDirectionHorizontal;
@@ -96,15 +83,15 @@
     
     //商品图片
     UIImageView *logoImage=(UIImageView *)[cell viewWithTag:1];
-    [logoImage sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    [logoImage sd_setImageWithURL:[NSURL URLWithString:[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
     
     //商品数量
     UILabel *countLabel=(UILabel *)[cell viewWithTag:2];
-    countLabel.text=@"99";
+    countLabel.text=[UserData objectForKey:[NSString stringWithFormat:@"sid_%@",[_goodsList[indexPath.row] objectForKey:@"sid"]]];
     
     //商品价格
     UILabel *priceLabel=(UILabel *)[logoImage viewWithTag:3];
-    priceLabel.text=@"¥12";
+    priceLabel.text=[NSString stringWithFormat:@"¥%@",[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"price2"]];
     
     return cell;
 }

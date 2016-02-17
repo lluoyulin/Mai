@@ -10,4 +10,6 @@
 
 @interface SCConfirmOrderViewController : BaseViewController
 
+@property(nonatomic,strong) NSDictionary *dic;//购买商品信息
+
 @end
