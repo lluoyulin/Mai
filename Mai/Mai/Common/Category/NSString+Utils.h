@@ -38,4 +38,11 @@
  */
 -(BOOL)isEmpty;
 
+/**
+ *  去掉空格的文本
+ *
+ *  @return 文本
+ */
+-(NSString *)text;
+
 @end

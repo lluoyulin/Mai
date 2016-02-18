@@ -62,4 +62,13 @@
     return [[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
 }
 
+/**
+ *  去掉空格的文本
+ *
+ *  @return 文本
+ */
+-(NSString *)text{
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
 @end

@@ -1,12 +1,12 @@
 //
-//  ULRegisterViewController.m
+//  ULQuickLoginViewController.m
 //  Mai
 //
 //  Created by freedom on 16/2/18.
 //  Copyright © 2016年 freedom_luo. All rights reserved.
 //
 
-#import "ULRegisterViewController.h"
+#import "ULQuickLoginViewController.h"
 
 #import "Const.h"
 #import "CTextField.h"
@@ -17,27 +17,24 @@
 
 #import "MBProgressHUD.h"
 
-@interface ULRegisterViewController (){
+@interface ULQuickLoginViewController (){
     NSString *_code;//验证码
-    NSInteger _secs;//秒数
 }
 
 @property(nonatomic,strong) UIView *contentView;
-@property(nonatomic,strong) UIButton *registerButton;//注册按钮
+@property(nonatomic,strong) UIButton *loginButton;//登录按钮
 @property(nonatomic,strong) UIButton *getCodeButton;//获取验证码按钮
 @property(nonatomic,strong) CTextField *phoneText;//手机号
 @property(nonatomic,strong) CTextField *codeText;//验证码
-@property(nonatomic,strong) CTextField *passwordText;//密码
-@property(nonatomic,strong) CTextField *inviteCodeText;//邀请码
-
-@property(nonatomic,strong) NSTimer *timer;//轮询对象
 
 @end
 
-@implementation ULRegisterViewController
+@implementation ULQuickLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title=@"手机号快速登录";
     
     self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
     
@@ -49,8 +46,6 @@
     
     //初始化视图
     [self initView];
-    
-    _secs=60;//设置倒计时初始值
 }
 
 #pragma mark 初始化视图
@@ -64,7 +59,7 @@
     
     //获取验证码按钮
     self.getCodeButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    self.getCodeButton.frame=CGRectMake(self.contentView.width-100-15, 20, 100, 45);
+    self.getCodeButton.frame=CGRectMake(self.contentView.width-100-15, 50, 100, 45);
     self.getCodeButton.layer.masksToBounds=YES;
     self.getCodeButton.layer.cornerRadius=2;
     self.getCodeButton.titleLabel.font=[UIFont systemFontOfSize:14.0];
@@ -76,7 +71,7 @@
     [self.contentView addSubview:self.getCodeButton];
     
     //手机号
-    self.phoneText=[[CTextField alloc] initWithFrame:CGRectMake(15, 20, self.contentView.width-15-15-self.getCodeButton.width-8, 45)];
+    self.phoneText=[[CTextField alloc] initWithFrame:CGRectMake(15, 50, self.contentView.width-15-15-self.getCodeButton.width-8, 45)];
     self.phoneText.textColor=ThemeBlack;
     self.phoneText.backgroundColor=ThemeWhite;
     self.phoneText.font=[UIFont systemFontOfSize:14.0];
@@ -94,7 +89,7 @@
     self.phoneText.leftView=phoneLeftImage;
     
     //验证码
-    self.codeText=[[CTextField alloc] initWithFrame:CGRectMake(self.phoneText.left, self.phoneText.bottom+10, self.contentView.width-15-15, self.phoneText.height)];
+    self.codeText=[[CTextField alloc] initWithFrame:CGRectMake(self.phoneText.left, self.phoneText.bottom+20, self.contentView.width-15-15, self.phoneText.height)];
     self.codeText.textColor=ThemeBlack;
     self.codeText.backgroundColor=ThemeWhite;
     self.codeText.font=[UIFont systemFontOfSize:14.0];
@@ -111,73 +106,21 @@
     codeLeftImage.image=[UIImage imageNamed:@"user_login_code"];
     self.codeText.leftView=codeLeftImage;
     
-    //密码
-    self.passwordText=[[CTextField alloc] initWithFrame:CGRectMake(self.codeText.left, self.codeText.bottom+10, self.codeText.width, self.codeText.height)];
-    self.passwordText.textColor=ThemeBlack;
-    self.passwordText.backgroundColor=ThemeWhite;
-    self.passwordText.font=[UIFont systemFontOfSize:14.0];
-    self.passwordText.placeholder=@"输入密码";
-    self.passwordText.layer.masksToBounds=YES;
-    self.passwordText.layer.cornerRadius=2;
-    self.passwordText.clearButtonMode=UITextFieldViewModeWhileEditing;
-    self.passwordText.leftViewMode=UITextFieldViewModeAlways;
-    self.passwordText.secureTextEntry=YES;
-    [self.contentView addSubview:self.passwordText];
-    
-    //添加密码文本框左视图
-    UIImageView *passwordLeftImage=[[UIImageView alloc] initWithFrame:phoneLeftImage.frame];
-    passwordLeftImage.image=[UIImage imageNamed:@"user_login_password"];
-    self.passwordText.leftView=passwordLeftImage;
-    
-    //邀请码
-    self.inviteCodeText=[[CTextField alloc] initWithFrame:CGRectMake(self.passwordText.left, self.passwordText.bottom+10, self.passwordText.width, self.passwordText.height)];
-    self.inviteCodeText.textColor=ThemeBlack;
-    self.inviteCodeText.backgroundColor=ThemeWhite;
-    self.inviteCodeText.font=[UIFont systemFontOfSize:14.0];
-    self.inviteCodeText.placeholder=@"输入邀请码(可以不填)";
-    self.inviteCodeText.layer.masksToBounds=YES;
-    self.inviteCodeText.layer.cornerRadius=2;
-    self.inviteCodeText.clearButtonMode=UITextFieldViewModeWhileEditing;
-    self.inviteCodeText.leftViewMode=UITextFieldViewModeAlways;
-    [self.contentView addSubview:self.inviteCodeText];
-    
-    //添加邀请码文本框左视图
-    UIImageView *inviteCodeLeftImage=[[UIImageView alloc] initWithFrame:phoneLeftImage.frame];
-    inviteCodeLeftImage.image=[UIImage imageNamed:@"user_login_invitation_code"];
-    self.inviteCodeText.leftView=inviteCodeLeftImage;
-    
-    //注册按钮
-    self.registerButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    self.registerButton.frame=CGRectMake(self.inviteCodeText.left, self.inviteCodeText.bottom+30, self.inviteCodeText.width, 45);
-    self.registerButton.layer.masksToBounds=YES;
-    self.registerButton.layer.cornerRadius=2;
-    self.registerButton.titleLabel.font=[UIFont systemFontOfSize:16.0];
-    [self.registerButton setTitleColor:ThemeBlack forState:UIControlStateNormal];
-    [self.registerButton setTitle:@"注册" forState:UIControlStateNormal];
-    [self.registerButton addTarget:self action:@selector(registerButton:) forControlEvents:UIControlEventTouchUpInside];
-    self.registerButton.showsTouchWhenHighlighted=YES;
-    self.registerButton.backgroundColor=ThemeYellow;
-    [self.contentView addSubview:self.registerButton];
+    //登录按钮
+    self.loginButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.loginButton.frame=CGRectMake(self.codeText.left, self.codeText.bottom+30, self.codeText.width, 45);
+    self.loginButton.layer.masksToBounds=YES;
+    self.loginButton.layer.cornerRadius=2;
+    self.loginButton.titleLabel.font=[UIFont systemFontOfSize:16.0];
+    [self.loginButton setTitleColor:ThemeBlack forState:UIControlStateNormal];
+    [self.loginButton setTitle:@"验证并登录" forState:UIControlStateNormal];
+    [self.loginButton addTarget:self action:@selector(loginButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.loginButton.showsTouchWhenHighlighted=YES;
+    self.loginButton.backgroundColor=ThemeYellow;
+    [self.contentView addSubview:self.loginButton];
 }
 
 #pragma mark 自定义方法
-/**
- *  短信倒计时
- */
--(void)startCountDown:(NSTimer *)timer{
-    _secs--;
-    
-    if (_secs==0) {
-        _secs=60;
-        [self.timer setFireDate:[NSDate distantFuture]];
-        [self.getCodeButton setEnabled:YES];
-        [self.getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-    }
-    else{
-        [self.getCodeButton setTitle:[NSString stringWithFormat:@"%ld秒",(long)_secs] forState:UIControlStateNormal];
-    }
-}
-
 /**
  *  获取验证码
  */
@@ -189,20 +132,13 @@
     //构造参数
     NSString *url=@"reg_code";
     NSDictionary *parameters=@{@"token":Token,
-                               @"mobile":[self.phoneText text]};
+                               @"mobile":self.phoneText.text};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             _code=[dic objectForKey:@"code"];
-            
-            if(self.timer) {
-                [self.timer setFireDate:[NSDate distantPast]];//开启定时器
-            }
-            else{
-                self.timer=[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startCountDown:) userInfo:nil repeats:YES];
-            }
         }
         else{
             
@@ -225,38 +161,30 @@
 }
 
 /**
- *  注册
+ *  登录
  */
--(void)regist{
+-(void)userLogin{
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.animationType=MBProgressHUDAnimationZoom;
-    hud.labelText=@"注册中...";
+    hud.labelText=@"登录中...";
     
     //构造参数
-    NSString *url=@"user_reg";
+    NSString *url=@"reg_code";
     NSDictionary *parameters=@{@"token":Token,
-                               @"tel":[self.phoneText text],
-                               @"upass":[self.passwordText text],
-                               @"refer":[self.inviteCodeText text]};
+                               @"mobile":self.phoneText.text};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
-            //缓存uid
-            self.uid=[dic objectForKey:@"uid"];
             
-            hud.mode=MBProgressHUDModeText;
-            hud.labelText=@"注册成功";
-            
-            //延迟1.5s执行方法
-            [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
         }
         else{
-            [hud hide:YES];
             
             [CAlertView alertMessage:error];
         }
+        
+        [hud hide:YES];
         
     } failure:^(NSError *error) {
         
@@ -269,11 +197,11 @@
 
 #pragma mark 按钮事件
 /**
- *  注册按钮
+ *  登录按钮
  *
  *  @param sender
  */
--(void)registerButton:(UIButton *)sender{
+-(void)loginButton:(UIButton *)sender{
     if ([self.phoneText.text isEmpty]) {
         [CAlertView alertMessage:@"手机号不能为空"];
         [self.phoneText becomeFirstResponder];
@@ -298,26 +226,12 @@
         
         return;
     }
-    if (![self.codeText.text isEqualToString:[NSString stringWithFormat:@"%@",_code]]) {
-        [CAlertView alertMessage:@"验证码不正确"];
-        [self.codeText becomeFirstResponder];
-        
-        return;
-    }
-    if ([self.passwordText.text isEmpty]) {
-        [CAlertView alertMessage:@"密码不能为空"];
-        [self.passwordText becomeFirstResponder];
-        
-        return;
-    }
     
     [self.phoneText resignFirstResponder];
     [self.codeText resignFirstResponder];
-    [self.passwordText resignFirstResponder];
-    [self.inviteCodeText resignFirstResponder];
     
-    //注册
-    [self regist];
+    //登录
+    [self userLogin];
 }
 
 /**
@@ -343,18 +257,9 @@
     
     [self.phoneText resignFirstResponder];
     [self.codeText resignFirstResponder];
-    [self.passwordText resignFirstResponder];
-    [self.inviteCodeText resignFirstResponder];
     
     //获取验证码
     [self getCode];
-}
-
-/**
- *  返回上层
- */
--(void)popViewController{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark 键盘弹出、隐藏通知
@@ -372,13 +277,7 @@
         viewHeight=self.phoneText.bottom;
     }
     else if (self.codeText.isFirstResponder){
-        viewHeight=self.codeText.bottom;
-    }
-    else if (self.passwordText.isFirstResponder){
-        viewHeight=self.registerButton.bottom;
-    }
-    else if (self.inviteCodeText.isFirstResponder){
-        viewHeight=self.registerButton.bottom;
+        viewHeight=self.loginButton.bottom;
     }
     
     //自适应代码
@@ -411,8 +310,6 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.phoneText resignFirstResponder];
     [self.codeText resignFirstResponder];
-    [self.passwordText resignFirstResponder];
-    [self.inviteCodeText resignFirstResponder];
 }
 
 -(void)dealloc{

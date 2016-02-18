@@ -84,6 +84,7 @@
 		E6C46A1E1C75532E005D643A /* ULLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A1D1C75532E005D643A /* ULLoginViewController.m */; };
 		E6C46A211C755B16005D643A /* CTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A201C755B16005D643A /* CTextField.m */; };
 		E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A231C7570C5005D643A /* ULRegisterViewController.m */; };
+		E6C46A271C7594D9005D643A /* ULQuickLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */; };
 		E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */; };
 		E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
@@ -251,6 +252,8 @@
 		E6C46A201C755B16005D643A /* CTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTextField.m; sourceTree = "<group>"; };
 		E6C46A221C7570C5005D643A /* ULRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULRegisterViewController.h; sourceTree = "<group>"; };
 		E6C46A231C7570C5005D643A /* ULRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULRegisterViewController.m; sourceTree = "<group>"; };
+		E6C46A251C7594D9005D643A /* ULQuickLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULQuickLoginViewController.h; sourceTree = "<group>"; };
+		E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULQuickLoginViewController.m; sourceTree = "<group>"; };
 		E6E4C48F1C605F4000B15B20 /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		E6ED93F41C5EEF7300127DC7 /* SCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
@@ -727,6 +730,8 @@
 				E6C46A1D1C75532E005D643A /* ULLoginViewController.m */,
 				E6C46A221C7570C5005D643A /* ULRegisterViewController.h */,
 				E6C46A231C7570C5005D643A /* ULRegisterViewController.m */,
+				E6C46A251C7594D9005D643A /* ULQuickLoginViewController.h */,
+				E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -851,6 +856,7 @@
 				E65B0B691C4F84B8002262F1 /* AFURLSessionManager.m in Sources */,
 				E65F9BE21C73F7FA0047A8E5 /* UCSelectAddressViewController.m in Sources */,
 				E6BA82031C508D6500A5C16F /* PushViewAnimation.m in Sources */,
+				E6C46A271C7594D9005D643A /* ULQuickLoginViewController.m in Sources */,
 				E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */,
 				E65B0BD61C4F84CE002262F1 /* UIImage+GIF.m in Sources */,
 				E65B0BA91C4F84C4002262F1 /* UIView+MJExtension.m in Sources */,

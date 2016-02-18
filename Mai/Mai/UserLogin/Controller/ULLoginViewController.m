@@ -152,8 +152,8 @@
     //构造参数
     NSString *url=@"login_do";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uname":self.phoneText.text,
-                               @"upass":self.passwordText.text};
+                               @"uname":[self.phoneText text],
+                               @"upass":[self.passwordText text]};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
