@@ -15,6 +15,8 @@
 #import "CTextField.h"
 #import "CAlertView.h"
 
+#import "ULRegisterViewController.h"
+
 #import "MBProgressHUD.h"
 
 @interface ULLoginViewController ()
@@ -58,7 +60,7 @@
     [self.view addSubview:self.contentView];
     
     //手机号
-    self.phoneText=[[CTextField alloc] initWithFrame:CGRectMake(15, 50, SCREEN_WIDTH-15-15, 45)];
+    self.phoneText=[[CTextField alloc] initWithFrame:CGRectMake(15, 50, self.contentView.width-15-15, 45)];
     self.phoneText.textColor=ThemeBlack;
     self.phoneText.backgroundColor=ThemeWhite;
     self.phoneText.font=[UIFont systemFontOfSize:14.0];
@@ -142,7 +144,7 @@
 /**
  *  登录
  */
--(void)login{
+-(void)userLogin{
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.animationType=MBProgressHUDAnimationZoom;
     hud.labelText=@"登录中...";
@@ -159,6 +161,7 @@
             NSDictionary *dic=(NSDictionary *)result;
             
             //缓存用户信息
+            self.login=@"1";
             self.uid=[[dic objectForKey:@"user"] objectForKey:@"uid"];
             self.userName=[[dic objectForKey:@"user"] objectForKey:@"uname"];
             self.phone=[[dic objectForKey:@"user"] objectForKey:@"tel"];
@@ -166,10 +169,6 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
         else{
-            //清除用户信息
-            self.uid=nil;
-            self.userName=nil;
-            self.phone=nil;
             
             [CAlertView alertMessage:error];
         }
@@ -183,27 +182,6 @@
         [CAlertView alertMessage:NetErrorMessage];
         
     }];
-}
-
-/**
- *  忘记密码
- */
--(void)forgetPassword{
-
-}
-
-/**
- *  注册
- */
--(void)regist{
-
-}
-
-/**
- *  快速登录
- */
--(void)quickLogin{
-
 }
 
 #pragma mark 按钮事件
@@ -236,7 +214,7 @@
     [self.passwordText resignFirstResponder];
     
     //登录
-    [self login];
+    [self userLogin];
 }
 
 /**
@@ -245,7 +223,9 @@
  *  @param sender
  */
 -(void)forgetPasswordButton:(UIButton *)sender{
-
+    ULRegisterViewController *vc=[ULRegisterViewController new];
+    vc.title=@"忘记密码";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /**
@@ -254,7 +234,9 @@
  *  @param sender
  */
 -(void)registerButton:(UIButton *)sender{
-    
+    ULRegisterViewController *vc=[ULRegisterViewController new];
+    vc.title=@"注册";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /**

@@ -25,6 +25,13 @@
 -(BOOL)isValidPhoneNumber;
 
 /**
+ *  验证验证码
+ *
+ *  @return 是或否
+ */
+-(BOOL)isValidCodeNumber;
+
+/**
  *  是否为空
  *
  *  @return 是或否

@@ -43,6 +43,17 @@
 }
 
 /**
+ *  验证验证码
+ *
+ *  @return 是或否
+ */
+-(BOOL)isValidCodeNumber{
+    NSString * number = @"^\\d{6}$";
+    NSPredicate *predicateNumber = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", number];
+    return [predicateNumber evaluateWithObject:self];
+}
+
+/**
  *  验证空
  *
  *  @return 是或否

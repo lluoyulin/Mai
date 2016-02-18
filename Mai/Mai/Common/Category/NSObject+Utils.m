@@ -176,7 +176,7 @@
  *  @return 登录返回yes，未登录返回no
  */
 -(BOOL)isLogin{
-    return [UserData objectForKey:@"islogin"] ? YES : NO;
+    return self.login ? YES : NO;
 }
 
 /**
@@ -189,6 +189,14 @@
 }
 
 #pragma mark 属性
+-(void)setLogin:(NSString *)login{
+    [UserData setObject:login forKey:@"login"];
+}
+
+-(NSString *)login{
+    return [UserData objectForKey:@"login"];
+}
+
 -(void)setUid:(NSString *)uid{
     [UserData setObject:uid forKey:@"uid"];
 }
