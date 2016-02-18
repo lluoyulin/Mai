@@ -162,6 +162,8 @@
             NSDictionary *dic=(NSDictionary *)result;
             _code=[dic objectForKey:@"code"];
             
+            self.phoneText.accessibilityValue=[self.phoneText text];
+            
             if(self.timer) {
                 [self.timer setFireDate:[NSDate distantPast]];//开启定时器
             }
@@ -244,6 +246,12 @@
     }
     if (![self.phoneText.text isValidPhoneNumber]) {
         [CAlertView alertMessage:@"手机号格式不正确"];
+        [self.phoneText becomeFirstResponder];
+        
+        return;
+    }
+    if (![self.phoneText.text isEqualToString:self.phoneText.accessibilityValue]) {
+        [CAlertView alertMessage:@"手机号和获取验证码时不一致"];
         [self.phoneText becomeFirstResponder];
         
         return;
