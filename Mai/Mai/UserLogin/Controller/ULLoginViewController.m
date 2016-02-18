@@ -175,6 +175,9 @@
             self.userName=[[dic objectForKey:@"user"] objectForKey:@"uname"];
             self.phone=[[dic objectForKey:@"user"] objectForKey:@"tel"];
             
+            //获取购物车数据
+            [self loadShoppingCartData];
+            
             [self.navigationController popViewControllerAnimated:YES];
         }
         else{
@@ -187,6 +190,40 @@
     } failure:^(NSError *error) {
         
         [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+/**
+ *  获取购物车数据
+ */
+-(void)loadShoppingCartData{
+    //构造参数
+    NSString *url=@"cart";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            NSArray *array=[dic objectForKey:@"list"];//添加到购物车中的商品列表
+            
+            if (array.count>0) {//服务器上购物车有数据
+                //清空本地缓存购物车数据
+                [self clearShoppingCart];
+                
+                //把服务器上最新的购物车数据添加到本地缓存中
+                for (NSDictionary *dic in array) {
+                    [self setShoppingCount:[dic objectForKey:@"num"] sid:[dic objectForKey:@"sid"] fid:[[dic objectForKey:@"gs"] objectForKey:@"fid"] isAdd:YES];
+                }
+            }
+        }
+        
+    } failure:^(NSError *error) {
         
         [CAlertView alertMessage:NetErrorMessage];
         

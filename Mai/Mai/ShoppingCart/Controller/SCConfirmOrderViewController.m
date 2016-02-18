@@ -434,8 +434,10 @@ static const CGFloat PayViewHeight=50.0;
             //设置支付可用
             self.payButton.enabled=YES;
             
-            //更新收货地址
-            [self updateAddress:[dic objectForKey:@"address"]];
+            if (![CheckNull([dic objectForKey:@"address"]) isEqualToString:@""]) {
+                //更新收货地址
+                [self updateAddress:[dic objectForKey:@"address"]];
+            }
             
             //更新服务费
             self.tipLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"fuwu"] floatValue]];
@@ -625,6 +627,12 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
+    if (!self.consigneeAddressLabel.accessibilityValue) {
+        [CAlertView alertMessage:@"请选择收货地址"];
+        
+        return;
+    }
+    
     //提交订单
     [self submitOrder];
 }
