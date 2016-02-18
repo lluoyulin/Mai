@@ -16,6 +16,7 @@
 
 #import "HHomeDetailsTableViewCell.h"
 #import "HGoodsDetailsViewController.h"
+#import "ULLoginViewController.h"
 
 #import "MJRefresh.h"
 #import "ImagePlayerView.h"
@@ -541,6 +542,12 @@
         
         //添加购物车成功Block
         cell.ShoppingBlock=^(NSString *sid,NSString *count,NSString *fid){
+            
+            if (sid==nil && count==nil && fid==nil) {//登录
+                [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+                
+                return;
+            }
             
             //设置商品购物车数量
             [self setShoppingCount:count sid:sid fid:fid isAdd:YES];

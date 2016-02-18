@@ -156,6 +156,13 @@
  *  @param sender 按钮对象
  */
 -(void)shoppingButton:(UIButton *)sender{
+    if (![self isLogin]) {
+        //登录
+        self.ShoppingBlock(nil,nil,nil);
+        
+        return;
+    }
+    
     //构造参数
     NSString *url=@"add_to_car";
     NSDictionary *parameters=@{@"token":Token,
