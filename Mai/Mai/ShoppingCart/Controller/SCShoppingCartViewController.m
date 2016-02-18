@@ -72,8 +72,10 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    //获取数据
-    [self loadData];
+    if (self.isRefresh) {//刷新数据
+        //获取数据
+        [self loadData];
+    }
 }
 
 #pragma mark 初始化视图

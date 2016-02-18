@@ -11,6 +11,7 @@
 #import "Const.h"
 #import "UILabel+AutoFrame.h"
 #import "SwipeBackNavigationViewController.h"
+#import "NSObject+Utils.h"
 
 #import "HHomeViewController.h"
 #import "TLTimeLimitViewController.h"
@@ -169,6 +170,11 @@
             btn.selected=NO;
             title.textColor=ThemeGray;
         }
+    }
+    
+    if (self.selectedIndex==2) {
+        //不刷新数据
+        self.isRefresh=YES;
     }
 }
 

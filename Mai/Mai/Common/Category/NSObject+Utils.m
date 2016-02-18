@@ -191,6 +191,7 @@
 #pragma mark 属性
 -(void)setLogin:(NSString *)login{
     [UserData setObject:login forKey:@"login"];
+    [UserData synchronize];
 }
 
 -(NSString *)login{
@@ -199,6 +200,7 @@
 
 -(void)setUid:(NSString *)uid{
     [UserData setObject:uid forKey:@"uid"];
+    [UserData synchronize];
 }
 
 -(NSString *)uid{
@@ -207,6 +209,7 @@
 
 -(void)setUserName:(NSString *)userName{
     [UserData setObject:userName forKey:@"user_name"];
+    [UserData synchronize];
 }
 
 -(NSString *)userName{
@@ -215,10 +218,20 @@
 
 -(void)setPhone:(NSString *)phone{
     [UserData setObject:phone forKey:@"phone"];
+    [UserData synchronize];
 }
 
 -(NSString *)phone{
     return [UserData objectForKey:@"phone"] ? [UserData objectForKey:@"phone"] : @"";
+}
+
+-(void)setIsRefresh:(BOOL)isRefresh{
+    [UserData setObject:isRefresh ? @"1" : nil forKey:@"isRefresh"];
+    [UserData synchronize];
+}
+
+-(BOOL)isRefresh{
+    return [UserData objectForKey:@"isRefresh"] ? YES : NO;
 }
 
 @end

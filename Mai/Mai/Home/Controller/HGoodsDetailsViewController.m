@@ -312,6 +312,9 @@
  *  @param sender 按钮对象
  */
 -(void)buyButton:(UIButton *)sender{
+    //刷新数据
+    self.isRefresh=YES;
+    
     //添加到购物车
     [self addShoppingCart];
     
@@ -334,6 +337,9 @@
  *  @param sender 按钮对象
  */
 -(void)navigationShoppingButton:(UIButton *)sender{
+    //刷新数据
+    self.isRefresh=YES;
+    
     SCShoppingCartViewController *vc=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleDefault];
     [self.navigationController pushViewController:vc animated:YES];
 }

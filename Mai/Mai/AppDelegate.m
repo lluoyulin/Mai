@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "NSObject+Utils.h"
+
 #import "MainViewController.h"
 #import "TabBarViewController.h"
 #import "SCShoppingCartViewController.h"
@@ -20,6 +22,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //不刷新数据
+    self.isRefresh=NO;
     
     self.window=[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor=[UIColor whiteColor];
