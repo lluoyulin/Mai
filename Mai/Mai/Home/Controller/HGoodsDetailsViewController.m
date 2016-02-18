@@ -312,6 +312,12 @@
  *  @param sender 按钮对象
  */
 -(void)buyButton:(UIButton *)sender{
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
+    
     //刷新数据
     self.isRefresh=YES;
     

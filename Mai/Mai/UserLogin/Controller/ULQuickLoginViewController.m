@@ -19,6 +19,7 @@
 
 @interface ULQuickLoginViewController (){
     NSString *_code;//验证码
+    NSInteger _secs;//秒数
 }
 
 @property(nonatomic,strong) UIView *contentView;
@@ -26,6 +27,8 @@
 @property(nonatomic,strong) UIButton *getCodeButton;//获取验证码按钮
 @property(nonatomic,strong) CTextField *phoneText;//手机号
 @property(nonatomic,strong) CTextField *codeText;//验证码
+
+@property(nonatomic,strong) NSTimer *timer;//轮询对象
 
 @end
 
@@ -46,6 +49,8 @@
     
     //初始化视图
     [self initView];
+    
+    _secs=60;//设置倒计时初始值
 }
 
 #pragma mark 初始化视图
@@ -122,6 +127,23 @@
 
 #pragma mark 自定义方法
 /**
+ *  短信倒计时
+ */
+-(void)startCountDown:(NSTimer *)timer{
+    _secs--;
+    
+    if (_secs==0) {
+        _secs=60;
+        [self.timer setFireDate:[NSDate distantFuture]];
+        [self.getCodeButton setEnabled:YES];
+        [self.getCodeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    else{
+        [self.getCodeButton setTitle:[NSString stringWithFormat:@"%ld秒",(long)_secs] forState:UIControlStateNormal];
+    }
+}
+
+/**
  *  获取验证码
  */
 -(void)getCode{
@@ -130,7 +152,7 @@
     hud.labelText=@"获取中...";
     
     //构造参数
-    NSString *url=@"reg_code";
+    NSString *url=@"code";
     NSDictionary *parameters=@{@"token":Token,
                                @"mobile":self.phoneText.text};
     
@@ -139,6 +161,13 @@
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             _code=[dic objectForKey:@"code"];
+            
+            if(self.timer) {
+                [self.timer setFireDate:[NSDate distantPast]];//开启定时器
+            }
+            else{
+                self.timer=[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startCountDown:) userInfo:nil repeats:YES];
+            }
         }
         else{
             
@@ -169,7 +198,7 @@
     hud.labelText=@"登录中...";
     
     //构造参数
-    NSString *url=@"reg_code";
+    NSString *url=@"tel_login";
     NSDictionary *parameters=@{@"token":Token,
                                @"mobile":self.phoneText.text};
     
@@ -178,6 +207,11 @@
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
             
+            //缓存数据
+            self.login=@"1";
+            self.uid=[dic objectForKey:@"uid"];
+            
+            [self.navigationController popViewControllerAnimated:YES];
         }
         else{
             
@@ -222,6 +256,12 @@
     }
     if (![self.codeText.text isValidCodeNumber]) {
         [CAlertView alertMessage:@"验证码格式不正确"];
+        [self.codeText becomeFirstResponder];
+        
+        return;
+    }
+    if (![self.codeText.text isEqualToString:[NSString stringWithFormat:@"%@",_code]]) {
+        [CAlertView alertMessage:@"验证码不正确"];
         [self.codeText becomeFirstResponder];
         
         return;

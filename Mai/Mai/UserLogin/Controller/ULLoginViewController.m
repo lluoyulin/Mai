@@ -16,6 +16,7 @@
 #import "CAlertView.h"
 
 #import "ULRegisterViewController.h"
+#import "ULQuickLoginViewController.h"
 
 #import "MBProgressHUD.h"
 
@@ -48,6 +49,14 @@
     
     //初始化视图
     [self initView];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if ([self isLogin]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark 初始化视图
@@ -253,6 +262,9 @@
 -(void)quickLoginButton:(UIButton *)sender{
     [self.phoneText resignFirstResponder];
     [self.passwordText resignFirstResponder];
+    
+    ULQuickLoginViewController *vc=[ULQuickLoginViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark 键盘弹出、隐藏通知
