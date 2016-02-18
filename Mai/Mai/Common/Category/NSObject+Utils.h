@@ -10,6 +10,10 @@
 
 @interface NSObject (Utils)
 
+@property(nonatomic,strong) NSString *uid;//用户id
+@property(nonatomic,strong) NSString *userName;//用户名
+@property(nonatomic,strong) NSString *phone;//用户手机号
+
 /**
  *  设置购物车商品数量
  *

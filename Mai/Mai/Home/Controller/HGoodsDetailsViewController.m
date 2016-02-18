@@ -20,6 +20,7 @@
 #import "HGoodsDescriptionsViewController.h"
 #import "HGoodsImageInfoViewController.h"
 #import "SCShoppingCartViewController.h"
+#import "ULLoginViewController.h"
 
 #import "ImagePlayerView.h"
 #import "UIImageView+WebCache.h"
@@ -268,6 +269,12 @@
  *  @param sender 按钮对象
  */
 -(void)addShoppingCartButton:(UIButton *)sender{
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
+    
     //添加到购物车
     [self addShoppingCart];
     

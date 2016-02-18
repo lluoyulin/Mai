@@ -176,8 +176,6 @@
  *  @return 登录返回yes，未登录返回no
  */
 -(BOOL)isLogin{
-    [UserData setObject:@"1" forKey:@"islogin"];
-    [UserData synchronize];
     return [UserData objectForKey:@"islogin"] ? YES : NO;
 }
 
@@ -187,9 +185,32 @@
  *  @return 用户id
  */
 -(NSString *)getUid{
-    [UserData setObject:@"113" forKey:@"uid"];
-    [UserData synchronize];
+    return [self uid];
+}
+
+#pragma mark 属性
+-(void)setUid:(NSString *)uid{
+    [UserData setObject:uid forKey:@"uid"];
+}
+
+-(NSString *)uid{
     return [UserData objectForKey:@"uid"] ? [UserData objectForKey:@"uid"] : @"";
+}
+
+-(void)setUserName:(NSString *)userName{
+    [UserData setObject:userName forKey:@"user_name"];
+}
+
+-(NSString *)userName{
+    return [UserData objectForKey:@"user_name"] ? [UserData objectForKey:@"user_name"] : @"";
+}
+
+-(void)setPhone:(NSString *)phone{
+    [UserData setObject:phone forKey:@"phone"];
+}
+
+-(NSString *)phone{
+    return [UserData objectForKey:@"phone"] ? [UserData objectForKey:@"phone"] : @"";
 }
 
 @end

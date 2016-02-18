@@ -42,4 +42,13 @@
     return [predicateMO evaluateWithObject:self];
 }
 
+/**
+ *  验证空
+ *
+ *  @return 是或否
+ */
+-(BOOL)isEmpty{
+    return [[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
+}
+
 @end

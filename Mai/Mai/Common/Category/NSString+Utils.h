@@ -24,4 +24,11 @@
  */
 -(BOOL)isValidPhoneNumber;
 
+/**
+ *  是否为空
+ *
+ *  @return 是或否
+ */
+-(BOOL)isEmpty;
+
 @end
