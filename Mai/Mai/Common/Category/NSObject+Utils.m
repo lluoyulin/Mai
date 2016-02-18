@@ -158,12 +158,12 @@
     NSString *key_fid=[NSString stringWithFormat:@"fid_%@",fid];//生成商品所属类型id的缓存key
     NSString *sum_fid=[UserData objectForKey:key_fid];//商品类型总数量
     sum_fid=[NSString stringWithFormat:@"%ld",[sum_fid integerValue]-[count integerValue]];
-    [UserData setObject:[sum_fid isEqualToString:@"0"] ? nil : sum_fid forKey:key_fid];
+    [UserData setObject:[sum_fid integerValue]<=0 ? nil : sum_fid forKey:key_fid];
     
     //清除商品总数量
     NSString *sum=[UserData objectForKey:@"total_shopping_cart"];//商品总数量
     sum=[NSString stringWithFormat:@"%ld",(long)[sum integerValue]-[count integerValue]];
-    [UserData setObject:[sum isEqualToString:@"0"] ? nil : sum forKey:@"total_shopping_cart"];
+    [UserData setObject:[sum integerValue]<=0 ? nil : sum forKey:@"total_shopping_cart"];
     [UserData synchronize];
     
     //发送添加购物车通知
