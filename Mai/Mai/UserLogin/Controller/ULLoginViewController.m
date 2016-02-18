@@ -223,6 +223,9 @@
  *  @param sender
  */
 -(void)forgetPasswordButton:(UIButton *)sender{
+    [self.phoneText resignFirstResponder];
+    [self.passwordText resignFirstResponder];
+    
     ULRegisterViewController *vc=[ULRegisterViewController new];
     vc.title=@"忘记密码";
     [self.navigationController pushViewController:vc animated:YES];
@@ -234,6 +237,9 @@
  *  @param sender
  */
 -(void)registerButton:(UIButton *)sender{
+    [self.phoneText resignFirstResponder];
+    [self.passwordText resignFirstResponder];
+    
     ULRegisterViewController *vc=[ULRegisterViewController new];
     vc.title=@"注册";
     [self.navigationController pushViewController:vc animated:YES];
@@ -245,7 +251,8 @@
  *  @param sender
  */
 -(void)quickLoginButton:(UIButton *)sender{
-    
+    [self.phoneText resignFirstResponder];
+    [self.passwordText resignFirstResponder];
 }
 
 #pragma mark 键盘弹出、隐藏通知
@@ -258,8 +265,16 @@
     NSDictionary *info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
+    CGFloat viewHeight=0;
+    if (self.phoneText.isFirstResponder) {
+        viewHeight=self.phoneText.bottom;
+    }
+    else if (self.passwordText.isFirstResponder){
+        viewHeight=self.loginButton.bottom;
+    }
+    
     //自适应代码
-    CGFloat offset=self.contentView.height-self.loginButton.bottom-kbSize.height;
+    CGFloat offset=self.contentView.height-viewHeight-kbSize.height;
     if (offset<=0) {//view和键盘有重合
         [UIView animateWithDuration:0.4 animations:^{
                         self.contentView.transform=CGAffineTransformMakeTranslation(0, offset-20);

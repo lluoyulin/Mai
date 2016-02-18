@@ -297,6 +297,11 @@
         return;
     }
     
+    [self.phoneText resignFirstResponder];
+    [self.codeText resignFirstResponder];
+    [self.passwordText resignFirstResponder];
+    [self.inviteCodeText resignFirstResponder];
+    
     //注册
     [self regist];
 }
@@ -336,8 +341,22 @@
     NSDictionary *info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
+    CGFloat viewHeight=0;
+    if (self.phoneText.isFirstResponder) {
+        viewHeight=self.phoneText.bottom;
+    }
+    else if (self.codeText.isFirstResponder){
+        viewHeight=self.codeText.bottom;
+    }
+    else if (self.passwordText.isFirstResponder){
+        viewHeight=self.registerButton.bottom;
+    }
+    else if (self.inviteCodeText.isFirstResponder){
+        viewHeight=self.registerButton.bottom;
+    }
+    
     //自适应代码
-    CGFloat offset=self.contentView.height-self.registerButton.bottom-kbSize.height;
+    CGFloat offset=offset=self.contentView.height-viewHeight-kbSize.height;
     if (offset<=0) {//view和键盘有重合
         [UIView animateWithDuration:0.4 animations:^{
             self.contentView.transform=CGAffineTransformMakeTranslation(0, offset-20);
