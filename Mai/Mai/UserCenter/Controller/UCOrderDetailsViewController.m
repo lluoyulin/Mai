@@ -370,7 +370,7 @@ static const CGFloat PayViewHeight=50.0;
     self.consigneeAddressLabel.text=[self.dic objectForKey:@"consigneeAddressLabel"];
     
     //支付方式
-    self.payWayLabel.text=[[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1 ? @"在线支付" : @"货到付款";
+    self.payWayLabel.text=[[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1 ? @"微信支付" : @"货到付款";
     
     //商品总价
     self.sumLabel.text=[NSString stringWithFormat:@"¥%.2f",[[[self.dic objectForKey:@"order"] objectForKey:@"zongjia"] floatValue]];

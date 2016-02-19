@@ -205,7 +205,7 @@ static const CGFloat PayViewHeight=50.0;
     self.onlinePayTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, 15, 60, 16)];
     self.onlinePayTagLabel.font=[UIFont systemFontOfSize:14.0];
     self.onlinePayTagLabel.textColor=ThemeBlack;
-    self.onlinePayTagLabel.text=@"在线支付";
+    self.onlinePayTagLabel.text=@"微信支付";
     [self.payWayView addSubview:self.onlinePayTagLabel];
     
     //在线支付按钮
