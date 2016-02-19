@@ -23,8 +23,9 @@
     
     self.automaticallyAdjustsScrollViewInsets=NO;
     
-    self.navigationController.navigationBar.barTintColor=ThemeYellow;
-    self.navigationController.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:ThemeBlack};
+    self.navigationController.navigationBar.barTintColor=ThemeYellow;//导航栏颜色
+    self.navigationController.navigationBar.titleTextAttributes=@{NSForegroundColorAttributeName:ThemeBlack};//导航栏字体
+    self.navigationController.navigationBar.tintColor=ThemeBlack;//导航栏返回按钮颜色
     
     //初始化导航栏按钮
     [self initnavigationBarButton];
@@ -37,12 +38,9 @@
     //导航栏左边按钮
     self.navigationBarLeftButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.navigationBarLeftButton.frame=CGRectMake(0, 0, 44, 44);
-    [self.navigationBarLeftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 26)];
-    [self.navigationBarLeftButton setImage:[UIImage imageNamed:@"navigation_back"] forState:UIControlStateNormal];
+    [self.navigationBarLeftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 22)];
+    [self.navigationBarLeftButton setImage:[UIImage imageNamed:@"navigation_menu"] forState:UIControlStateNormal];
     [self.navigationBarLeftButton addTarget:self action:@selector(navigationBarLeftButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *leftItem=[[UIBarButtonItem alloc] initWithCustomView:self.navigationBarLeftButton];
-    self.navigationItem.leftBarButtonItem=leftItem;
 }
 
 /**
@@ -54,8 +52,11 @@
     _showMenu=showMenu;
     
     if (self.isShowMenu) {
-        [self.navigationBarLeftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 22)];
-        [self.navigationBarLeftButton setImage:[UIImage imageNamed:@"navigation_menu"] forState:UIControlStateNormal];
+        UIBarButtonItem *leftItem=[[UIBarButtonItem alloc] initWithCustomView:self.navigationBarLeftButton];
+        self.navigationItem.leftBarButtonItem=leftItem;
+    }
+    else{
+        self.navigationItem.leftBarButtonItem=nil;
     }
 }
 

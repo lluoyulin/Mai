@@ -77,6 +77,22 @@
     }
 }
 
+/**
+ *  是否隐藏状态栏（重写）
+ *
+ *  @return 是或否
+ */
+- (BOOL)prefersStatusBarHidden {
+    return _statusBarHidden;
+}
+
+-(void)setStatusBarHidden:(BOOL)statusBarHidden{
+    _statusBarHidden=statusBarHidden;
+    
+    //更新状态栏
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
 }
