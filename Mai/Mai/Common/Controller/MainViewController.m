@@ -82,12 +82,28 @@
  *
  *  @return 是或否
  */
-- (BOOL)prefersStatusBarHidden {
+-(BOOL)prefersStatusBarHidden{
     return _statusBarHidden;
+}
+
+/**
+ *  状态栏样式（重写）
+ *
+ *  @return 样式
+ */
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return _statusBarStyle;
 }
 
 -(void)setStatusBarHidden:(BOOL)statusBarHidden{
     _statusBarHidden=statusBarHidden;
+    
+    //更新状态栏
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+-(void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle{
+    _statusBarStyle=statusBarStyle;
     
     //更新状态栏
     [self setNeedsStatusBarAppearanceUpdate];
