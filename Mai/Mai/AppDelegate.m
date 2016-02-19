@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+#import "Const.h"
 #import "NSObject+Utils.h"
 
 #import "MainViewController.h"
@@ -25,6 +26,9 @@
     
     //不刷新数据
     self.isRefresh=NO;
+    
+    //进入购物车页面，当用户未登录时，显示登录页面
+    [UserData setObject:@"1" forKey:@"show_login"];
     
     self.window=[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor=[UIColor whiteColor];

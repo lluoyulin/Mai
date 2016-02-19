@@ -15,6 +15,7 @@
 
 #import "SCShoppingCartTableViewCell.h"
 #import "SCConfirmOrderViewController.h"
+#import "ULLoginViewController.h"
 
 #import "MBProgressHUD.h"
 
@@ -73,6 +74,25 @@
     [super viewWillAppear:animated];
     
     if (self.isRefresh) {//刷新数据
+        if (![self isLogin]) {//未登录
+            if ([UserData objectForKey:@"show_login"]) {//显示登录页面
+                //不需要显示登录页面
+                [UserData setObject:nil forKey:@"show_login"];
+                
+                UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"购物车数据需要登录才可查看" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+                [alert addAction:[UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+                    
+                }]];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        
+            return;
+        }
+        
         //获取数据
         [self loadData];
     }
