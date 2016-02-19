@@ -85,6 +85,7 @@
 		E6C46A211C755B16005D643A /* CTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A201C755B16005D643A /* CTextField.m */; };
 		E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A231C7570C5005D643A /* ULRegisterViewController.m */; };
 		E6C46A271C7594D9005D643A /* ULQuickLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */; };
+		E6C627301C76A1AA00BD3F7E /* ULFindPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C6272F1C76A1AA00BD3F7E /* ULFindPasswordViewController.m */; };
 		E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */; };
 		E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
@@ -254,6 +255,8 @@
 		E6C46A231C7570C5005D643A /* ULRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULRegisterViewController.m; sourceTree = "<group>"; };
 		E6C46A251C7594D9005D643A /* ULQuickLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULQuickLoginViewController.h; sourceTree = "<group>"; };
 		E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULQuickLoginViewController.m; sourceTree = "<group>"; };
+		E6C6272E1C76A1AA00BD3F7E /* ULFindPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULFindPasswordViewController.h; sourceTree = "<group>"; };
+		E6C6272F1C76A1AA00BD3F7E /* ULFindPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULFindPasswordViewController.m; sourceTree = "<group>"; };
 		E6E4C48F1C605F4000B15B20 /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		E6ED93F41C5EEF7300127DC7 /* SCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
@@ -732,6 +735,8 @@
 				E6C46A231C7570C5005D643A /* ULRegisterViewController.m */,
 				E6C46A251C7594D9005D643A /* ULQuickLoginViewController.h */,
 				E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */,
+				E6C6272E1C76A1AA00BD3F7E /* ULFindPasswordViewController.h */,
+				E6C6272F1C76A1AA00BD3F7E /* ULFindPasswordViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -901,6 +906,7 @@
 				E65B0B971C4F84C4002262F1 /* MJRefreshAutoFooter.m in Sources */,
 				E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */,
 				E65B0BCD1C4F84CE002262F1 /* NSData+ImageContentType.m in Sources */,
+				E6C627301C76A1AA00BD3F7E /* ULFindPasswordViewController.m in Sources */,
 				E65B0BD91C4F84CE002262F1 /* UIImageView+HighlightedWebCache.m in Sources */,
 				E6C46A1E1C75532E005D643A /* ULLoginViewController.m in Sources */,
 				E65B0B351C4F7A24002262F1 /* main.m in Sources */,

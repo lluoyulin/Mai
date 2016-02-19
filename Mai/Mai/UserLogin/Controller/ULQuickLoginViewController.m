@@ -256,7 +256,9 @@
                 
                 //把服务器上最新的购物车数据添加到本地缓存中
                 for (NSDictionary *dic in array) {
-                    [self setShoppingCount:[dic objectForKey:@"num"] sid:[dic objectForKey:@"sid"] fid:[[dic objectForKey:@"gs"] objectForKey:@"fid"] isAdd:YES];
+                    for (int i=0; i<[[dic objectForKey:@"num"] integerValue]; i++) {
+                        [self setShoppingCount:[dic objectForKey:@"num"] sid:[dic objectForKey:@"sid"] fid:[[dic objectForKey:@"gs"] objectForKey:@"fid"] isAdd:YES];
+                    }
                 }
             }
         }
