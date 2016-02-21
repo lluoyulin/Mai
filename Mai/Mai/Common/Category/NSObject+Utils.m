@@ -188,6 +188,16 @@
     return [self uid];
 }
 
+/**
+ *  退出
+ */
+-(void)logout{
+    self.login=nil;
+    self.uid=nil;
+    self.userName=nil;
+    self.phone=nil;
+}
+
 #pragma mark 属性
 -(void)setLogin:(NSString *)login{
     [UserData setObject:login forKey:@"login"];
@@ -228,6 +238,15 @@
 -(void)setIsRefresh:(BOOL)isRefresh{
     [UserData setObject:isRefresh ? @"1" : nil forKey:@"isRefresh"];
     [UserData synchronize];
+}
+
+-(void)setUserHead:(NSString *)userHead{
+    [UserData setObject:userHead forKey:@"user_head"];
+    [UserData synchronize];
+}
+
+-(NSString *)userHead{
+    return [UserData objectForKey:@"user_head"] ? [UserData objectForKey:@"user_head"] : @"";
 }
 
 -(BOOL)isRefresh{

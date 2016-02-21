@@ -14,6 +14,7 @@
 @property(nonatomic,strong) NSString *uid;//用户id
 @property(nonatomic,strong) NSString *userName;//用户名
 @property(nonatomic,strong) NSString *phone;//用户手机号
+@property(nonatomic,strong) NSString *userHead;//用户头像
 @property(nonatomic) BOOL isRefresh;//是否刷新数据
 
 /**
@@ -53,5 +54,10 @@
  *  @return 用户id
  */
 -(NSString *)getUid;
+
+/**
+ *  退出
+ */
+-(void)logout;
 
 @end

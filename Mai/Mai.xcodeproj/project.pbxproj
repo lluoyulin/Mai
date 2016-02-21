@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E6138CCB1C79B97B003A370E /* UCEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6138CCA1C79B97B003A370E /* UCEditProfileViewController.m */; };
 		E61ADDFE1C72BFF0009D0324 /* UCUserAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */; };
 		E61ADE011C72D813009D0324 /* UCAddressDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */; };
 		E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */; };
@@ -97,6 +98,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E6138CC91C79B97B003A370E /* UCEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCEditProfileViewController.h; sourceTree = "<group>"; };
+		E6138CCA1C79B97B003A370E /* UCEditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCEditProfileViewController.m; sourceTree = "<group>"; };
 		E61ADDFC1C72BFF0009D0324 /* UCUserAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCUserAddressViewController.h; sourceTree = "<group>"; };
 		E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCUserAddressViewController.m; sourceTree = "<group>"; };
 		E61ADDFF1C72D813009D0324 /* UCAddressDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCAddressDetailsViewController.h; sourceTree = "<group>"; };
@@ -689,6 +692,8 @@
 				E65F9BE41C7417750047A8E5 /* UCOrderDetailsViewController.m */,
 				E65F9BE61C74192C0047A8E5 /* UCGoodsListViewController.h */,
 				E65F9BE71C74192C0047A8E5 /* UCGoodsListViewController.m */,
+				E6138CC91C79B97B003A370E /* UCEditProfileViewController.h */,
+				E6138CCA1C79B97B003A370E /* UCEditProfileViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -890,6 +895,7 @@
 				E6BA82141C50C3BB00A5C16F /* HGoodsDetailsViewController.m in Sources */,
 				E65B0BCF1C4F84CE002262F1 /* SDWebImageCompat.m in Sources */,
 				E61ADE011C72D813009D0324 /* UCAddressDetailsViewController.m in Sources */,
+				E6138CCB1C79B97B003A370E /* UCEditProfileViewController.m in Sources */,
 				E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */,
 				E65B0BA01C4F84C4002262F1 /* MJRefreshBackNormalFooter.m in Sources */,
 				E65B0BD01C4F84CE002262F1 /* SDWebImageDecoder.m in Sources */,

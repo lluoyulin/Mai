@@ -10,8 +10,11 @@
 
 #import "Const.h"
 #import "UILabel+AutoFrame.h"
+#import "NSObject+Utils.h"
 
 #import "MainViewController.h"
+#import "ULLoginViewController.h"
+#import "UCEditProfileViewController.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -67,6 +70,11 @@
     
     //隐藏导航栏
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
+    if ([self isLogin]) {
+        //更新用户信息
+        [self updateUserInfo];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -114,7 +122,7 @@
     self.nickNameLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.userHeadImage.right+15, (self.userInfoButton.height-20)/2, self.userView.width-self.userHeadImage.right-15-15-14-15, 20)];
     self.nickNameLabel.font=[UIFont systemFontOfSize:20.0];
     self.nickNameLabel.textColor=ThemeWhite;
-    self.nickNameLabel.text=@"我是出来mai开发者";
+    self.nickNameLabel.text=@"游客";
     [self.userInfoButton addSubview:self.nickNameLabel];
     
     //用户信息编辑图片
@@ -222,6 +230,13 @@
 }
 
 #pragma mark 自定义方法
+/**
+ *  更新用户信息
+ */
+-(void)updateUserInfo{
+    [self.userHeadImage sd_setImageWithURL:[NSURL URLWithString:self.userHead] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    self.nickNameLabel.text=self.userName;
+}
 
 #pragma mark 按钮事件
 /**
@@ -230,7 +245,13 @@
  *  @param sender
  */
 -(void)userInfoButton:(UIButton *)sender{
-   
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
+    
+    [self.navigationController pushViewController:[UCEditProfileViewController new] animated:YES];
 }
 
 /**
