@@ -11,11 +11,14 @@
 #import "Const.h"
 #import "UILabel+AutoFrame.h"
 #import "NSObject+Utils.h"
+#import "NSObject+HttpTask.h"
+#import "CAlertView.h"
 
 #import "UCEditProfileTableViewCell.h"
 #import "UCEditViewController.h"
 
 #import "UIImageView+WebCache.h"
+#import "MBProgressHUD.h"
 
 @interface UCEditProfileViewController (){
     NSMutableArray *_list;
@@ -123,7 +126,7 @@
     self.headImage=[[UIImageView alloc] initWithFrame:CGRectMake(self.headButtonFlag.left-15-56, (self.headButton.height-56)/2, 56, 56)];
     self.headImage.layer.masksToBounds=YES;
     self.headImage.layer.cornerRadius=self.headImage.width/2;
-    [self.headImage sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    [self.headImage sd_setImageWithURL:[NSURL URLWithString:self.userHead] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     [self.headButton addSubview:self.headImage];
     
     //头部视图分割线
@@ -160,6 +163,67 @@
     [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"text":self.city,@"tag":@"城市"}]];
     [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"text":self.area,@"tag":@"区"}]];
     [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"text":self.address,@"tag":@"地址"}]];
+}
+
+/**
+ *  保存数据
+ */
+-(void)saveData{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"提交中...";
+    
+    //构造参数
+    NSString *url=@"user_edit";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0",
+                               @"nickname":[_list[0] objectForKey:@"text"],
+                               @"mail":[_list[2] objectForKey:@"text"],
+                               @"sex":[_list[1] objectForKey:@"text"],
+                               @"province":[_list[3] objectForKey:@"text"],
+                               @"city":[_list[4] objectForKey:@"text"],
+                               @"area":[_list[5] objectForKey:@"text"],
+                               @"address":[_list[6] objectForKey:@"text"]};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            hud.mode=MBProgressHUDModeText;
+            hud.labelText=@"提交成功";
+            
+            //缓存用户信息
+            self.nickName=[_list[0] objectForKey:@"text"];
+            self.sex=[_list[1] objectForKey:@"text"];
+            self.mail=[_list[2] objectForKey:@"text"];
+            self.province=[_list[3] objectForKey:@"text"];
+            self.city=[_list[4] objectForKey:@"text"];
+            self.area=[_list[5] objectForKey:@"text"];
+            self.address=[_list[6] objectForKey:@"text"];
+            
+            //延迟1.5s执行方法
+            [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
+        }
+        else{
+            [hud hide:YES];
+            
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+/**
+ *  返回上层
+ */
+-(void)popViewController{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark 按钮事件
@@ -204,7 +268,8 @@
  *  @param sender
  */
 -(void)navigationSaveButton:(UIButton *)sender{
-    
+    //保存数据
+    [self saveData];
 }
 
 #pragma mark 通知

@@ -271,7 +271,7 @@
 }
 
 -(NSString *)sex{
-    return [UserData objectForKey:@"sex"] ? [UserData objectForKey:@"sex"] : @"1";
+    return [UserData objectForKey:@"sex"] ? [UserData objectForKey:@"sex"] : @"";
 }
 
 -(void)setMail:(NSString *)mail{

@@ -115,14 +115,13 @@
     self.userHeadImage.layer.borderColor=[UIColorFromRGB(0xffffff) CGColor];
     self.userHeadImage.layer.borderWidth=1.5;
     self.userHeadImage.layer.cornerRadius=self.userHeadImage.width/2;
-    [self.userHeadImage sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"image_default"]];
+    [self.userHeadImage sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
     [self.userInfoButton addSubview:self.userHeadImage];
     
     //用户昵称
     self.nickNameLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.userHeadImage.right+15, (self.userInfoButton.height-20)/2, self.userView.width-self.userHeadImage.right-15-15-14-15, 20)];
     self.nickNameLabel.font=[UIFont systemFontOfSize:20.0];
     self.nickNameLabel.textColor=ThemeWhite;
-    self.nickNameLabel.text=@"游客";
     [self.userInfoButton addSubview:self.nickNameLabel];
     
     //用户信息编辑图片
@@ -234,8 +233,8 @@
  *  更新用户信息
  */
 -(void)updateUserInfo{
-    [self.userHeadImage sd_setImageWithURL:[NSURL URLWithString:self.userHead] placeholderImage:[UIImage imageNamed:@"image_default"]];
-    self.nickNameLabel.text=self.userName;
+    [self.userHeadImage sd_setImageWithURL:[NSURL URLWithString:self.userHead] placeholderImage:[UIImage imageNamed:@"default_avatar"]];
+    self.nickNameLabel.text=[self.nickName isEqualToString:@""] ? @"游客" : self.nickName;
 }
 
 #pragma mark 按钮事件
