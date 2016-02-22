@@ -11,5 +11,6 @@
 @interface UCOrderListTableViewCell : UITableViewCell
 
 @property(nonatomic,strong) NSDictionary *dic;
+@property(nonatomic,strong) UIView *goodsList;
 
 @end

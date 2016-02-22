@@ -11,5 +11,6 @@
 @interface SCGoodsListViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @property(nonatomic,strong) NSArray *goodsList;//购买商品数据源
+@property(nonatomic,strong) NSString *type;//类型
 
 @end

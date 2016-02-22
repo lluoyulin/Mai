@@ -83,6 +83,12 @@
     
     //商品图片
     UIImageView *logoImage=(UIImageView *)[cell viewWithTag:1];
+    if ([self.type isEqualToString:@"1"]) {//添加订单加载
+        
+    }
+    else{//
+    
+    }
     [logoImage sd_setImageWithURL:[NSURL URLWithString:[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
     
     //商品数量
