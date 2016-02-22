@@ -172,9 +172,16 @@
             
             //缓存用户信息
             self.login=@"1";
-            self.uid=[[dic objectForKey:@"user"] objectForKey:@"uid"];
-            self.userName=[[dic objectForKey:@"user"] objectForKey:@"uname"];
-            self.phone=[[dic objectForKey:@"user"] objectForKey:@"tel"];
+            self.uid=CheckNull([[dic objectForKey:@"user"] objectForKey:@"uid"]);
+            self.userName=CheckNull([[dic objectForKey:@"user"] objectForKey:@"uname"]);
+            self.phone=CheckNull([[dic objectForKey:@"user"] objectForKey:@"tel"]);
+            self.nickName=CheckNull([[dic objectForKey:@"user"] objectForKey:@"nickname"]);
+            self.sex=CheckNull([[dic objectForKey:@"user"] objectForKey:@"sex"]);
+            self.mail=CheckNull([[dic objectForKey:@"user"] objectForKey:@"mail"]);
+            self.province=CheckNull([[dic objectForKey:@"user"] objectForKey:@"province"]);
+            self.city=CheckNull([[dic objectForKey:@"user"] objectForKey:@"city"]);
+            self.area=CheckNull([[dic objectForKey:@"user"] objectForKey:@"area"]);
+            self.address=CheckNull([[dic objectForKey:@"user"] objectForKey:@"address"]);
             
             //获取购物车数据
             [self loadShoppingCartData];

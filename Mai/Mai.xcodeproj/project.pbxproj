@@ -87,6 +87,8 @@
 		E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A231C7570C5005D643A /* ULRegisterViewController.m */; };
 		E6C46A271C7594D9005D643A /* ULQuickLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */; };
 		E6C627301C76A1AA00BD3F7E /* ULFindPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C6272F1C76A1AA00BD3F7E /* ULFindPasswordViewController.m */; };
+		E6CD203A1C7A941000BB4481 /* UCEditProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD20391C7A941000BB4481 /* UCEditProfileTableViewCell.m */; };
+		E6CD203D1C7AA42E00BB4481 /* UCEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD203C1C7AA42E00BB4481 /* UCEditViewController.m */; };
 		E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */; };
 		E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
@@ -260,6 +262,10 @@
 		E6C46A261C7594D9005D643A /* ULQuickLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULQuickLoginViewController.m; sourceTree = "<group>"; };
 		E6C6272E1C76A1AA00BD3F7E /* ULFindPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULFindPasswordViewController.h; sourceTree = "<group>"; };
 		E6C6272F1C76A1AA00BD3F7E /* ULFindPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ULFindPasswordViewController.m; sourceTree = "<group>"; };
+		E6CD20381C7A941000BB4481 /* UCEditProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCEditProfileTableViewCell.h; sourceTree = "<group>"; };
+		E6CD20391C7A941000BB4481 /* UCEditProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCEditProfileTableViewCell.m; sourceTree = "<group>"; };
+		E6CD203B1C7AA42E00BB4481 /* UCEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCEditViewController.h; sourceTree = "<group>"; };
+		E6CD203C1C7AA42E00BB4481 /* UCEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCEditViewController.m; sourceTree = "<group>"; };
 		E6E4C48F1C605F4000B15B20 /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		E6ED93F41C5EEF7300127DC7 /* SCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
@@ -694,6 +700,8 @@
 				E65F9BE71C74192C0047A8E5 /* UCGoodsListViewController.m */,
 				E6138CC91C79B97B003A370E /* UCEditProfileViewController.h */,
 				E6138CCA1C79B97B003A370E /* UCEditProfileViewController.m */,
+				E6CD203B1C7AA42E00BB4481 /* UCEditViewController.h */,
+				E6CD203C1C7AA42E00BB4481 /* UCEditViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -703,6 +711,8 @@
 			children = (
 				E65F9BE91C7419490047A8E5 /* UCGoodsListTableViewCell.h */,
 				E65F9BEA1C7419490047A8E5 /* UCGoodsListTableViewCell.m */,
+				E6CD20381C7A941000BB4481 /* UCEditProfileTableViewCell.h */,
+				E6CD20391C7A941000BB4481 /* UCEditProfileTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -877,11 +887,13 @@
 				E6BA81E81C508AC800A5C16F /* BaseViewController.m in Sources */,
 				E6BA81EE1C508C9D00A5C16F /* HHomeViewController.m in Sources */,
 				E65B0BA11C4F84C4002262F1 /* MJRefreshBackStateFooter.m in Sources */,
+				E6CD203A1C7A941000BB4481 /* UCEditProfileTableViewCell.m in Sources */,
 				E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */,
 				E6C46A211C755B16005D643A /* CTextField.m in Sources */,
 				E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */,
 				E65B0BDF1C4F8584002262F1 /* MBProgressHUD.m in Sources */,
 				E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */,
+				E6CD203D1C7AA42E00BB4481 /* UCEditViewController.m in Sources */,
 				E65B0BD51C4F84CE002262F1 /* UIButton+WebCache.m in Sources */,
 				E6C25CD11C7178B000FE6E9F /* SCConfirmOrderViewController.m in Sources */,
 				E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */,

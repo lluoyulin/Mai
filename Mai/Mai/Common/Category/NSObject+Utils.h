@@ -15,6 +15,13 @@
 @property(nonatomic,strong) NSString *userName;//用户名
 @property(nonatomic,strong) NSString *phone;//用户手机号
 @property(nonatomic,strong) NSString *userHead;//用户头像
+@property(nonatomic,strong) NSString *nickName;//昵称
+@property(nonatomic,strong) NSString *sex;//性别
+@property(nonatomic,strong) NSString *mail;//邮箱
+@property(nonatomic,strong) NSString *province;//省份
+@property(nonatomic,strong) NSString *city;//市
+@property(nonatomic,strong) NSString *area;//区
+@property(nonatomic,strong) NSString *address;//地址
 @property(nonatomic) BOOL isRefresh;//是否刷新数据
 
 /**

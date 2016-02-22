@@ -45,4 +45,11 @@
  */
 -(NSString *)text;
 
+/**
+ *  验证邮箱格式
+ *
+ *  @return 是或否
+ */
+-(BOOL)isValidEmail;
+
 @end

@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface UCEditProfileViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
+@interface UCEditProfileViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

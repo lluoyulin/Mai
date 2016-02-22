@@ -245,6 +245,7 @@
  *  @param sender
  */
 -(void)userInfoButton:(UIButton *)sender{
+//    [self logout];
     if (![self isLogin]) {
         [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
         

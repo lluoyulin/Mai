@@ -196,6 +196,13 @@
     self.uid=nil;
     self.userName=nil;
     self.phone=nil;
+    self.nickName=nil;
+    self.sex=nil;
+    self.mail=nil;
+    self.province=nil;
+    self.city=nil;
+    self.area=nil;
+    self.address=nil;
 }
 
 #pragma mark 属性
@@ -247,6 +254,69 @@
 
 -(NSString *)userHead{
     return [UserData objectForKey:@"user_head"] ? [UserData objectForKey:@"user_head"] : @"";
+}
+
+-(void)setNickName:(NSString *)nickName{
+    [UserData setObject:nickName forKey:@"nickName"];
+    [UserData synchronize];
+}
+
+-(NSString *)nickName{
+    return [UserData objectForKey:@"nickName"] ? [UserData objectForKey:@"nickName"] : @"";
+}
+
+-(void)setSex:(NSString *)sex{
+    [UserData setObject:sex forKey:@"sex"];
+    [UserData synchronize];
+}
+
+-(NSString *)sex{
+    return [UserData objectForKey:@"sex"] ? [UserData objectForKey:@"sex"] : @"1";
+}
+
+-(void)setMail:(NSString *)mail{
+    [UserData setObject:mail forKey:@"mail"];
+    [UserData synchronize];
+}
+
+-(NSString *)mail{
+    return [UserData objectForKey:@"mail"] ? [UserData objectForKey:@"mail"] : @"";
+}
+
+-(void)setProvince:(NSString *)province{
+    [UserData setObject:province forKey:@"province"];
+    [UserData synchronize];
+}
+
+-(NSString *)province{
+    return [UserData objectForKey:@"province"] ? [UserData objectForKey:@"province"] : @"";
+}
+
+-(void)setCity:(NSString *)city{
+    [UserData setObject:city forKey:@"city"];
+    [UserData synchronize];
+}
+
+-(NSString *)city{
+    return [UserData objectForKey:@"city"] ? [UserData objectForKey:@"city"] : @"";
+}
+
+-(void)setArea:(NSString *)area{
+    [UserData setObject:area forKey:@"area"];
+    [UserData synchronize];
+}
+
+-(NSString *)area{
+    return [UserData objectForKey:@"area"] ? [UserData objectForKey:@"area"] : @"";
+}
+
+-(void)setAddress:(NSString *)address{
+    [UserData setObject:address forKey:@"address"];
+    [UserData synchronize];
+}
+
+-(NSString *)address{
+    return [UserData objectForKey:@"address"] ? [UserData objectForKey:@"address"] : @"";
 }
 
 -(BOOL)isRefresh{
