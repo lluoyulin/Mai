@@ -15,6 +15,7 @@
 #import "MainViewController.h"
 #import "ULLoginViewController.h"
 #import "UCEditProfileViewController.h"
+#import "UCOrderListViewController.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -244,7 +245,6 @@
  *  @param sender
  */
 -(void)userInfoButton:(UIButton *)sender{
-//    [self logout];
     if (![self isLogin]) {
         [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
         
@@ -260,7 +260,15 @@
  *  @param sender
  */
 -(void)allOrdersButton:(UIButton *)sender{
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
     
+    UCOrderListViewController *vc=[UCOrderListViewController new];
+    vc.selectIndex=5;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /**
@@ -269,7 +277,15 @@
  *  @param sender
  */
 -(void)orderOperateButton:(UIButton *)sender{
-
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
+    
+    UCOrderListViewController *vc=[UCOrderListViewController new];
+    vc.selectIndex=sender.tag;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

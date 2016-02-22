@@ -89,6 +89,8 @@
 		E6C627301C76A1AA00BD3F7E /* ULFindPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C6272F1C76A1AA00BD3F7E /* ULFindPasswordViewController.m */; };
 		E6CD203A1C7A941000BB4481 /* UCEditProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD20391C7A941000BB4481 /* UCEditProfileTableViewCell.m */; };
 		E6CD203D1C7AA42E00BB4481 /* UCEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD203C1C7AA42E00BB4481 /* UCEditViewController.m */; };
+		E6CD20401C7AC39000BB4481 /* UCOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD203F1C7AC39000BB4481 /* UCOrderListViewController.m */; };
+		E6CD20431C7AD7BE00BB4481 /* UCOrderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD20421C7AD7BE00BB4481 /* UCOrderListTableViewCell.m */; };
 		E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */; };
 		E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
@@ -266,6 +268,10 @@
 		E6CD20391C7A941000BB4481 /* UCEditProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCEditProfileTableViewCell.m; sourceTree = "<group>"; };
 		E6CD203B1C7AA42E00BB4481 /* UCEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCEditViewController.h; sourceTree = "<group>"; };
 		E6CD203C1C7AA42E00BB4481 /* UCEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCEditViewController.m; sourceTree = "<group>"; };
+		E6CD203E1C7AC39000BB4481 /* UCOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCOrderListViewController.h; sourceTree = "<group>"; };
+		E6CD203F1C7AC39000BB4481 /* UCOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCOrderListViewController.m; sourceTree = "<group>"; };
+		E6CD20411C7AD7BE00BB4481 /* UCOrderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UCOrderListTableViewCell.h; sourceTree = "<group>"; };
+		E6CD20421C7AD7BE00BB4481 /* UCOrderListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCOrderListTableViewCell.m; sourceTree = "<group>"; };
 		E6E4C48F1C605F4000B15B20 /* NSObject+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Utils.h"; sourceTree = "<group>"; };
 		E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		E6ED93F41C5EEF7300127DC7 /* SCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
@@ -694,6 +700,8 @@
 				E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */,
 				E61ADDFF1C72D813009D0324 /* UCAddressDetailsViewController.h */,
 				E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */,
+				E6CD203E1C7AC39000BB4481 /* UCOrderListViewController.h */,
+				E6CD203F1C7AC39000BB4481 /* UCOrderListViewController.m */,
 				E65F9BE31C7417750047A8E5 /* UCOrderDetailsViewController.h */,
 				E65F9BE41C7417750047A8E5 /* UCOrderDetailsViewController.m */,
 				E65F9BE61C74192C0047A8E5 /* UCGoodsListViewController.h */,
@@ -713,6 +721,8 @@
 				E65F9BEA1C7419490047A8E5 /* UCGoodsListTableViewCell.m */,
 				E6CD20381C7A941000BB4481 /* UCEditProfileTableViewCell.h */,
 				E6CD20391C7A941000BB4481 /* UCEditProfileTableViewCell.m */,
+				E6CD20411C7AD7BE00BB4481 /* UCOrderListTableViewCell.h */,
+				E6CD20421C7AD7BE00BB4481 /* UCOrderListTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -889,6 +899,7 @@
 				E65B0BA11C4F84C4002262F1 /* MJRefreshBackStateFooter.m in Sources */,
 				E6CD203A1C7A941000BB4481 /* UCEditProfileTableViewCell.m in Sources */,
 				E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */,
+				E6CD20401C7AC39000BB4481 /* UCOrderListViewController.m in Sources */,
 				E6C46A211C755B16005D643A /* CTextField.m in Sources */,
 				E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */,
 				E65B0BDF1C4F8584002262F1 /* MBProgressHUD.m in Sources */,
@@ -921,6 +932,7 @@
 				E6BA82011C508D6500A5C16F /* BackViewAnimation.m in Sources */,
 				E6BA81F71C508D0100A5C16F /* UCUserCenterViewController.m in Sources */,
 				E6BA82021C508D6500A5C16F /* BackViewTransition.m in Sources */,
+				E6CD20431C7AD7BE00BB4481 /* UCOrderListTableViewCell.m in Sources */,
 				E65B0B971C4F84C4002262F1 /* MJRefreshAutoFooter.m in Sources */,
 				E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */,
 				E65B0BCD1C4F84CE002262F1 /* NSData+ImageContentType.m in Sources */,

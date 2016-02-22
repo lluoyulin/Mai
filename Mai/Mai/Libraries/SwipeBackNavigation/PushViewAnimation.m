@@ -24,7 +24,7 @@
     [[transitionContext containerView] addSubview:toView];
     
     //动画效果
-    toViewController.view.frame=CGRectMake(-toViewController.view.frame.size.width, toViewController.view.frame.origin.y, toViewController.view.frame.size.width, toViewController.view.frame.size.height);
+    toViewController.view.frame=CGRectMake(toViewController.view.frame.size.width, toViewController.view.frame.origin.y, toViewController.view.frame.size.width, toViewController.view.frame.size.height);
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         toViewController.view.frame=CGRectMake(0, toViewController.view.frame.origin.y, toViewController.view.frame.size.width, toViewController.view.frame.size.height);

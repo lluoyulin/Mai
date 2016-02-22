@@ -184,22 +184,26 @@
                                @"province":[_list[3] objectForKey:@"text"],
                                @"city":[_list[4] objectForKey:@"text"],
                                @"area":[_list[5] objectForKey:@"text"],
-                               @"address":[_list[6] objectForKey:@"text"]};
+                               @"address":[_list[6] objectForKey:@"text"],
+                               @"img":self.avatarData.length==0 ? @"" : CDBase64EncodedForData(self.avatarData)};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
             hud.mode=MBProgressHUDModeText;
             hud.labelText=@"提交成功";
             
             //缓存用户信息
-            self.nickName=[_list[0] objectForKey:@"text"];
-            self.sex=[_list[1] objectForKey:@"text"];
-            self.mail=[_list[2] objectForKey:@"text"];
-            self.province=[_list[3] objectForKey:@"text"];
-            self.city=[_list[4] objectForKey:@"text"];
-            self.area=[_list[5] objectForKey:@"text"];
-            self.address=[_list[6] objectForKey:@"text"];
+            self.nickName=[[dic objectForKey:@"uid"] objectForKey:@"nickname"];
+            self.sex=[[dic objectForKey:@"uid"] objectForKey:@"sex"];
+            self.mail=[[dic objectForKey:@"uid"] objectForKey:@"mail"];
+            self.province=[[dic objectForKey:@"uid"] objectForKey:@"province"];
+            self.city=[[dic objectForKey:@"uid"] objectForKey:@"city"];
+            self.area=[[dic objectForKey:@"uid"] objectForKey:@"area"];
+            self.address=[[dic objectForKey:@"uid"] objectForKey:@"address"];
+            self.userHead=[[dic objectForKey:@"uid"] objectForKey:@"headimg"];
             
             //延迟1.5s执行方法
             [self performSelector:@selector(popViewController) withObject:nil afterDelay:1.5];
