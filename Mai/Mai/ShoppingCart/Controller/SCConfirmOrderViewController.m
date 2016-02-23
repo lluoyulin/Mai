@@ -164,6 +164,7 @@ static const CGFloat PayViewHeight=50.0;
     
     //商品列表
     SCGoodsListViewController *goodsListVC=[SCGoodsListViewController new];
+    goodsListVC.type=@"1";
     goodsListVC.goodsList=[self.dic objectForKey:@"list"];
     
     [self addChildViewController:goodsListVC];

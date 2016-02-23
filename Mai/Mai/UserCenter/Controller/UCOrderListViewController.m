@@ -79,7 +79,7 @@
  */
 -(void)initOrderOperateButton{
     //按钮名称
-    NSArray *titleArray=@[@"待付款",@"待抢单",@"已接单",@"配送中",@"已完成"];
+    NSArray *titleArray=@[@"已下单",@"已支付",@"已取消",@"配送中",@"已完成"];
     
     for (int i=0; i<titleArray.count; i++) {
         UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -135,6 +135,8 @@
             NSArray *array=[dic objectForKey:@"list"];
             
             if (array.count>0) {
+                [_list removeAllObjects];
+                
                 [_list addObjectsFromArray:array];
                 
                 //筛选数据
@@ -164,19 +166,19 @@
 -(void)filterDataWithSelectIndex:(NSInteger )index{
     NSInteger status;
     switch (index) {
-        case 1:
+        case 1://已下单
             status=1;
             break;
-        case 2:
+        case 2://已支付
             status=2;
             break;
-        case 3:
-            status=1;
+        case 3://已取消
+            status=3;
             break;
-        case 4:
+        case 4://配送中
             status=4;
             break;
-        case 5:
+        case 5://已完成
             status=5;
             break;
     }
@@ -192,6 +194,47 @@
     [self.tableView reloadData];//刷新tableView
 }
 
+/**
+ *  取消订单
+ *
+ *  @param orderNO 订单id
+ */
+-(void)cancelOrder:(NSString *)orderNO{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"提交中...";
+    
+    //构造参数
+    NSString *url=@"order_cancel";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"orderid":orderNO,
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            hud.mode=MBProgressHUDModeText;
+            hud.labelText=@"提交成功";
+            [hud hide:YES afterDelay:1.5];
+            
+            //获取数据
+            [self loadData];
+        }
+        else{
+            [hud hide:YES];
+            
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
 #pragma mark 按钮事件
 /**
  *  订单状态操作栏按钮
@@ -204,6 +247,7 @@
         
         if (btn.tag==sender.tag) {
             btn.selected=YES;
+            self.selectIndex=btn.tag;
             
             //筛选数据
             [self filterDataWithSelectIndex:btn.tag];
@@ -229,10 +273,26 @@
     UCOrderListTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:tableViewCellIdentifier];
     if (cell==nil) {
         cell=[[UCOrderListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
+        
+        //取消订单block
+        cell.cancelOrderBlock=^(NSString *orderNO){
+            [self cancelOrder:orderNO];
+        };
+        
+        //支付订单block
+        cell.payOrderBlock=^(){
+        
+        };
+        
+        //查看订单
+        cell.queryOrderBlock=^(){
+        
+        };
     }
     
     //商品列表
     SCGoodsListViewController *goodsListVC=[SCGoodsListViewController new];
+    goodsListVC.type=@"2";
     goodsListVC.goodsList=[_orderList[indexPath.row] objectForKey:@"gs"];
     
     [self addChildViewController:goodsListVC];

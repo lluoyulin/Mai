@@ -157,6 +157,7 @@
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
+    self.payOrderBlock();
 }
 
 /**
@@ -165,6 +166,8 @@
  *  @param sender
  */
 -(void)cancelButton:(UIButton *)sender{
+    //取消订单block
+    self.cancelOrderBlock([self.dic objectForKey:@"id"]);
 }
 
 /**
@@ -173,6 +176,7 @@
  *  @param sender
  */
 -(void)queryOrderButton:(UIButton *)sender{
+    self.queryOrderBlock();
 }
 
 @end

@@ -200,7 +200,7 @@
  */
 -(void)initOrderOperateButton{
     //按钮名称
-    NSArray *titleArray=@[@"待付款",@"待抢单",@"已接单",@"配送中",@"已完成"];
+    NSArray *titleArray=@[@"已下单",@"已支付",@"已取消",@"配送中",@"已完成"];
     
     //菜单栏按钮图片
     NSArray *imageNormalArray=@[@"user_center_card",

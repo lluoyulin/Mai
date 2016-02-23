@@ -27,7 +27,7 @@
     flowLayout.scrollDirection=UICollectionViewScrollDirectionHorizontal;
     
     self.collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 90) collectionViewLayout:flowLayout];
-    self.collectionView.backgroundColor=ThemeWhite;
+    self.collectionView.backgroundColor=[self.type isEqualToString:@"1"] ? ThemeWhite : UIColorFromRGB(0xf9f9f9);
     self.collectionView.showsHorizontalScrollIndicator=NO;
     self.collectionView.dataSource=self;
     self.collectionView.delegate=self;
@@ -83,21 +83,27 @@
     
     //商品图片
     UIImageView *logoImage=(UIImageView *)[cell viewWithTag:1];
-    if ([self.type isEqualToString:@"1"]) {//添加订单加载
-        
-    }
-    else{//
-    
-    }
-    [logoImage sd_setImageWithURL:[NSURL URLWithString:[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
     
     //商品数量
     UILabel *countLabel=(UILabel *)[cell viewWithTag:2];
-    countLabel.text=[_goodsList[indexPath.row] objectForKey:@"num"];
     
     //商品价格
     UILabel *priceLabel=(UILabel *)[logoImage viewWithTag:3];
-    priceLabel.text=[NSString stringWithFormat:@"¥%@",[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"price2"]];
+    
+    if ([self.type isEqualToString:@"1"]) {//添加订单
+        [logoImage sd_setImageWithURL:[NSURL URLWithString:[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
+        
+        countLabel.text=[_goodsList[indexPath.row] objectForKey:@"num"];
+        
+        priceLabel.text=[NSString stringWithFormat:@"¥%@",[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"price2"]];
+    }
+    else{//我的订单
+        [logoImage sd_setImageWithURL:[NSURL URLWithString:[_goodsList[indexPath.row] objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
+        
+        countLabel.text=[_goodsList[indexPath.row] objectForKey:@"num"];
+        
+        priceLabel.text=[NSString stringWithFormat:@"¥%.2f",[[_goodsList[indexPath.row] objectForKey:@"price2"] floatValue]];
+    }
     
     return cell;
 }
