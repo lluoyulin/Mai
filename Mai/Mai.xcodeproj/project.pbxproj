@@ -70,6 +70,7 @@
 		E663973A1C53967800E5F593 /* CAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E66397381C53967800E5F593 /* CAlertView.m */; };
 		E673C0F71C7C3C860091FA85 /* LBLeftBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E673C0F61C7C3C860091FA85 /* LBLeftBarViewController.m */; };
 		E673C0FA1C7C43810091FA85 /* LBLeftBarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E673C0F91C7C43810091FA85 /* LBLeftBarTableViewCell.m */; };
+		E673C0FD1C7C649C0091FA85 /* LBWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E673C0FC1C7C649C0091FA85 /* LBWebViewViewController.m */; };
 		E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81D81C5083DF00A5C16F /* MainViewController.m */; };
 		E6BA81E81C508AC800A5C16F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81E71C508AC800A5C16F /* BaseViewController.m */; };
 		E6BA81EE1C508C9D00A5C16F /* HHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81ED1C508C9D00A5C16F /* HHomeViewController.m */; };
@@ -232,6 +233,8 @@
 		E673C0F61C7C3C860091FA85 /* LBLeftBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBLeftBarViewController.m; sourceTree = "<group>"; };
 		E673C0F81C7C43810091FA85 /* LBLeftBarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBLeftBarTableViewCell.h; sourceTree = "<group>"; };
 		E673C0F91C7C43810091FA85 /* LBLeftBarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBLeftBarTableViewCell.m; sourceTree = "<group>"; };
+		E673C0FB1C7C649C0091FA85 /* LBWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBWebViewViewController.h; sourceTree = "<group>"; };
+		E673C0FC1C7C649C0091FA85 /* LBWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBWebViewViewController.m; sourceTree = "<group>"; };
 		E6BA81D71C5083DF00A5C16F /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E6BA81D81C5083DF00A5C16F /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E6BA81E61C508AC800A5C16F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -608,6 +611,8 @@
 			children = (
 				E673C0F51C7C3C860091FA85 /* LBLeftBarViewController.h */,
 				E673C0F61C7C3C860091FA85 /* LBLeftBarViewController.m */,
+				E673C0FB1C7C649C0091FA85 /* LBWebViewViewController.h */,
+				E673C0FC1C7C649C0091FA85 /* LBWebViewViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -910,6 +915,7 @@
 				E6BA81F41C508CF200A5C16F /* SCShoppingCartViewController.m in Sources */,
 				E65B0BA41C4F84C4002262F1 /* MJRefreshStateHeader.m in Sources */,
 				E65B0B521C4F8005002262F1 /* UIView+Frame.m in Sources */,
+				E673C0FD1C7C649C0091FA85 /* LBWebViewViewController.m in Sources */,
 				E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */,
 				E65F9BE81C74192C0047A8E5 /* UCGoodsListViewController.m in Sources */,
 				E65B0B9D1C4F84C4002262F1 /* MJRefreshAutoNormalFooter.m in Sources */,

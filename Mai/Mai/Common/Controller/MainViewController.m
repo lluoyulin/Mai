@@ -10,12 +10,16 @@
 
 #import "Const.h"
 
+#import "LBWebViewViewController.h"
+#import "SwipeBackNavigationViewController.h"
+
 @interface MainViewController ()
 
 @property(nonatomic,strong) UIViewController *leftViewController;//左边VC
 @property(nonatomic,strong) UIViewController *centerViewController;//中间VC
 @property(nonatomic,strong) UIView *leftView;//左边视图
 @property(nonatomic,strong) UIView *centerView;//中间视图
+@property(nonatomic,strong) LBWebViewViewController *webViewVC;
 
 @end
 
@@ -37,6 +41,9 @@
     
     //注册点击汉堡包通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMenu:) name:@"showmenu" object:nil];
+    
+    //注册切换栏目通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCenterView:) name:@"load_center_view" object:nil];
     
     //左边视图
     self.leftView=[[UIView alloc] initWithFrame:CGRectMake(-self.view.width*2/3, 0, self.view.width*2/3, self.view.height)];
@@ -75,6 +82,30 @@
             self.centerView.transform=CGAffineTransformIdentity;
         }];
     }
+}
+
+/**
+ *  切换栏目发送通知
+ */
+-(void)loadCenterView:(NSNotification *)notification{
+    [self showMenu:nil];
+    
+    if (!self.webViewVC) {
+        self.webViewVC=[LBWebViewViewController new];
+        [self addChildViewController:self.webViewVC];
+        [self.webViewVC didMoveToParentViewController:self];
+    }
+    
+    [self.centerViewController.view removeFromSuperview];
+    [self.webViewVC.view removeFromSuperview];
+    
+    if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"我要买"]) {
+        [self.centerView addSubview:self.centerViewController.view];
+        return;
+    }
+    
+    self.webViewVC.title=[notification.userInfo objectForKey:@"title"];
+    [self.centerView addSubview:self.webViewVC.view];
 }
 
 /**

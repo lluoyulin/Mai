@@ -43,12 +43,6 @@
     [self initTableView];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-}
-
 #pragma mark 初始化视图
 /**
  *  初始化背景图
@@ -134,6 +128,9 @@
  *  显示左边视图
  */
 -(void)showMenu:(NSNotification *)notification{
+    //去掉选中效果
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    
     if ([self isLogin] && _list.count<8) {
         [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"退出",@"logo":@"leftbar_log_out",@"isselect":@"0"}]];
         
@@ -184,31 +181,37 @@
 
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithDictionary:@{@"title":@""}];
     switch (indexPath.row) {
         case 0:
-            
+            [dic setObject:@"我要买" forKey:@"title"];
             break;
         case 1:
-            
+            [dic setObject:@"消息" forKey:@"title"];
             break;
         case 2:
-            
+            [dic setObject:@"我要卖" forKey:@"title"];
             break;
         case 3:
-            
+            [dic setObject:@"真有才" forKey:@"title"];
             break;
         case 4:
-            
+            [dic setObject:@"如意分期" forKey:@"title"];
             break;
         case 5:
-            
+            [dic setObject:@"分享好友" forKey:@"title"];
             break;
         case 6:
-            
+            [dic setObject:@"设置" forKey:@"title"];
             break;
         case 7://退出
             [self userLogout];
             break;
+    }
+    
+    if (indexPath.row!=7) {
+        //切换栏目发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"load_center_view" object:nil userInfo:dic];
     }
 }
 
