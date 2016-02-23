@@ -1,0 +1,133 @@
+//
+//  LBLeftBarViewController.m
+//  Mai
+//
+//  Created by freedom on 16/2/23.
+//  Copyright © 2016年 freedom_luo. All rights reserved.
+//
+
+#import "LBLeftBarViewController.h"
+
+#import "Const.h"
+
+#import "LBLeftBarTableViewCell.h"
+
+@interface LBLeftBarViewController (){
+    NSMutableArray *_list;
+}
+
+@property(nonatomic,strong) UIImageView *bgImage;//背景图
+
+@property(nonatomic,strong) UITableView *tableView;
+
+@end
+
+@implementation LBLeftBarViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor=UIColorFromRGB(0x13112b);
+    
+    //初始化数据
+    [self initData];
+    
+    //初始化背景图
+    [self initBGImage];
+    
+    //初始化tablebview
+    [self initTableView];
+}
+
+#pragma mark 初始化视图
+/**
+ *  初始化背景图
+ */
+-(void)initBGImage{
+    //背景图
+    self.bgImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 160)];
+    self.bgImage.image=[UIImage imageNamed:@"leftbar_image"];
+    [self.view addSubview:self.bgImage];
+}
+
+/**
+ *  初始化tablebview
+ */
+-(void)initTableView{
+    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 91, self.view.width*2/3, SCREEN_HEIGHT-91)];
+    self.tableView.delegate=self;
+    self.tableView.dataSource=self;
+    self.tableView.backgroundColor=UIColorFromRGB(0x13112b);
+    self.tableView.tableFooterView=[[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
+}
+
+#pragma mark 自定义方法
+/**
+ *  初始化数据
+ */
+-(void)initData{
+    _list=[[NSMutableArray alloc] init];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"我要买",@"logo":@"leftbar_shopping",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"消息",@"logo":@"leftbar_notice",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"我要卖",@"logo":@"leftbar_store",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"真有才",@"logo":@"leftbar_hat",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"如意分期",@"logo":@"leftbar_card",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"设置",@"logo":@"leftbar_setting",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"分享好友",@"logo":@"leftbar_share",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"退出",@"logo":@"leftbar_log_out",@"isselect":@"0"}]];
+}
+
+#pragma mark 表格数据源委托
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return _list.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *tableViewCellIdentifier=@"tableViewCellIdentifier";
+    
+    LBLeftBarTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:tableViewCellIdentifier];
+    if (cell==nil) {
+        cell=[[LBLeftBarTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:tableViewCellIdentifier];
+    }
+    
+    cell.dic=_list[indexPath.row];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50;
+}
+
+#pragma mark tableView动作委托
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

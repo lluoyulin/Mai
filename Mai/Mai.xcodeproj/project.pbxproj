@@ -68,6 +68,8 @@
 		E65F9BEB1C7419490047A8E5 /* UCGoodsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E65F9BEA1C7419490047A8E5 /* UCGoodsListTableViewCell.m */; };
 		E66397351C53926100E5F593 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E66397341C53926100E5F593 /* NSString+Utils.m */; };
 		E663973A1C53967800E5F593 /* CAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E66397381C53967800E5F593 /* CAlertView.m */; };
+		E673C0F71C7C3C860091FA85 /* LBLeftBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E673C0F61C7C3C860091FA85 /* LBLeftBarViewController.m */; };
+		E673C0FA1C7C43810091FA85 /* LBLeftBarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E673C0F91C7C43810091FA85 /* LBLeftBarTableViewCell.m */; };
 		E6BA81D91C5083DF00A5C16F /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81D81C5083DF00A5C16F /* MainViewController.m */; };
 		E6BA81E81C508AC800A5C16F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81E71C508AC800A5C16F /* BaseViewController.m */; };
 		E6BA81EE1C508C9D00A5C16F /* HHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA81ED1C508C9D00A5C16F /* HHomeViewController.m */; };
@@ -226,6 +228,10 @@
 		E66397371C53967800E5F593 /* CAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAlertView.h; sourceTree = "<group>"; };
 		E66397381C53967800E5F593 /* CAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAlertView.m; sourceTree = "<group>"; };
 		E66397391C53967800E5F593 /* Const.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
+		E673C0F51C7C3C860091FA85 /* LBLeftBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBLeftBarViewController.h; sourceTree = "<group>"; };
+		E673C0F61C7C3C860091FA85 /* LBLeftBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBLeftBarViewController.m; sourceTree = "<group>"; };
+		E673C0F81C7C43810091FA85 /* LBLeftBarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBLeftBarTableViewCell.h; sourceTree = "<group>"; };
+		E673C0F91C7C43810091FA85 /* LBLeftBarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBLeftBarTableViewCell.m; sourceTree = "<group>"; };
 		E6BA81D71C5083DF00A5C16F /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E6BA81D81C5083DF00A5C16F /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E6BA81E61C508AC800A5C16F /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -329,6 +335,7 @@
 				E6BA81DB1C5089FE00A5C16F /* ShoppingCart */,
 				E6BA81DD1C5089FE00A5C16F /* UserCenter */,
 				E6C46A191C755301005D643A /* UserLogin */,
+				E673C0F21C7C3C530091FA85 /* LeftBar */,
 				E65B0B361C4F7A24002262F1 /* AppDelegate.h */,
 				E65B0B371C4F7A24002262F1 /* AppDelegate.m */,
 				E65B0B3F1C4F7A24002262F1 /* Assets.xcassets */,
@@ -585,6 +592,33 @@
 				E6C46A201C755B16005D643A /* CTextField.m */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		E673C0F21C7C3C530091FA85 /* LeftBar */ = {
+			isa = PBXGroup;
+			children = (
+				E673C0F31C7C3C530091FA85 /* Controller */,
+				E673C0F41C7C3C530091FA85 /* View */,
+			);
+			path = LeftBar;
+			sourceTree = "<group>";
+		};
+		E673C0F31C7C3C530091FA85 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E673C0F51C7C3C860091FA85 /* LBLeftBarViewController.h */,
+				E673C0F61C7C3C860091FA85 /* LBLeftBarViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E673C0F41C7C3C530091FA85 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E673C0F81C7C43810091FA85 /* LBLeftBarTableViewCell.h */,
+				E673C0F91C7C43810091FA85 /* LBLeftBarTableViewCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E6BA81DA1C5089FE00A5C16F /* Home */ = {
@@ -880,6 +914,7 @@
 				E65F9BE81C74192C0047A8E5 /* UCGoodsListViewController.m in Sources */,
 				E65B0B9D1C4F84C4002262F1 /* MJRefreshAutoNormalFooter.m in Sources */,
 				E65B0B991C4F84C4002262F1 /* MJRefreshComponent.m in Sources */,
+				E673C0FA1C7C43810091FA85 /* LBLeftBarTableViewCell.m in Sources */,
 				E6F455901C574A6400B69D29 /* ImagePlayerView.m in Sources */,
 				E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */,
 				E65F9BEB1C7419490047A8E5 /* UCGoodsListTableViewCell.m in Sources */,
@@ -921,6 +956,7 @@
 				E6138CCB1C79B97B003A370E /* UCEditProfileViewController.m in Sources */,
 				E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */,
 				E65B0BA01C4F84C4002262F1 /* MJRefreshBackNormalFooter.m in Sources */,
+				E673C0F71C7C3C860091FA85 /* LBLeftBarViewController.m in Sources */,
 				E65B0BD01C4F84CE002262F1 /* SDWebImageDecoder.m in Sources */,
 				E6F3CE141C523387001A3670 /* HHomeDetailsTableViewCell.m in Sources */,
 				E65B0BCE1C4F84CE002262F1 /* SDImageCache.m in Sources */,
