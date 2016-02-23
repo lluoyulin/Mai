@@ -282,6 +282,7 @@
     
     UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
     vc.dic=dicOrder;
+    vc.payViewHidden=YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -11,5 +11,6 @@
 @interface UCOrderDetailsViewController : BaseViewController
 
 @property(nonatomic,strong) NSDictionary *dic;//订单信息
+@property(nonatomic,getter=isPayViewHidden) BOOL payViewHidden;//是否隐藏支付视图
 
 @end

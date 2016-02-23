@@ -560,6 +560,7 @@ static const CGFloat PayViewHeight=50.0;
             
             UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
             vc.dic=dicOrder;
+            vc.payViewHidden=self.onlinePayButton.isSelected ? NO : YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
         else{

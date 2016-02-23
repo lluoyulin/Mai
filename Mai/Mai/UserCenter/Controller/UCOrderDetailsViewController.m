@@ -75,7 +75,7 @@ static const CGFloat PayViewHeight=50.0;
  */
 -(void)initScrollView{
     //订单信息视图
-    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-([[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1 ? 10+PayViewHeight : 0))];
+    self.scrollView=[[UIScrollView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-STATUS_BAR_HEIGHT-NAVIGATION_BAR_HEIGHT-(self.isPayViewHidden ? 0 : 10+PayViewHeight))];
     self.scrollView.backgroundColor=UIColorFromRGB(0xf5f5f5);
     [self.view addSubview:self.scrollView];
     
@@ -399,11 +399,11 @@ static const CGFloat PayViewHeight=50.0;
     self.remarkLabel.attributedText=remarkAttributedString;
     
     //是否显示支付操作视图
-    if ([[[self.dic objectForKey:@"order"] objectForKey:@"payment"] integerValue]==1) {//在线支付
-        self.payView.hidden=NO;
-    }
-    else{//货到付款
+    if (self.isPayViewHidden) {
         self.payView.hidden=YES;
+    }
+    else{
+        self.payView.hidden=NO;
     }
 }
 
