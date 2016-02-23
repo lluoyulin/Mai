@@ -196,6 +196,7 @@
     self.uid=nil;
     self.userName=nil;
     self.phone=nil;
+    self.userHead=nil;
     self.nickName=nil;
     self.sex=nil;
     self.mail=nil;

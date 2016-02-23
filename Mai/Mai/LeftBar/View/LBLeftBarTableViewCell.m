@@ -37,7 +37,7 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    self.backgroundColor=[UIColor clearColor];
+    self.backgroundColor=UIColorFromRGB(0x13112b);
     
     nameLabel.font=[UIFont systemFontOfSize:14.0];
     [nameLabel setTextWidth:[self.dic objectForKey:@"name"] size:CGSizeMake(150, 16)];
@@ -48,7 +48,7 @@
     nameLabel.frame=CGRectMake(logoImage.right+15, (self.height-16)/2, nameLabel.width, 16);
     
     if ([[self.dic objectForKey:@"isselect"] integerValue]==1) {//选中栏目
-        nameLabel.textColor=ThemeWhite;
+        nameLabel.textColor=ThemeYellow;
         logoImage.image=[[UIImage imageNamed:[self.dic objectForKey:@"logo"]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
     else{//未选中栏目
