@@ -201,39 +201,47 @@
  *  @param orderNO 订单id
  */
 -(void)cancelOrder:(NSString *)orderNO{
-    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.animationType=MBProgressHUDAnimationZoom;
-    hud.labelText=@"提交中...";
-    
-    //构造参数
-    NSString *url=@"order_cancel";
-    NSDictionary *parameters=@{@"token":Token,
-                               @"orderid":orderNO,
-                               @"isLogin":[self isLogin] ? @"1" : @"0"};
-    
-    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"是否确定取消订单" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         
-        if (isSuccess) {
-            hud.mode=MBProgressHUDModeText;
-            hud.labelText=@"提交成功";
-            [hud hide:YES afterDelay:1.5];
+        MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.animationType=MBProgressHUDAnimationZoom;
+        hud.labelText=@"提交中...";
+        
+        //构造参数
+        NSString *url=@"order_cancel";
+        NSDictionary *parameters=@{@"token":Token,
+                                   @"orderid":orderNO,
+                                   @"isLogin":[self isLogin] ? @"1" : @"0"};
+        
+        [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
             
-            //获取数据
-            [self loadData];
-        }
-        else{
+            if (isSuccess) {
+                hud.mode=MBProgressHUDModeText;
+                hud.labelText=@"提交成功";
+                [hud hide:YES afterDelay:1.5];
+                
+                //获取数据
+                [self loadData];
+            }
+            else{
+                [hud hide:YES];
+                
+                [CAlertView alertMessage:error];
+            }
+            
+        } failure:^(NSError *error) {
+            
             [hud hide:YES];
             
-            [CAlertView alertMessage:error];
-        }
+            [CAlertView alertMessage:NetErrorMessage];
+            
+        }];
         
-    } failure:^(NSError *error) {
-        
-        [hud hide:YES];
-        
-        [CAlertView alertMessage:NetErrorMessage];
-        
-    }];
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /**

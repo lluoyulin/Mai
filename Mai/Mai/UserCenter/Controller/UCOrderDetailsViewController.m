@@ -454,13 +454,21 @@ static const CGFloat PayViewHeight=50.0;
 
 #pragma mark 按钮事件取
 /**
- *  消支付按钮
+ *  取消订单按钮
  *
  *  @param sender
  */
 -(void)cancelButton:(UIButton *)sender{
-    //取消订单
-    [self cancelOrder];
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"是否确定取消订单" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+        //取消订单
+        [self cancelOrder];
+        
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /**

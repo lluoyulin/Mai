@@ -251,16 +251,20 @@
     UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"头像" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
         //设置图片源
         self.pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
         //打开拾取器界面
         [self presentViewController:self.pickerImage animated:YES completion:nil];
+        
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"从手机相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
         //设置图片源
         self.pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         //打开拾取器界面
         [self presentViewController:self.pickerImage animated:YES completion:nil];
+        
     }]];
     
     [self presentViewController:alert animated:YES completion:nil];
@@ -272,6 +276,9 @@
  *  @param sender
  */
 -(void)navigationSaveButton:(UIButton *)sender{
+    //获取压缩数据
+    self.avatarData = UIImageJPEGRepresentation(self.headImage.image, 0.2);
+    
     //保存数据
     [self saveData];
 }
@@ -352,6 +359,7 @@
     
     //获取压缩数据
     self.avatarData = UIImageJPEGRepresentation(photo, 0.2);
+    
     //加载图片
     self.headImage.image=photo;
     
