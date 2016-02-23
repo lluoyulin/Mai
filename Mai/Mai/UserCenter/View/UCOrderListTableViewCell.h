@@ -26,6 +26,6 @@
 /**
  *  查看订单
  */
-@property(nonatomic,copy) void(^queryOrderBlock)(void);
+@property(nonatomic,copy) void(^queryOrderBlock)(NSDictionary *dic);
 
 @end

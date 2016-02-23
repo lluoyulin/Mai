@@ -176,7 +176,7 @@
  *  @param sender
  */
 -(void)queryOrderButton:(UIButton *)sender{
-    self.queryOrderBlock();
+    self.queryOrderBlock(self.dic);
 }
 
 @end
