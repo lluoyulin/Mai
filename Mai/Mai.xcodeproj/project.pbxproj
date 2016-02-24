@@ -96,6 +96,9 @@
 		E6CD20431C7AD7BE00BB4481 /* UCOrderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6CD20421C7AD7BE00BB4481 /* UCOrderListTableViewCell.m */; };
 		E6E4C4911C605F4000B15B20 /* NSObject+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */; };
 		E6ED93F61C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */; };
+		E6F340851C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F340841C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m */; };
+		E6F340881C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F340871C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m */; };
+		E6F3408B1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3408A1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
 		E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */; };
 		E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */; };
@@ -285,6 +288,12 @@
 		E6E4C4901C605F4000B15B20 /* NSObject+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Utils.m"; sourceTree = "<group>"; };
 		E6ED93F41C5EEF7300127DC7 /* SCShoppingCartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShoppingCartTableViewCell.h; sourceTree = "<group>"; };
 		E6ED93F51C5EEF7300127DC7 /* SCShoppingCartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCShoppingCartTableViewCell.m; sourceTree = "<group>"; };
+		E6F340831C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTimeLimitDetailsViewController.h; sourceTree = "<group>"; };
+		E6F340841C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTimeLimitDetailsViewController.m; sourceTree = "<group>"; };
+		E6F340861C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTimeLimitDetailsTableViewCell.h; sourceTree = "<group>"; };
+		E6F340871C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTimeLimitDetailsTableViewCell.m; sourceTree = "<group>"; };
+		E6F340891C7D38F80064E7A0 /* TLTimeLimitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTimeLimitTableViewCell.h; sourceTree = "<group>"; };
+		E6F3408A1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTimeLimitTableViewCell.m; sourceTree = "<group>"; };
 		E6F3CE091C522FEA001A3670 /* NSObject+DataConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DataConvert.h"; sourceTree = "<group>"; };
 		E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DataConvert.m"; sourceTree = "<group>"; };
 		E6F3CE0C1C523201001A3670 /* HHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeTableViewCell.h; sourceTree = "<group>"; };
@@ -695,6 +704,8 @@
 			children = (
 				E6BA81EF1C508CDD00A5C16F /* TLTimeLimitViewController.h */,
 				E6BA81F01C508CDD00A5C16F /* TLTimeLimitViewController.m */,
+				E6F340831C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.h */,
+				E6F340841C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -702,6 +713,10 @@
 		E6BA81E11C508A7B00A5C16F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E6F340891C7D38F80064E7A0 /* TLTimeLimitTableViewCell.h */,
+				E6F3408A1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m */,
+				E6F340861C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.h */,
+				E6F340871C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -924,10 +939,12 @@
 				E6F455901C574A6400B69D29 /* ImagePlayerView.m in Sources */,
 				E65B0B381C4F7A24002262F1 /* AppDelegate.m in Sources */,
 				E65F9BEB1C7419490047A8E5 /* UCGoodsListTableViewCell.m in Sources */,
+				E6F340881C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m in Sources */,
 				E65B0B691C4F84B8002262F1 /* AFURLSessionManager.m in Sources */,
 				E65F9BE21C73F7FA0047A8E5 /* UCSelectAddressViewController.m in Sources */,
 				E6BA82031C508D6500A5C16F /* PushViewAnimation.m in Sources */,
 				E6C46A271C7594D9005D643A /* ULQuickLoginViewController.m in Sources */,
+				E6F3408B1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m in Sources */,
 				E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */,
 				E65B0BD61C4F84CE002262F1 /* UIImage+GIF.m in Sources */,
 				E65B0BA91C4F84C4002262F1 /* UIView+MJExtension.m in Sources */,
@@ -960,6 +977,7 @@
 				E65B0BCF1C4F84CE002262F1 /* SDWebImageCompat.m in Sources */,
 				E61ADE011C72D813009D0324 /* UCAddressDetailsViewController.m in Sources */,
 				E6138CCB1C79B97B003A370E /* UCEditProfileViewController.m in Sources */,
+				E6F340851C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m in Sources */,
 				E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */,
 				E65B0BA01C4F84C4002262F1 /* MJRefreshBackNormalFooter.m in Sources */,
 				E673C0F71C7C3C860091FA85 /* LBLeftBarViewController.m in Sources */,
