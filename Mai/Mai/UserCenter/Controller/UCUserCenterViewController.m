@@ -43,10 +43,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
     self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
     
     self.showMenu=YES;
+    
+    //注册退出通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogout:) name:@"logout" object:nil];
     
     //初始化用户信息视图
     [self initUserView];
@@ -64,7 +67,7 @@
     MainViewController *vc=(MainViewController *)self.navigationController.parentViewController.parentViewController;
     
     //隐藏状态栏
-//    vc.statusBarHidden=YES;
+    //    vc.statusBarHidden=YES;
     
     //状态栏样式
     vc.statusBarStyle=UIStatusBarStyleLightContent;
@@ -72,10 +75,8 @@
     //隐藏导航栏
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
-    if ([self isLogin]) {
-        //更新用户信息
-        [self updateUserInfo];
-    }
+    //更新用户信息
+    [self updateUserInfo];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -84,7 +85,7 @@
     MainViewController *vc=(MainViewController *)self.navigationController.parentViewController.parentViewController;
     
     //显示状态栏
-//    vc.statusBarHidden=NO;
+    //    vc.statusBarHidden=NO;
     
     //状态栏样式
     vc.statusBarStyle=UIStatusBarStyleDefault;
@@ -286,6 +287,21 @@
     UCOrderListViewController *vc=[UCOrderListViewController new];
     vc.selectIndex=sender.tag;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark 通知
+/**
+ *  退出通知
+ *
+ *  @param notification
+ */
+-(void)userLogout:(NSNotification *)notification{
+    //更新用户信息
+    [self updateUserInfo];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];//移除所有通知
 }
 
 - (void)didReceiveMemoryWarning {

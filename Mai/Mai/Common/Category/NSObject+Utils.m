@@ -204,6 +204,12 @@
     self.city=nil;
     self.area=nil;
     self.address=nil;
+    
+    //清除购物车
+    [self clearShoppingCart];
+    
+    //发送退出通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
 }
 
 #pragma mark 属性

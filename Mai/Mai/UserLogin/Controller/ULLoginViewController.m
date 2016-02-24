@@ -182,6 +182,7 @@
             self.city=CheckNull([[dic objectForKey:@"user"] objectForKey:@"city"]);
             self.area=CheckNull([[dic objectForKey:@"user"] objectForKey:@"area"]);
             self.address=CheckNull([[dic objectForKey:@"user"] objectForKey:@"address"]);
+            self.userHead=CheckNull([[dic objectForKey:@"user"] objectForKey:@"headimg"]);
             
             //获取购物车数据
             [self loadShoppingCartData];
