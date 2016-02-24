@@ -243,9 +243,9 @@
     //构造参数
     NSString *url=@"cart_jian";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":[UserData objectForKey:@"uid"] ? [UserData objectForKey:@"uid"] : @"",
+                               @"uid":[self getUid],
                                @"sid":[self.dic objectForKey:@"sid"],
-                               @"isLogin":[UserData objectForKey:@"islogin"] ? @"1" : @"0"};
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
