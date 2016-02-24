@@ -21,6 +21,11 @@
 @property (nonatomic, assign) BOOL interacting;
 @property(nonatomic,weak)id<BackViewTransitionDelegate>delegate;
 
+/**
+ *  添加VC返回手势
+ *
+ *  @param viewController VC
+ */
 - (void)wireToViewController:(UIViewController*)viewController;
 
 @end

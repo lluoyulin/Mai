@@ -11,7 +11,9 @@
 #import "BackViewTransition.h"
 #import "BackViewAnimation.h"
 
-@interface SwipeBackNavigationViewController ()
+@interface SwipeBackNavigationViewController (){
+    NSArray *_disablePanGestureInViewControllerClassList;//不添加返回手势的VC集合
+}
 
 @property(nonatomic,strong) PushViewAnimation *pushAnimation;
 @property(nonatomic,strong) BackViewTransition *interactionController;
@@ -30,23 +32,28 @@
     self.interactionController=[BackViewTransition new];
     self.backAnimation=[BackViewAnimation new];
     self.interactionController.delegate=self;
+    
+    //不添加返回手势的VC集合
+    _disablePanGestureInViewControllerClassList=@[@"SCShoppingCartViewController"];
 }
 
 //重写push
--(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+-(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated{
     if (self.viewControllers.count==1) {
         self.tarBar =(UIView *)[self.tabBarController.view viewWithTag:99];
         self.tarBar.hidden=YES;
     }
-    [self.interactionController wireToViewController:viewController];
+    
+    if (![_disablePanGestureInViewControllerClassList containsObject:NSStringFromClass([viewController class])]) {
+        //添加VC返回手势
+        [self.interactionController wireToViewController:viewController];
+    }
     
     [super pushViewController:viewController animated:animated];
 }
 
 //重写pop
--(UIViewController *)popViewControllerAnimated:(BOOL)animated
-{
+-(UIViewController *)popViewControllerAnimated:(BOOL)animated{
     if (self.viewControllers.count==2) {
         self.tarBar.alpha=1;
         self.tarBar.hidden=NO;
@@ -56,13 +63,11 @@
 }
 
 #pragma BackViewTransition 委托
--(void)popSwipeBackControllerNavigation
-{
+-(void)popSwipeBackControllerNavigation{
     [self popViewControllerAnimated:YES];
 }
 
--(void)moveTabBar:(CGFloat)translation moveState:(int)state
-{
+-(void)moveTabBar:(CGFloat)translation moveState:(int)state{
     switch (state) {
         case 1:
             self.tarBar.alpha=translation;
@@ -82,8 +87,7 @@
 - (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
                                    animationControllerForOperation:(UINavigationControllerOperation)operation
                                                 fromViewController:(UIViewController *)fromVC
-                                                  toViewController:(UIViewController *)toVC
-{
+                                                  toViewController:(UIViewController *)toVC{
     if (operation == UINavigationControllerOperationPush) {
         return self.pushAnimation;
     }else if(operation == UINavigationControllerOperationPop){
@@ -95,8 +99,7 @@
 
 //交互
 - (id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
-                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController
-{
+                          interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController{
     if (self.interactionController.interacting) {
         self.tarBar.alpha=0;
         return self.interactionController;

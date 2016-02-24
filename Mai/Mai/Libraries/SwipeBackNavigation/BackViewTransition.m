@@ -10,14 +10,18 @@
 
 @interface BackViewTransition ()<UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign) BOOL shouldComplete;
+@property(nonatomic,assign) BOOL shouldComplete;
 
 @end
 
 @implementation BackViewTransition
 
--(void)wireToViewController:(UIViewController *)viewController
-{
+/**
+ *  添加VC返回手势
+ *
+ *  @param viewController VC
+ */
+-(void)wireToViewController:(UIViewController *)viewController{
     [self prepareGestureRecognizerInView:viewController.view];
 }
 
@@ -27,8 +31,7 @@
     [view addGestureRecognizer:gesture];
 }
 
--(CGFloat)completionSpeed
-{
+-(CGFloat)completionSpeed{
     return 1-self.percentComplete;
 }
 
@@ -70,14 +73,13 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    // 输出点击的view的类名
-    //    NSLog(@"所点击view的类名：%@", NSStringFromClass([touch.view class]));
+    //输出点击的view的类名
+    //NSLog(@"所点击view的类名：%@", NSStringFromClass([touch.view class]));
     
-    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
-    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]
-        || [NSStringFromClass([touch.view class]) isEqualToString:@"UITableView"]) {
-        return NO;
-    }
+//    //若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+//    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+//        return NO;
+//    }
     
     return YES;
 }
