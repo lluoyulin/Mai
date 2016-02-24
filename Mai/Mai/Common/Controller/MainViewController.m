@@ -19,6 +19,10 @@
 @property(nonatomic,strong) UIViewController *centerViewController;//中间VC
 @property(nonatomic,strong) UIView *leftView;//左边视图
 @property(nonatomic,strong) UIView *centerView;//中间视图
+
+@property(nonatomic,strong) UIView *showLeftView;//显示左边视图时触摸事件的View
+@property(nonatomic,strong) UITapGestureRecognizer *tapGesture;//触摸事件
+
 @property(nonatomic,strong) SwipeBackNavigationViewController *webViewVC;
 
 @end
@@ -64,6 +68,26 @@
     [self addChildViewController:self.centerViewController];
     [self.centerViewController didMoveToParentViewController:self];
     [self.centerView addSubview:self.centerViewController.view];
+    
+    //显示左边视图时触摸事件的View
+    self.showLeftView=[[UIView alloc] initWithFrame:CGRectMake(self.view.width*2/3, 0, self.view.width*2/3, self.view.height)];
+    self.showLeftView.backgroundColor=[UIColor clearColor];
+    self.showLeftView.hidden=YES;
+    [self.view addSubview:self.showLeftView];
+    [self.view bringSubviewToFront:self.showLeftView];
+    
+    //触摸事件
+    self.tapGesture=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
+    [self.showLeftView addGestureRecognizer:self.tapGesture];
+}
+
+/**
+ *  触摸事件
+ *
+ *  @param tap
+ */
+-(void)tapGesture:(UITapGestureRecognizer *)tap{
+    [self showMenu:nil];
 }
 
 /**
@@ -71,12 +95,16 @@
  */
 -(void)showMenu:(NSNotification *)notification{
     if (self.centerView.left==0) {
+        self.showLeftView.hidden=NO;
+        
         [UIView animateWithDuration:0.2 animations:^{
             self.leftView.transform=CGAffineTransformMakeTranslation(self.leftView.width, 0);
             self.centerView.transform=CGAffineTransformMakeTranslation(self.leftView.width, 0);
         }];
     }
     else{
+        self.showLeftView.hidden=YES;
+        
         [UIView animateWithDuration:0.2 animations:^{
             self.leftView.transform=CGAffineTransformIdentity;
             self.centerView.transform=CGAffineTransformIdentity;
