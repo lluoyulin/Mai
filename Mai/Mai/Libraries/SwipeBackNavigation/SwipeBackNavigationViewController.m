@@ -34,7 +34,7 @@
     self.interactionController.delegate=self;
     
     //不添加返回手势的VC集合
-    _disablePanGestureInViewControllerClassList=@[@"SCShoppingCartViewController"];
+    _disablePanGestureInViewControllerClassList=@[@"SCShoppingCartViewController",@"UCUserAddressViewController"];
 }
 
 //重写push
