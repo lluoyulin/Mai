@@ -99,6 +99,8 @@
 		E6F340851C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F340841C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m */; };
 		E6F340881C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F340871C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m */; };
 		E6F3408B1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3408A1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m */; };
+		E6F340931C7D5ABF0064E7A0 /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F340901C7D5ABF0064E7A0 /* NJKWebViewProgress.m */; };
+		E6F340941C7D5ABF0064E7A0 /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F340921C7D5ABF0064E7A0 /* NJKWebViewProgressView.m */; };
 		E6F3CE0B1C522FEA001A3670 /* NSObject+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */; };
 		E6F3CE0E1C523201001A3670 /* HHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE0D1C523201001A3670 /* HHomeTableViewCell.m */; };
 		E6F3CE111C5232C2001A3670 /* HHomeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3CE101C5232C2001A3670 /* HHomeDetailsViewController.m */; };
@@ -294,6 +296,10 @@
 		E6F340871C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTimeLimitDetailsTableViewCell.m; sourceTree = "<group>"; };
 		E6F340891C7D38F80064E7A0 /* TLTimeLimitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLTimeLimitTableViewCell.h; sourceTree = "<group>"; };
 		E6F3408A1C7D38F80064E7A0 /* TLTimeLimitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLTimeLimitTableViewCell.m; sourceTree = "<group>"; };
+		E6F3408F1C7D5ABF0064E7A0 /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
+		E6F340901C7D5ABF0064E7A0 /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
+		E6F340911C7D5ABF0064E7A0 /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
+		E6F340921C7D5ABF0064E7A0 /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgressView.m; sourceTree = "<group>"; };
 		E6F3CE091C522FEA001A3670 /* NSObject+DataConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DataConvert.h"; sourceTree = "<group>"; };
 		E6F3CE0A1C522FEA001A3670 /* NSObject+DataConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DataConvert.m"; sourceTree = "<group>"; };
 		E6F3CE0C1C523201001A3670 /* HHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeTableViewCell.h; sourceTree = "<group>"; };
@@ -411,6 +417,7 @@
 		E65B0B4E1C4F7F06002262F1 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				E6F3408E1C7D5ABF0064E7A0 /* NJKWebViewProgress */,
 				E6F4558C1C574A6400B69D29 /* ImagePlayerView */,
 				E6BA81F81C508D6500A5C16F /* SwipeBackNavigation */,
 				E65B0BDC1C4F8584002262F1 /* MBProgressHUD */,
@@ -827,6 +834,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		E6F3408E1C7D5ABF0064E7A0 /* NJKWebViewProgress */ = {
+			isa = PBXGroup;
+			children = (
+				E6F3408F1C7D5ABF0064E7A0 /* NJKWebViewProgress.h */,
+				E6F340901C7D5ABF0064E7A0 /* NJKWebViewProgress.m */,
+				E6F340911C7D5ABF0064E7A0 /* NJKWebViewProgressView.h */,
+				E6F340921C7D5ABF0064E7A0 /* NJKWebViewProgressView.m */,
+			);
+			path = NJKWebViewProgress;
+			sourceTree = "<group>";
+		};
 		E6F4558C1C574A6400B69D29 /* ImagePlayerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -957,6 +975,7 @@
 				E65B0BA11C4F84C4002262F1 /* MJRefreshBackStateFooter.m in Sources */,
 				E6CD203A1C7A941000BB4481 /* UCEditProfileTableViewCell.m in Sources */,
 				E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */,
+				E6F340941C7D5ABF0064E7A0 /* NJKWebViewProgressView.m in Sources */,
 				E6CD20401C7AC39000BB4481 /* UCOrderListViewController.m in Sources */,
 				E6C46A211C755B16005D643A /* CTextField.m in Sources */,
 				E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */,
@@ -972,6 +991,7 @@
 				E65B0B661C4F84B8002262F1 /* AFSecurityPolicy.m in Sources */,
 				E65B0B641C4F84B8002262F1 /* AFHTTPSessionManager.m in Sources */,
 				E6BA82041C508D6500A5C16F /* SwipeBackNavigationViewController.m in Sources */,
+				E6F340931C7D5ABF0064E7A0 /* NJKWebViewProgress.m in Sources */,
 				E65B0B9B1C4F84C4002262F1 /* MJRefreshHeader.m in Sources */,
 				E6BA82141C50C3BB00A5C16F /* HGoodsDetailsViewController.m in Sources */,
 				E65B0BCF1C4F84CE002262F1 /* SDWebImageCompat.m in Sources */,

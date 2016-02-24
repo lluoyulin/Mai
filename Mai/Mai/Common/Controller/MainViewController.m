@@ -19,7 +19,7 @@
 @property(nonatomic,strong) UIViewController *centerViewController;//中间VC
 @property(nonatomic,strong) UIView *leftView;//左边视图
 @property(nonatomic,strong) UIView *centerView;//中间视图
-@property(nonatomic,strong) LBWebViewViewController *webViewVC;
+@property(nonatomic,strong) SwipeBackNavigationViewController *webViewVC;
 
 @end
 
@@ -91,20 +91,23 @@
     [self showMenu:nil];
     
     if (!self.webViewVC) {
-        self.webViewVC=[LBWebViewViewController new];
-        [self addChildViewController:self.webViewVC];
-        [self.webViewVC didMoveToParentViewController:self];
+        LBWebViewViewController *vc=[LBWebViewViewController new];
+        self.webViewVC=[[SwipeBackNavigationViewController alloc] initWithRootViewController:vc];
     }
     
     [self.centerViewController.view removeFromSuperview];
+    [self.centerViewController removeFromParentViewController];
     [self.webViewVC.view removeFromSuperview];
+    [self.webViewVC removeFromParentViewController];
+    
+    [self addChildViewController:self.webViewVC];
+    [self.webViewVC didMoveToParentViewController:self];
     
     if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"我要买"]) {
         [self.centerView addSubview:self.centerViewController.view];
         return;
     }
     
-    self.webViewVC.title=[notification.userInfo objectForKey:@"title"];
     [self.centerView addSubview:self.webViewVC.view];
 }
 

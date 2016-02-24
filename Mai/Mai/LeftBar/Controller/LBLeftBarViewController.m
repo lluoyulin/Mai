@@ -182,6 +182,7 @@
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithDictionary:@{@"title":@""}];
+    
     switch (indexPath.row) {
         case 0:
             [dic setObject:@"我要买" forKey:@"title"];
@@ -210,6 +211,9 @@
     }
     
     if (indexPath.row!=7) {
+        //刷新列表
+        [self refresh:indexPath.row];
+        
         //切换栏目发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"load_center_view" object:nil userInfo:dic];
     }

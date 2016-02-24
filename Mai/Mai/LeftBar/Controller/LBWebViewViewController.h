@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
-@interface LBWebViewViewController : BaseViewController
+#import "NJKWebViewProgress.h"
+
+@interface LBWebViewViewController : BaseViewController<UIWebViewDelegate,NJKWebViewProgressDelegate>
 
 @end
