@@ -58,7 +58,7 @@
  *  初始化tablebview
  */
 -(void)initTableView{
-    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 91, self.view.width*2/3, SCREEN_HEIGHT-91)];
+    self.tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, self.bgImage.bottom-30, self.view.width*2/3, SCREEN_HEIGHT-self.bgImage.bottom+30)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.backgroundColor=UIColorFromRGB(0x13112b);

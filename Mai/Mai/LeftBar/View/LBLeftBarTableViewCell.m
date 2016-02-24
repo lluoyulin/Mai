@@ -39,13 +39,12 @@
     
     self.backgroundColor=UIColorFromRGB(0x13112b);
     
-    nameLabel.font=[UIFont systemFontOfSize:14.0];
-    [nameLabel setTextWidth:[self.dic objectForKey:@"name"] size:CGSizeMake(150, 16)];
-    
-    logoImage.frame=CGRectMake((self.width-28-15-nameLabel.width)/2, (self.height-28)/2, 28, 28);
+    logoImage.frame=CGRectMake(15, (self.height-28)/2, 28, 28);
     logoImage.tintColor=ThemeYellow;
     
-    nameLabel.frame=CGRectMake(logoImage.right+15, (self.height-16)/2, nameLabel.width, 16);
+    nameLabel.frame=CGRectMake(logoImage.right+15, (self.height-16)/2, 0, 16);
+    nameLabel.font=[UIFont systemFontOfSize:14.0];
+    [nameLabel setTextWidth:[self.dic objectForKey:@"name"] size:CGSizeMake(150, 16)];
     
     if ([[self.dic objectForKey:@"isselect"] integerValue]==1) {//选中栏目
         nameLabel.textColor=ThemeYellow;
