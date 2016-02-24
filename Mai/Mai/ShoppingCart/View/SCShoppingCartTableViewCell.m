@@ -186,6 +186,8 @@
  *  @param sender 按钮对象
  */
 -(void)addButton:(UIButton *)sender{
+    sender.enabled=NO;
+    
     //构造参数
     NSString *url=@"cart_jia";
     NSDictionary *parameters=@{@"token":Token,
@@ -214,7 +216,11 @@
             [CAlertView alertMessage:error];
         }
         
+        sender.enabled=YES;
+        
     } failure:^(NSError *error) {
+        
+        sender.enabled=YES;
         
         [CAlertView alertMessage:NetErrorMessage];
         
@@ -231,6 +237,8 @@
         [CAlertView alertMessage:@"商品数量至少1个"];
         return;
     }
+    
+    sender.enabled=NO;
     
     //构造参数
     NSString *url=@"cart_jian";
@@ -260,7 +268,11 @@
             [CAlertView alertMessage:error];
         }
         
+        sender.enabled=YES;
+        
     } failure:^(NSError *error) {
+        
+        sender.enabled=YES;
         
         [CAlertView alertMessage:NetErrorMessage];
         
