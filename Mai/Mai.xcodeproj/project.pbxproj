@@ -1129,9 +1129,9 @@
 				INFOPLIST_FILE = Mai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chulaimai.Mai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ionicframework.chulaimai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a1a44e77-3b1e-4857-9a36-4583e8f27877";
+				PROVISIONING_PROFILE = "1c73c875-f6f2-409f-90d5-5725d9f9f834";
 			};
 			name = Debug;
 		};
@@ -1144,9 +1144,9 @@
 				INFOPLIST_FILE = Mai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chulaimai.Mai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ionicframework.chulaimai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a1a44e77-3b1e-4857-9a36-4583e8f27877";
+				PROVISIONING_PROFILE = "1c73c875-f6f2-409f-90d5-5725d9f9f834";
 			};
 			name = Release;
 		};
