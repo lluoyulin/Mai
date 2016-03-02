@@ -35,6 +35,11 @@
 @property(nonatomic,strong) UILabel *totalLabel;//总价
 @property(nonatomic,strong) UIButton *payButton;//去结算按钮
 
+@property(nonatomic,strong) UIView *addGoodsView;//添加商品视图
+@property(nonatomic,strong) UIImageView *addLogoImage;//添加商品logo
+@property(nonatomic,strong) UILabel *addGoodsTagLabel;//添加商品标签
+@property(nonatomic,strong) UIButton *addGoodsButton;//添加商品按钮
+
 @end
 
 @implementation SCShoppingCartViewController
@@ -68,6 +73,9 @@
     
     //初始化操作栏
     [self initOperateView];
+    
+    //初始化添加商品视图
+    [self initaddGoodsView];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -192,6 +200,42 @@
     self.totalLabel.attributedText=totalAttributedString;
 }
 
+/**
+ *  初始化添加商品视图
+ */
+-(void)initaddGoodsView{
+    //添加商品视图
+    self.addGoodsView=[[UIView alloc] initWithFrame:CGRectMake(0, 100, SCREEN_WIDTH, 170)];
+    self.addGoodsView.backgroundColor=self.view.backgroundColor;
+    self.addGoodsView.hidden=YES;
+    [self.view addSubview:self.addGoodsView];
+    
+    //添加商品logo
+    self.addLogoImage=[[UIImageView alloc] initWithFrame:CGRectMake((self.addGoodsView.width-60)/2, 0, 60, 60)];
+    self.addLogoImage.image=[UIImage imageNamed:@"shopping_cart_msg"];
+    [self.addGoodsView addSubview:self.addLogoImage];
+    
+    //添加商品标签
+    self.addGoodsTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, self.addLogoImage.bottom+15, self.addGoodsView.width, 15)];
+    self.addGoodsTagLabel.font=[UIFont systemFontOfSize:13.0];
+    self.addGoodsTagLabel.textColor=ThemeGray;
+    self.addGoodsTagLabel.textAlignment=NSTextAlignmentCenter;
+    self.addGoodsTagLabel.text=@"还没有商品";
+    [self.addGoodsView addSubview:self.addGoodsTagLabel];
+    
+    //添加商品按钮
+    self.addGoodsButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.addGoodsButton.frame=CGRectMake((self.addGoodsView.width-110)/2, self.addGoodsTagLabel.bottom+30.5, 110, 45);
+    self.addGoodsButton.layer.masksToBounds=YES;
+    self.addGoodsButton.layer.cornerRadius=4;
+    self.addGoodsButton.backgroundColor=ThemeYellow;
+    self.addGoodsButton.titleLabel.font=[UIFont systemFontOfSize:14.0];
+    [self.addGoodsButton setTitleColor:ThemeBlack forState:UIControlStateNormal];
+    [self.addGoodsButton setTitle:@"添加商品" forState:UIControlStateNormal];
+    [self.addGoodsButton addTarget:self action:@selector(addGoodsButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.addGoodsView addSubview:self.addGoodsButton];
+}
+
 #pragma mark 按钮事件
 /**
  *  导航栏删除按钮
@@ -267,6 +311,16 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+/**
+ *  添加商品按钮
+ *
+ *  @param sender
+ */
+-(void)addGoodsButton:(UIButton *)sender{
+    //添加商品通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"add_goods" object:nil];
+}
+
 #pragma mark 自定义方法
 /**
  *  获取数据
@@ -297,23 +351,36 @@
                 [_goodsList addObject:mutableDic];//添加到列表数据源
             }
             
-            [self.tableView reloadData];//刷新tableView
-            
-            //总价
-            self.totalLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"zongjia"] floatValue]];
-            
-            //修改字体大小
-            NSMutableAttributedString *totalAttributedString=[[NSMutableAttributedString alloc] initWithString:self.totalLabel.text];
-            [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
-            
-            self.totalLabel.attributedText=totalAttributedString;
-            
-            //商品数量
-            [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%lu)",(unsigned long)_goodsList.count] forState:UIControlStateNormal];
-            
-            //全选
-            self.selectAllButton.enabled=_goodsList.count>0 ? YES : NO;
-            self.selectAllButton.selected=_goodsList.count>0 ? YES : NO;
+            if (_goodsList.count>0) {
+                self.tableView.hidden=NO;
+                self.addGoodsView.hidden=YES;
+                
+                [self.tableView reloadData];//刷新tableView
+                
+                //总价
+                self.totalLabel.text=[NSString stringWithFormat:@"¥%.2f",[[dic objectForKey:@"zongjia"] floatValue]];
+                
+                //修改字体大小
+                NSMutableAttributedString *totalAttributedString=[[NSMutableAttributedString alloc] initWithString:self.totalLabel.text];
+                [totalAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11.0] range:NSMakeRange(0, 1)];
+                
+                self.totalLabel.attributedText=totalAttributedString;
+                
+                //商品数量
+                [self.payButton setTitle:[NSString stringWithFormat:@"去结算(%lu)",(unsigned long)_goodsList.count] forState:UIControlStateNormal];
+                
+                //全选
+                self.selectAllButton.enabled=_goodsList.count>0 ? YES : NO;
+                self.selectAllButton.selected=_goodsList.count>0 ? YES : NO;
+            }
+            else{
+                self.tableView.hidden=YES;
+                self.addGoodsView.hidden=NO;
+                
+                self.selectAllButton.selected=NO;
+                self.totalLabel.text=@"¥0.00";
+                [self.payButton setTitle:@"去结算(0)" forState:UIControlStateNormal];
+            }
         }
         else{
             [CAlertView alertMessage:error];
@@ -510,8 +577,11 @@
         [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
+            NSDictionary *dic=@{@"sid":[_goodsList[indexPath.row] objectForKey:@"sid"],
+                                @"fid":[[_goodsList[indexPath.row] objectForKey:@"gs"] objectForKey:@"fid"],
+                                @"num":[_goodsList[indexPath.row] objectForKey:@"num"]};
             //删除购物车商品
-            [self deleteShoppingCart:@[[_goodsList[indexPath.row] objectForKey:@"sid"]]];
+            [self deleteShoppingCart:@[dic]];
             
         }]];
         [self presentViewController:alert animated:YES completion:nil];

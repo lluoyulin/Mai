@@ -47,6 +47,9 @@
     //注册添加购物车通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addShoppingCart:) name:@"add_shopping_cart" object:nil];
     
+    //注册添加商品通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addGoods:) name:@"add_goods" object:nil];
+    
     //菜单栏名称
     _tabBarTiTleArray=@[@"首页",@"限时购",@"购物车",@"我的"];
     
@@ -188,6 +191,16 @@
     NSString *count=[UserData objectForKey:@"total_shopping_cart"];
     self.countLabel.text=count ? count : @"";
     self.countLabel.hidden=count ? NO : YES;
+}
+
+/**
+ *  添加商品通知
+ *
+ *  @param notification 
+ */
+-(void)addGoods:(NSNotification *)notification{
+    UIButton *btn=(UIButton *)[self.tabBarView viewWithTag:1];
+    [self tabBarButton:btn];
 }
 
 -(void)dealloc{
