@@ -73,13 +73,9 @@
  */
 -(void)initData{
     _list=[[NSMutableArray alloc] init];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"我要买",@"logo":@"leftbar_shopping",@"isselect":@"1"}]];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"消息",@"logo":@"leftbar_notice",@"isselect":@"0"}]];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"我要卖",@"logo":@"leftbar_store",@"isselect":@"0"}]];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"真有才",@"logo":@"leftbar_hat",@"isselect":@"0"}]];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"如意分期",@"logo":@"leftbar_card",@"isselect":@"0"}]];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"分享好友",@"logo":@"leftbar_share",@"isselect":@"0"}]];
-    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"设置",@"logo":@"leftbar_setting",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"商城",@"logo":@"leftbar_store",@"isselect":@"1"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"蚤市",@"logo":@"leftbar_market",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"社区",@"logo":@"leftbar_community",@"isselect":@"0"}]];
 }
 
 /**
@@ -131,7 +127,7 @@
     //去掉选中效果
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
-    if ([self isLogin] && _list.count<8) {
+    if ([self isLogin] && _list.count<4) {
         [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"退出",@"logo":@"leftbar_log_out",@"isselect":@"0"}]];
         
         [self.tableView reloadData];
@@ -185,32 +181,20 @@
     
     switch (indexPath.row) {
         case 0:
-            [dic setObject:@"我要买" forKey:@"title"];
+            [dic setObject:@"商城" forKey:@"title"];
             break;
         case 1:
-            [dic setObject:@"消息" forKey:@"title"];
+            [dic setObject:@"蚤市" forKey:@"title"];
             break;
         case 2:
-            [dic setObject:@"我要卖" forKey:@"title"];
+            [dic setObject:@"社区" forKey:@"title"];
             break;
-        case 3:
-            [dic setObject:@"真有才" forKey:@"title"];
-            break;
-        case 4:
-            [dic setObject:@"如意分期" forKey:@"title"];
-            break;
-        case 5:
-            [dic setObject:@"分享好友" forKey:@"title"];
-            break;
-        case 6:
-            [dic setObject:@"设置" forKey:@"title"];
-            break;
-        case 7://退出
+        case 3://退出
             [self userLogout];
             break;
     }
     
-    if (indexPath.row!=7) {
+    if (indexPath.row!=3) {
         //刷新列表
         [self refresh:indexPath.row];
         
