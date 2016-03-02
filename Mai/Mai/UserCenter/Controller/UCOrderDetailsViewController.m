@@ -200,7 +200,7 @@ static const CGFloat PayViewHeight=50.0;
  */
 -(void)initOrderInfoView{
     //订单信息视图
-    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsView.bottom+10, self.goodsView.width, 290)];
+    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.goodsView.bottom+10, self.goodsView.width, 290-88)];
     self.orderInfoView.backgroundColor=ThemeWhite;
     [self.scrollView addSubview:self.orderInfoView];
     
@@ -257,45 +257,45 @@ static const CGFloat PayViewHeight=50.0;
     self.tipTagLabel.font=self.sumTagLabel.font;
     self.tipTagLabel.textColor=self.sumTagLabel.textColor;
     self.tipTagLabel.text=@"服务费";
-    [self.orderInfoView addSubview:self.tipTagLabel];
+//    [self.orderInfoView addSubview:self.tipTagLabel];
     
     //服务费
     self.tipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.tipTagLabel.top, 100, self.tipTagLabel.height)];
     self.tipLabel.font=self.tipTagLabel.font;
     self.tipLabel.textColor=self.tipTagLabel.textColor;
     self.tipLabel.textAlignment=NSTextAlignmentRight;
-    [self.orderInfoView addSubview:self.tipLabel];
+//    [self.orderInfoView addSubview:self.tipLabel];
     
     //服务费分割线
     UIView *tipLine=[[UIView alloc] initWithFrame:CGRectMake(self.tipTagLabel.left, self.tipTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
     tipLine.backgroundColor=sumLine.backgroundColor;
-    [self.orderInfoView addSubview:tipLine];
+//    [self.orderInfoView addSubview:tipLine];
     
     //减免服务费标签
     self.nonTipTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.tipTagLabel.left, tipLine.bottom+14, self.tipTagLabel.width, self.tipTagLabel.height)];
     self.nonTipTagLabel.font=self.tipTagLabel.font;
     self.nonTipTagLabel.textColor=self.tipTagLabel.textColor;
     self.nonTipTagLabel.text=@"减免服务费";
-    [self.orderInfoView addSubview:self.nonTipTagLabel];
+//    [self.orderInfoView addSubview:self.nonTipTagLabel];
     
     //减免服务费
     self.nonTipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.nonTipTagLabel.top, 100, self.nonTipTagLabel.height)];
     self.nonTipLabel.font=self.nonTipTagLabel.font;
     self.nonTipLabel.textColor=self.nonTipTagLabel.textColor;
     self.nonTipLabel.textAlignment=NSTextAlignmentRight;
-    [self.orderInfoView addSubview:self.nonTipLabel];
+//    [self.orderInfoView addSubview:self.nonTipLabel];
     
     //减免服务费分割线
     UIView *nonTipLine=[[UIView alloc] initWithFrame:CGRectMake(self.nonTipTagLabel.left, self.nonTipTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
     nonTipLine.backgroundColor=sumLine.backgroundColor;
-    [self.orderInfoView addSubview:nonTipLine];
+//    [self.orderInfoView addSubview:nonTipLine];
     
     //实付款
     self.payLabel=[UILabel new];
     self.payLabel.font=[UIFont systemFontOfSize:14.0];
     self.payLabel.textColor=ThemeRed;
     [self.payLabel setTextWidth:@"实付款：" size:CGSizeMake(self.orderInfoView.width,self.nonTipTagLabel.height)];
-    self.payLabel.frame=CGRectMake(self.orderInfoView.width-self.payLabel.width-15, nonTipLine.bottom+15, self.payLabel.width, 16);
+    self.payLabel.frame=CGRectMake(self.orderInfoView.width-self.payLabel.width-15, sumLine.bottom+15, self.payLabel.width, 16);
     [self.orderInfoView addSubview:self.payLabel];
     
     //订单时间

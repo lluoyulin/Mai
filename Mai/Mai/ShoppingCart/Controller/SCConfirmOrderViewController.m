@@ -241,7 +241,7 @@ static const CGFloat PayViewHeight=50.0;
  */
 -(void)initOrderInfoView{
     //订单信息视图
-    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.payWayView.bottom+10, self.payWayView.width, 236)];
+    self.orderInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, self.payWayView.bottom+10, self.payWayView.width, 236-88)];
     self.orderInfoView.backgroundColor=ThemeWhite;
     [self.scrollView addSubview:self.orderInfoView];
     
@@ -280,7 +280,7 @@ static const CGFloat PayViewHeight=50.0;
     self.tipTagLabel.font=self.sumTagLabel.font;
     self.tipTagLabel.textColor=self.sumTagLabel.textColor;
     self.tipTagLabel.text=@"服务费";
-    [self.orderInfoView addSubview:self.tipTagLabel];
+//    [self.orderInfoView addSubview:self.tipTagLabel];
     
     //服务费
     self.tipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.tipTagLabel.top, 100, self.tipTagLabel.height)];
@@ -288,19 +288,19 @@ static const CGFloat PayViewHeight=50.0;
     self.tipLabel.textColor=self.tipTagLabel.textColor;
     self.tipLabel.text=@"¥0.00";
     self.tipLabel.textAlignment=NSTextAlignmentRight;
-    [self.orderInfoView addSubview:self.tipLabel];
+//    [self.orderInfoView addSubview:self.tipLabel];
     
     //服务费分割线
     UIView *tipLine=[[UIView alloc] initWithFrame:CGRectMake(self.tipTagLabel.left, self.tipTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
     tipLine.backgroundColor=sumLine.backgroundColor;
-    [self.orderInfoView addSubview:tipLine];
+//    [self.orderInfoView addSubview:tipLine];
     
     //减免服务费标签
     self.nonTipTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.tipTagLabel.left, tipLine.bottom+14, self.tipTagLabel.width, self.tipTagLabel.height)];
     self.nonTipTagLabel.font=self.tipTagLabel.font;
     self.nonTipTagLabel.textColor=self.tipTagLabel.textColor;
     self.nonTipTagLabel.text=@"减免服务费";
-    [self.orderInfoView addSubview:self.nonTipTagLabel];
+//    [self.orderInfoView addSubview:self.nonTipTagLabel];
     
     //减免服务费
     self.nonTipLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.sumLabel.left, self.nonTipTagLabel.top, 100, self.nonTipTagLabel.height)];
@@ -308,15 +308,15 @@ static const CGFloat PayViewHeight=50.0;
     self.nonTipLabel.textColor=self.nonTipTagLabel.textColor;
     self.nonTipLabel.text=@"-¥0.00";
     self.nonTipLabel.textAlignment=NSTextAlignmentRight;
-    [self.orderInfoView addSubview:self.nonTipLabel];
+//    [self.orderInfoView addSubview:self.nonTipLabel];
     
     //减免服务费分割线
     UIView *nonTipLine=[[UIView alloc] initWithFrame:CGRectMake(self.nonTipTagLabel.left, self.nonTipTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
     nonTipLine.backgroundColor=sumLine.backgroundColor;
-    [self.orderInfoView addSubview:nonTipLine];
+//    [self.orderInfoView addSubview:nonTipLine];
     
     //实付款标签
-    self.payTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.nonTipTagLabel.left, nonTipLine.bottom+14, self.nonTipTagLabel.width, self.nonTipTagLabel.height)];
+    self.payTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.nonTipTagLabel.left, sumLine.bottom+14, self.nonTipTagLabel.width, self.nonTipTagLabel.height)];
     self.payTagLabel.font=self.tipTagLabel.font;
     self.payTagLabel.textColor=self.tipTagLabel.textColor;
     self.payTagLabel.text=@"实付款";
@@ -330,7 +330,7 @@ static const CGFloat PayViewHeight=50.0;
     self.payLabel.textAlignment=NSTextAlignmentRight;
     [self.orderInfoView addSubview:self.payLabel];
     
-    //减免服务费分割线
+    //实付款分割线
     UIView *payLine=[[UIView alloc] initWithFrame:CGRectMake(self.payTagLabel.left, self.payTagLabel.bottom+14, self.orderInfoView.width-15-15, 0.5)];
     payLine.backgroundColor=sumLine.backgroundColor;
     [self.orderInfoView addSubview:payLine];
@@ -447,12 +447,12 @@ static const CGFloat PayViewHeight=50.0;
             //更新总价
             CGFloat total=[[self.dic objectForKey:@"total"] floatValue];//总价
             
-            if ([[dic objectForKey:@"free"] integerValue]==0) {//不免服务费
-                if (total<[[dic objectForKey:@"man"] floatValue]) {//商品总价小于了每单免服务费金额
-                    self.nonTipLabel.text=@"-¥0.00";
-                    total=total+[[dic objectForKey:@"fuwu"] floatValue];
-                }
-            }
+//            if ([[dic objectForKey:@"free"] integerValue]==0) {//不免服务费
+//                if (total<[[dic objectForKey:@"man"] floatValue]) {//商品总价小于了每单免服务费金额
+//                    self.nonTipLabel.text=@"-¥0.00";
+//                    total=total+[[dic objectForKey:@"fuwu"] floatValue];
+//                }
+//            }
             
             [self updateTotal:[NSString stringWithFormat:@"%.2f",total]];
         }
