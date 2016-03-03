@@ -15,6 +15,7 @@
 #import "UILabel+AutoFrame.h"
 
 #import "UCGoodsListViewController.h"
+#import "UCOrderListViewController.h"
 
 #import "MBProgressHUD.h"
 
@@ -64,6 +65,9 @@ static const CGFloat PayViewHeight=50.0;
     self.title=@"订单详情";
     
     self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
+    
+    //添加支付成功后进入我的订单通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess:) name:@"pay_success" object:nil];
     
     //初始化订单信息视图
     [self initScrollView];
@@ -452,7 +456,7 @@ static const CGFloat PayViewHeight=50.0;
  *  返回上层
  */
 -(void)popViewController{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark 按钮事件取
@@ -514,6 +518,38 @@ static const CGFloat PayViewHeight=50.0;
     } failure:^(NSError *error) {
         
         [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+#pragma mark 通知
+/**
+ *  添加支付成功后进入我的订单通知
+ *
+ *  @param notification
+ */
+-(void)paySuccess:(NSNotification *)notification{
+    //构造参数
+    NSString *url=@"update_order";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"orderid":[[self.dic objectForKey:@"order"] objectForKey:@"id"]};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            UCOrderListViewController *vc=[UCOrderListViewController new];
+            vc.selectIndex=2;
+            vc.flag=@"pay_success";
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else{
+            
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
         
         [CAlertView alertMessage:NetErrorMessage];
         

@@ -11,6 +11,8 @@
 #import "BackViewTransition.h"
 #import "BackViewAnimation.h"
 
+#import "UCOrderListViewController.h"
+
 @interface SwipeBackNavigationViewController (){
     NSArray *_disablePanGestureInViewControllerClassList;//不添加返回手势的VC集合
 }
@@ -46,7 +48,7 @@
     
     if (![_disablePanGestureInViewControllerClassList containsObject:NSStringFromClass([viewController class])]) {
         //添加VC返回手势
-        [self.interactionController wireToViewController:viewController];
+//        [self.interactionController wireToViewController:viewController];
     }
     
     [super pushViewController:viewController animated:animated];
@@ -59,7 +61,23 @@
         self.tarBar.hidden=NO;
     }
     
+    if ([[[self.viewControllers lastObject] class] isSubclassOfClass:[UCOrderListViewController class]]) {
+        
+        UCOrderListViewController *vc=[self.viewControllers lastObject];
+        if ([vc.flag isEqualToString:@"pay_success"]) {
+            [self popToRootViewControllerAnimated:YES];
+        }
+    }
+    
     return [super popViewControllerAnimated:animated];
+}
+
+//重写popToRoot
+-(NSArray<UIViewController *> *)popToRootViewControllerAnimated:(BOOL)animated{
+    self.tarBar.alpha=1;
+    self.tarBar.hidden=NO;
+    
+    return [super popToRootViewControllerAnimated:animated];
 }
 
 #pragma BackViewTransition 委托

@@ -11,5 +11,6 @@
 @interface UCOrderListViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic,assign) NSInteger selectIndex;
+@property(nonatomic,strong) NSString *flag;
 
 @end

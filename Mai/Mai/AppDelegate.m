@@ -10,6 +10,7 @@
 
 #import "Const.h"
 #import "NSObject+Utils.h"
+#import "CAlertView.h"
 
 #import "MainViewController.h"
 #import "TabBarViewController.h"
@@ -82,8 +83,13 @@
  * @param resp具体的回应内容，是自动释放的
  */
 -(void)onResp:(BaseResp*)resp{
-    int code=resp.errCode;
-    NSString *string=resp.errStr;
+    if (resp.errCode==0) {//成功
+        //发送支付成功后进入我的订单通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"pay_success" object:nil];
+    }
+    else{//失败
+        [CAlertView alertMessage:resp.errStr];
+    }
 }
 
 @end
