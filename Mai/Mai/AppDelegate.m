@@ -15,7 +15,9 @@
 #import "TabBarViewController.h"
 #import "LBLeftBarViewController.h"
 
-@interface AppDelegate ()
+#import "WXApi.h"
+
+@interface AppDelegate ()<WXApiDelegate>
 
 @end
 
@@ -34,6 +36,10 @@
     self.window.backgroundColor=[UIColor whiteColor];
     self.window.rootViewController=[[MainViewController alloc] initWithLeftViewController:[LBLeftBarViewController new] centerViewController:[TabBarViewController new]];
     [self.window makeKeyAndVisible];
+    
+    
+    //向微信注册wx3eb102aff53e1896
+    [WXApi registerApp:@"wx3eb102aff53e1896" withDescription:@"出来mai"];
     
     return YES;
 }
@@ -58,6 +64,26 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return  [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+#pragma mark 微信支付委托
+/*! @brief 发送一个sendReq后，收到微信的回应
+ *
+ * 收到一个来自微信的处理结果。调用一次sendReq后会收到onResp。
+ * 可能收到的处理结果有SendMessageToWXResp、SendAuthResp等。
+ * @param resp具体的回应内容，是自动释放的
+ */
+-(void)onResp:(BaseResp*)resp{
+    int code=resp.errCode;
+    NSString *string=resp.errStr;
 }
 
 @end

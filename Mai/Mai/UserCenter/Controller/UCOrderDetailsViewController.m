@@ -18,6 +18,9 @@
 
 #import "MBProgressHUD.h"
 
+#import "WXApi.h"
+#import "WXApiObject.h"
+
 static const CGFloat PayViewHeight=50.0;
 
 @interface UCOrderDetailsViewController ()
@@ -418,7 +421,7 @@ static const CGFloat PayViewHeight=50.0;
     //构造参数
     NSString *url=@"order_cancel";
     NSDictionary *parameters=@{@"token":Token,
-                               @"orderid":[[self.dic objectForKey:@"order"] objectForKey:@"orderno"],
+                               @"orderid":[[self.dic objectForKey:@"order"] objectForKey:@"id"],
                                @"isLogin":[self isLogin] ? @"1" : @"0"};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
@@ -477,6 +480,44 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"提交中...";
+    
+    //构造参数
+    NSString *url=@"weixin_pay";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"orderid":[[self.dic objectForKey:@"order"] objectForKey:@"id"]};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            //调起微信支付
+            PayReq *req=[PayReq new];
+            req.partnerId=[[dic objectForKey:@"data"] objectForKey:@"partnerid"];
+            req.prepayId=[[dic objectForKey:@"data"] objectForKey:@"prepayid"];
+            req.nonceStr=[[dic objectForKey:@"data"] objectForKey:@"noncestr"];
+            req.timeStamp=[[[dic objectForKey:@"data"] objectForKey:@"timestamp"] intValue];
+            req.package=[[dic objectForKey:@"data"] objectForKey:@"package"];
+            req.sign=[[dic objectForKey:@"data"] objectForKey:@"sign"];
+            
+            [WXApi sendReq:req];
+        }
+        else{
+            
+            [CAlertView alertMessage:error];
+        }
+        
+        [hud hide:YES];
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
