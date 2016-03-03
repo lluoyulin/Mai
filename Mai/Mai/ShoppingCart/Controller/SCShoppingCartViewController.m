@@ -87,6 +87,13 @@
                 //不需要显示登录页面
                 [UserData setObject:nil forKey:@"show_login"];
                 
+                self.tableView.hidden=YES;
+                self.addGoodsView.hidden=NO;
+                
+                self.selectAllButton.selected=NO;
+                self.totalLabel.text=@"¥0.00";
+                [self.payButton setTitle:@"去结算(0)" forState:UIControlStateNormal];
+                
                 UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"购物车数据需要登录才可查看" message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
                 [alert addAction:[UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
