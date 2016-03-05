@@ -503,6 +503,8 @@
 - (void)imagePlayerView:(ImagePlayerView *)imagePlayerView loadImageForImageView:(UIImageView *)imageView index:(NSInteger)index{
     
     if (_imagePlayerList.count>0) {
+        imageView.backgroundColor=[UIColor whiteColor];
+        imageView.contentMode=UIViewContentModeScaleAspectFit;
         [imageView sd_setImageWithURL:[NSURL URLWithString:[_imagePlayerList[index] objectForKey:@"pic"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
     }
 }
