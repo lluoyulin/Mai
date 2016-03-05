@@ -20,6 +20,8 @@
 
 #import "MBProgressHUD.h"
 
+#import "WXApi.h"
+
 @interface UCOrderListViewController (){
     NSMutableArray *_list;//用户全部订单数据
     NSMutableArray *_orderList;//筛选后的订单数据
@@ -51,6 +53,10 @@
     
     //初始化表格
     [self initTableView];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     
     //获取数据
     [self loadData];
@@ -252,6 +258,7 @@
 -(void)queryOrder:(NSDictionary *)dic{
     //订单信息
     NSDictionary *order=@{@"orderno":[dic objectForKey:@"orderno"],
+                          @"id":[dic objectForKey:@"id"],
                           @"payment":[dic objectForKey:@"payment"],
                           @"zongjia":[dic objectForKey:@"zongjia"],
                           @"fuwufei":[dic objectForKey:@"fuwufei"],
@@ -291,6 +298,59 @@
     UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
     vc.dic=dicOrder;
     vc.payViewHidden=YES;
+    vc.flag=@"UCOrderListViewController";
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+/**
+ *  支付订单
+ *
+ *  @param dic 订单信息
+ */
+-(void)payOrder:(NSDictionary *)dic{
+    //订单信息
+    NSDictionary *order=@{@"orderno":[dic objectForKey:@"orderno"],
+                          @"id":[dic objectForKey:@"id"],
+                          @"payment":[dic objectForKey:@"payment"],
+                          @"zongjia":[dic objectForKey:@"zongjia"],
+                          @"fuwufei":[dic objectForKey:@"fuwufei"],
+                          @"jianmian":[dic objectForKey:@"jianmian"],
+                          @"totalprice":[dic objectForKey:@"totalprice"],
+                          @"date":[dic objectForKey:@"date"],
+                          @"remark":[dic objectForKey:@"remark"]
+                          };
+    
+    //订单商品集合
+    NSMutableArray *list=[[NSMutableArray alloc] init];
+    for (NSDictionary *gs in [dic objectForKey:@"gs"]) {
+        [list addObject:@{@"num":[gs objectForKey:@"num"],
+                          @"gs":@{@"img":[gs objectForKey:@"img"],
+                                  @"title":[gs objectForKey:@"title"],
+                                  @"price2":[gs objectForKey:@"price2"]
+                                  }
+                          }];
+    }
+    
+    //收货地址信息
+    NSDictionary *address=[[dic objectForKey:@"ads"] firstObject];
+    
+    //收货人
+    NSString *consignee=[NSString stringWithFormat:@"收货人：%@(%@) | %@",[address objectForKey:@"name"],[[address objectForKey:@"sex"] integerValue]==1 ? @"男" : @"女",[address objectForKey:@"mobile"]];
+    
+    //收货地址
+    NSString *consigneeAddress=[NSString stringWithFormat:@"收货地址：%@",[address objectForKey:@"address"]];
+    
+    //封装订单信息
+    NSDictionary *dicOrder=@{@"order":order,
+                             @"list":list,
+                             @"consignee":consignee,
+                             @"consigneeAddressLabel":consigneeAddress};
+    
+    
+    UCOrderDetailsViewController *vc=[UCOrderDetailsViewController new];
+    vc.dic=dicOrder;
+    vc.payViewHidden=NO;
+    vc.flag=@"UCOrderListViewController";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -339,8 +399,8 @@
         };
         
         //支付订单block
-        cell.payOrderBlock=^(){
-            
+        cell.payOrderBlock=^(NSDictionary *dic){
+            [self payOrder:dic];
         };
         
         //查看订单

@@ -21,7 +21,7 @@
 /**
  *  支付订单
  */
-@property(nonatomic,copy) void(^payOrderBlock)(void);
+@property(nonatomic,copy) void(^payOrderBlock)(NSDictionary *dic);
 
 /**
  *  查看订单

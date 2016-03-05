@@ -157,7 +157,7 @@
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
-    self.payOrderBlock();
+    self.payOrderBlock(self.dic);
 }
 
 /**

@@ -456,6 +456,12 @@ static const CGFloat PayViewHeight=50.0;
  *  返回上层
  */
 -(void)popViewController{
+    if ([self.flag isEqualToString:@"UCOrderListViewController"]) {//从订单列表进入
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        return;
+    }
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
