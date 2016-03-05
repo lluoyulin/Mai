@@ -324,8 +324,13 @@
  *  @param sender
  */
 -(void)addGoodsButton:(UIButton *)sender{
-    //添加商品通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"add_goods" object:nil];
+    if (_style==ShoppingCartStyleDefault) {//从VC进入购物车
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else{//从tabbar进入购物车
+        //添加商品通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"add_goods" object:nil];
+    }
 }
 
 #pragma mark 自定义方法

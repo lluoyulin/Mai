@@ -340,7 +340,7 @@
         
         //支付订单block
         cell.payOrderBlock=^(){
-        
+            
         };
         
         //查看订单
