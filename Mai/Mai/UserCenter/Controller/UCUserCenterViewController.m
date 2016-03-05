@@ -11,6 +11,8 @@
 #import "Const.h"
 #import "UILabel+AutoFrame.h"
 #import "NSObject+Utils.h"
+#import "CAlertView.h"
+#import "NSObject+HttpTask.h"
 
 #import "MainViewController.h"
 #import "ULLoginViewController.h"
@@ -18,6 +20,7 @@
 #import "UCOrderListViewController.h"
 
 #import "UIImageView+WebCache.h"
+#import "MBProgressHUD.h"
 
 @interface UCUserCenterViewController ()
 
@@ -26,6 +29,8 @@
 @property(nonatomic,strong) UIImageView *userHeadImage;//用户头像
 @property(nonatomic,strong) UILabel *nickNameLabel;//用户昵称
 @property(nonatomic,strong) UIImageView *userEditFlagImage;//用户信息编辑图片
+@property(nonatomic,strong) UIButton *signButton;//签到按钮
+@property(nonatomic,strong) UILabel *signTagLabel;//签到标签
 
 @property(nonatomic,strong) UIView *allOrdersView;//全部订单视图
 @property(nonatomic,strong) UIImageView *allOrdersLogoImage;//全部订单logo
@@ -130,6 +135,21 @@
     self.userEditFlagImage=[[UIImageView alloc] initWithFrame:CGRectMake(self.userInfoButton.width-14-15, (self.userInfoButton.height-14)/2, 14, 14)];
     self.userEditFlagImage.image=[UIImage imageNamed:@"user_center_white_arrow"];
     [self.userInfoButton addSubview:self.userEditFlagImage];
+    
+    //签到按钮
+    self.signButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.signButton.frame=CGRectMake(self.userView.width-44-1, self.userInfoButton.bottom+6, 44, 44);
+    [self.signButton setImage:[UIImage imageNamed:@"user_center_sign"] forState:UIControlStateNormal];
+    [self.signButton addTarget:self action:@selector(signButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.userView addSubview:self.signButton];
+    
+    //签到标签
+    self.signTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, 32, self.signButton.width, 12)];
+    self.signTagLabel.font=[UIFont systemFontOfSize:10.0];
+    self.signTagLabel.textColor=[UIColor whiteColor];
+    self.signTagLabel.textAlignment=NSTextAlignmentCenter;
+    self.signTagLabel.text=@"签到";
+    [self.signButton addSubview:self.signTagLabel];
 }
 
 /**
@@ -239,6 +259,43 @@
     self.nickNameLabel.text=[self.nickName isEqualToString:@""] ? @"游客" : self.nickName;
 }
 
+/**
+ *  签到
+ */
+-(void)sign{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"签到途中...";
+    
+    //构造参数
+    NSString *url=@"qiandao";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            hud.mode=MBProgressHUDModeCustomView;
+            hud.customView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+            hud.labelText=@"签到成功";
+            [hud hide:YES afterDelay:3];
+        }
+        else{
+            [hud hide:YES];
+            
+            [CAlertView alertMessage:error];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
 #pragma mark 按钮事件
 /**
  *  用户信息按钮
@@ -287,6 +344,22 @@
     UCOrderListViewController *vc=[UCOrderListViewController new];
     vc.selectIndex=sender.tag;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+/**
+ *  签到按钮
+ *
+ *  @param sender 
+ */
+-(void)signButton:(UIButton *)sender{
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
+    
+    //签到
+    [self sign];
 }
 
 #pragma mark 通知
