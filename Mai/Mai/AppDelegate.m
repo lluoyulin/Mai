@@ -83,12 +83,26 @@
  * @param resp具体的回应内容，是自动释放的
  */
 -(void)onResp:(BaseResp*)resp{
-    if (resp.errCode==0) {//成功
-        //发送支付成功后进入我的订单通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"pay_success" object:nil];
-    }
-    else{//失败
-        [CAlertView alertMessage:resp.errStr];
+    switch (resp.errCode) {
+        case 0:
+            //发送支付成功后进入我的订单通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"pay_success" object:nil];
+            break;
+        case -1:
+            [CAlertView alertMessage:resp.errStr];
+            break;
+        case -2:
+            [CAlertView alertMessage:@"取消支付"];
+            break;
+        case -3:
+            [CAlertView alertMessage:resp.errStr];
+            break;
+        case -4:
+            [CAlertView alertMessage:resp.errStr];
+            break;
+        case -5:
+            [CAlertView alertMessage:resp.errStr];
+            break;
     }
 }
 

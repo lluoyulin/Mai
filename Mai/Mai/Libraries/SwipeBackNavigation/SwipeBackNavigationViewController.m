@@ -61,13 +61,13 @@
         self.tarBar.hidden=NO;
     }
     
-    if ([[[self.viewControllers lastObject] class] isSubclassOfClass:[UCOrderListViewController class]]) {
-        
-        UCOrderListViewController *vc=[self.viewControllers lastObject];
-        if ([vc.flag isEqualToString:@"pay_success"]) {
-            [self popToRootViewControllerAnimated:YES];
-        }
-    }
+//    if ([[[self.viewControllers lastObject] class] isSubclassOfClass:[UCOrderListViewController class]]) {
+//        
+//        UCOrderListViewController *vc=[self.viewControllers lastObject];
+//        if ([vc.flag isEqualToString:@"pay_success"]) {
+//            [self popToRootViewControllerAnimated:YES];
+//        }
+//    }
     
     return [super popViewControllerAnimated:animated];
 }

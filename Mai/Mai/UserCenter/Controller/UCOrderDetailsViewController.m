@@ -545,10 +545,21 @@ static const CGFloat PayViewHeight=50.0;
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
-            UCOrderListViewController *vc=[UCOrderListViewController new];
-            vc.selectIndex=2;
-            vc.flag=@"pay_success";
-            [self.navigationController pushViewController:vc animated:YES];
+//            UCOrderListViewController *vc=[UCOrderListViewController new];
+//            vc.selectIndex=2;
+//            vc.flag=@"pay_success";
+//            [self.navigationController pushViewController:vc animated:YES];
+            [CAlertView alertTarget:self message:@"支付成功" handler:^{
+                
+                if ([self.flag isEqualToString:@"UCOrderListViewController"]) {//从订单列表进入
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                    return;
+                }
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                
+            }];
         }
         else{
             
