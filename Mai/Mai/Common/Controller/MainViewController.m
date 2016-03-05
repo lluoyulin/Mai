@@ -132,6 +132,8 @@
     [self.webViewVC didMoveToParentViewController:self];
     
     if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"商城"]) {
+        [self addChildViewController:self.centerViewController];
+        [self.centerViewController didMoveToParentViewController:self];
         [self.centerView addSubview:self.centerViewController.view];
         return;
     }

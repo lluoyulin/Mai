@@ -322,7 +322,7 @@
     self.isRefresh=YES;
     
     //添加到购物车
-    [self addShoppingCart];
+//    [self addShoppingCart];
     
     SCShoppingCartViewController *vc=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleDefault];
     [self.navigationController pushViewController:vc animated:YES];
