@@ -629,14 +629,22 @@ static const CGFloat PayViewHeight=50.0;
  *  @param sender
  */
 -(void)payButton:(UIButton *)sender{
-    if (!self.consigneeAddressLabel.accessibilityValue) {
-        [CAlertView alertMessage:@"请选择收货地址"];
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"提交订单" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        return;
-    }
+        if (!self.consigneeAddressLabel.accessibilityValue) {
+            [CAlertView alertMessage:@"请选择收货地址"];
+            
+            return;
+        }
+        
+        //提交订单
+        [self submitOrder];
+        
+    }]];
     
-    //提交订单
-    [self submitOrder];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark 键盘弹出和隐藏通知方法
