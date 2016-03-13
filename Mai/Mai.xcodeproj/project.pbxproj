@@ -11,6 +11,8 @@
 		E61ADDFE1C72BFF0009D0324 /* UCUserAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61ADDFD1C72BFF0009D0324 /* UCUserAddressViewController.m */; };
 		E61ADE011C72D813009D0324 /* UCAddressDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */; };
 		E61CCE761C7201B100CAF626 /* CKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */; };
+		E63E4D101C9511EC00F26CD5 /* MPPointsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E63E4D0F1C9511EC00F26CD5 /* MPPointsViewController.m */; };
+		E63E4D131C95125100F26CD5 /* MPPointsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E63E4D121C95125100F26CD5 /* MPPointsTableViewCell.m */; };
 		E647324E1C5CA0DF008061A5 /* CSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */; };
 		E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732531C5CA422008061A5 /* HGoodsDescriptionsViewController.m */; };
 		E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E64732561C5CA449008061A5 /* HGoodsImageInfoViewController.m */; };
@@ -123,6 +125,10 @@
 		E61ADE001C72D813009D0324 /* UCAddressDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UCAddressDetailsViewController.m; sourceTree = "<group>"; };
 		E61CCE741C7201B100CAF626 /* CKeyboardToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKeyboardToolBar.h; sourceTree = "<group>"; };
 		E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKeyboardToolBar.m; sourceTree = "<group>"; };
+		E63E4D0E1C9511EC00F26CD5 /* MPPointsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPPointsViewController.h; sourceTree = "<group>"; };
+		E63E4D0F1C9511EC00F26CD5 /* MPPointsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPPointsViewController.m; sourceTree = "<group>"; };
+		E63E4D111C95125100F26CD5 /* MPPointsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPPointsTableViewCell.h; sourceTree = "<group>"; };
+		E63E4D121C95125100F26CD5 /* MPPointsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPPointsTableViewCell.m; sourceTree = "<group>"; };
 		E647324C1C5CA0DF008061A5 /* CSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSlidingViewController.h; sourceTree = "<group>"; };
 		E647324D1C5CA0DF008061A5 /* CSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSlidingViewController.m; sourceTree = "<group>"; };
 		E64732521C5CA422008061A5 /* HGoodsDescriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsDescriptionsViewController.h; sourceTree = "<group>"; };
@@ -344,6 +350,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E63E4D0B1C95114C00F26CD5 /* MyPoints */ = {
+			isa = PBXGroup;
+			children = (
+				E63E4D0C1C95114C00F26CD5 /* Controller */,
+				E63E4D0D1C95114C00F26CD5 /* View */,
+			);
+			path = MyPoints;
+			sourceTree = "<group>";
+		};
+		E63E4D0C1C95114C00F26CD5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E63E4D0E1C9511EC00F26CD5 /* MPPointsViewController.h */,
+				E63E4D0F1C9511EC00F26CD5 /* MPPointsViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E63E4D0D1C95114C00F26CD5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E63E4D111C95125100F26CD5 /* MPPointsTableViewCell.h */,
+				E63E4D121C95125100F26CD5 /* MPPointsTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E65B0B271C4F7A24002262F1 = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +404,7 @@
 				E6BA81DB1C5089FE00A5C16F /* ShoppingCart */,
 				E6BA81DD1C5089FE00A5C16F /* UserCenter */,
 				E6C46A191C755301005D643A /* UserLogin */,
+				E63E4D0B1C95114C00F26CD5 /* MyPoints */,
 				E673C0F21C7C3C530091FA85 /* LeftBar */,
 				E65B0B361C4F7A24002262F1 /* AppDelegate.h */,
 				E65B0B371C4F7A24002262F1 /* AppDelegate.m */,
@@ -993,6 +1027,7 @@
 				E65F9BEB1C7419490047A8E5 /* UCGoodsListTableViewCell.m in Sources */,
 				E6F340881C7D38500064E7A0 /* TLTimeLimitDetailsTableViewCell.m in Sources */,
 				E65B0B691C4F84B8002262F1 /* AFURLSessionManager.m in Sources */,
+				E63E4D131C95125100F26CD5 /* MPPointsTableViewCell.m in Sources */,
 				E65F9BE21C73F7FA0047A8E5 /* UCSelectAddressViewController.m in Sources */,
 				E6BA82031C508D6500A5C16F /* PushViewAnimation.m in Sources */,
 				E6C46A271C7594D9005D643A /* ULQuickLoginViewController.m in Sources */,
@@ -1014,6 +1049,7 @@
 				E6C46A211C755B16005D643A /* CTextField.m in Sources */,
 				E64732571C5CA449008061A5 /* HGoodsImageInfoViewController.m in Sources */,
 				E65B0BDF1C4F8584002262F1 /* MBProgressHUD.m in Sources */,
+				E63E4D101C9511EC00F26CD5 /* MPPointsViewController.m in Sources */,
 				E64732541C5CA422008061A5 /* HGoodsDescriptionsViewController.m in Sources */,
 				E6CD203D1C7AA42E00BB4481 /* UCEditViewController.m in Sources */,
 				E65B0BD51C4F84CE002262F1 /* UIButton+WebCache.m in Sources */,

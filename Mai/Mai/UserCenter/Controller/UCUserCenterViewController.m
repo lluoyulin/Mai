@@ -18,6 +18,7 @@
 #import "ULLoginViewController.h"
 #import "UCEditProfileViewController.h"
 #import "UCOrderListViewController.h"
+#import "MPPointsViewController.h"
 
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
@@ -32,11 +33,18 @@
 @property(nonatomic,strong) UIButton *signButton;//签到按钮
 @property(nonatomic,strong) UILabel *signTagLabel;//签到标签
 
+@property(nonatomic,strong) UIView *myPointsView;//我的积分视图
+@property(nonatomic,strong) UIImageView *myPointsLogoImage;//我的积分logo
+@property(nonatomic,strong) UIButton *myPointsButton;//我的积分按钮
+@property(nonatomic,strong) UILabel *myPointsTagLabel;//我的积分标签
+@property(nonatomic,strong) UILabel *openMyPointsTagLabel;//打开我的积分标签
+@property(nonatomic,strong) UIImageView *openMyPointsFlagImage;//打开我的积分图片
+
 @property(nonatomic,strong) UIView *allOrdersView;//全部订单视图
 @property(nonatomic,strong) UIImageView *allOrdersLogoImage;//全部订单logo
 @property(nonatomic,strong) UIButton *allOrdersButton;//全部订单按钮
 @property(nonatomic,strong) UILabel *myOrdersTagLabel;//我消费的订单标签
-@property(nonatomic,strong) UILabel *openOrdersTagLabel;//打开我的订单
+@property(nonatomic,strong) UILabel *openOrdersTagLabel;//打开我的订单标签
 @property(nonatomic,strong) UIImageView *openOrdersFlagImage;//打开我的订单图片
 
 @property(nonatomic,strong) UIView *orderOperateView;//订单状态操作栏视图
@@ -58,6 +66,9 @@
     
     //初始化用户信息视图
     [self initUserView];
+    
+    //我的积分视图
+    [self initMyPointsView];
     
     //初始化全部订单视图
     [self initAllOrdersView];
@@ -153,11 +164,57 @@
 }
 
 /**
+ *  初始化我的积分视图
+ */
+-(void)initMyPointsView{
+    //我的积分视图
+    self.myPointsView=[[UIView alloc] initWithFrame:CGRectMake(0, self.userView.bottom, self.userView.width, 44)];
+    self.myPointsView.backgroundColor=ThemeWhite;
+    [self.view addSubview:self.myPointsView];
+    
+    //我的积分视图分割线
+    UIView *myPointsLine=[[UIView alloc] initWithFrame:CGRectMake(0, self.myPointsView.height-0.5, self.myPointsView.width, 0.5)];
+    myPointsLine.backgroundColor=UIColorFromRGB(0xdddddd);
+    [self.myPointsView addSubview:myPointsLine];
+    
+    //我的积分logo
+    self.myPointsLogoImage=[[UIImageView alloc] initWithFrame:CGRectMake(14, (self.myPointsView.height-21)/2, 21, 21)];
+    self.myPointsLogoImage.image=[UIImage imageNamed:@"points_diamond"];
+    [self.myPointsView addSubview:self.myPointsLogoImage];
+    
+    //我的积分按钮
+    self.myPointsButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.myPointsButton.frame=CGRectMake(self.myPointsLogoImage.right+10, 0, self.userView.width-self.myPointsLogoImage.right-10, 44);
+    [self.myPointsButton addTarget:self action:@selector(myPointsButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.myPointsView addSubview:self.myPointsButton];
+    
+    //我的积分标签
+    self.myPointsTagLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, (self.myPointsButton.height-16)/2, 0, 16)];
+    self.myPointsTagLabel.font=[UIFont systemFontOfSize:14.0];
+    self.myPointsTagLabel.textColor=UIColorFromRGB(0x666666);
+    [self.myPointsTagLabel setTextWidth:@"我的积分" size:CGSizeMake(100,16)];
+    [self.myPointsButton addSubview:self.myPointsTagLabel];
+    
+    //打开我的积分图片
+    self.openMyPointsFlagImage=[[UIImageView alloc] initWithFrame:CGRectMake(self.myPointsButton.width-16-15, (self.myPointsButton.height-16)/2, 16, 16)];
+    self.openMyPointsFlagImage.image=[UIImage imageNamed:@"order_address_arrow"];
+    [self.myPointsButton addSubview:self.openMyPointsFlagImage];
+    
+    //打开我的积分标签
+    self.openMyPointsTagLabel=[UILabel new];
+    self.openMyPointsTagLabel.font=[UIFont systemFontOfSize:11.0];
+    self.openMyPointsTagLabel.textColor=ThemeGray;
+    [self.openMyPointsTagLabel setTextWidth:@"查看积分详情" size:CGSizeMake(150,13)];
+    self.openMyPointsTagLabel.frame=CGRectMake(self.openMyPointsFlagImage.left-5-self.openMyPointsTagLabel.width, (self.myPointsButton.height-13)/2, self.openMyPointsTagLabel.width, 13);
+    [self.myPointsButton addSubview:self.openMyPointsTagLabel];
+}
+
+/**
  *  初始化全部订单视图
  */
 -(void)initAllOrdersView{
     //全部订单视图
-    self.allOrdersView=[[UIView alloc] initWithFrame:CGRectMake(0, self.userView.bottom, self.userView.width, 44)];
+    self.allOrdersView=[[UIView alloc] initWithFrame:CGRectMake(0, self.myPointsView.bottom, self.myPointsView.width, 44)];
     self.allOrdersView.backgroundColor=ThemeWhite;
     [self.view addSubview:self.allOrdersView];
     
@@ -310,6 +367,22 @@
     }
     
     [self.navigationController pushViewController:[UCEditProfileViewController new] animated:YES];
+}
+
+/**
+ *  我的积分按钮
+ *
+ *  @param sender
+ */
+-(void)myPointsButton:(UIButton *)sender{
+    if (![self isLogin]) {
+        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        
+        return;
+    }
+    
+    MPPointsViewController *vc=[MPPointsViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /**
