@@ -65,18 +65,18 @@
     _nameLabel.frame=CGRectMake(_logoImage.right+10, 15, 100, 16);
     _nameLabel.font=[UIFont systemFontOfSize:14.0];
     _nameLabel.textColor=UIColorFromRGB(0x292f33);
-    _nameLabel.text=[self.dicPoint objectForKey:@"title"];
+    _nameLabel.text=@"每日签到";
     
     //积分类型简介
     _descriptionLabel.frame=CGRectMake(_nameLabel.left, _nameLabel.bottom+5, 200, 15);
     _descriptionLabel.font=[UIFont systemFontOfSize:13.0];
-    _descriptionLabel.textColor=UIColorFromRGB(0xaab8c2);
-    _descriptionLabel.text=[self.dicPoint objectForKey:@"tip"];
+    _descriptionLabel.textColor=ThemeGray;
+    _descriptionLabel.text=[self.dicPoint objectForKey:@"date"];
     
     //积分
     _pointsLabel.font=[UIFont systemFontOfSize:22.0];
     _pointsLabel.textColor=UIColorFromRGB(0xef4235);
-    [_pointsLabel setTextWidth:[NSString stringWithFormat:@"+%@",[self.dicPoint objectForKey:@"total"]] size:CGSizeMake(100, 24)];
+    [_pointsLabel setTextWidth:[NSString stringWithFormat:@"+%@",[self.dicPoint objectForKey:@"jifen"]] size:CGSizeMake(100, 24)];
     _pointsLabel.frame=CGRectMake(self.width-15-_pointsLabel.width, (self.height-24)/2, _pointsLabel.width, 24);
     
     //线

@@ -47,6 +47,8 @@
     
     self.view.backgroundColor=ThemeWhite;
     
+    _pointsList=[[NSMutableArray alloc] init];
+    
     //初始化导航栏
     [self initNavigationBarView];
     
@@ -55,6 +57,9 @@
     
     //初始化下面部分视图
     [self initBottomView];
+    
+    //获取数据
+    [self loadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -156,7 +161,7 @@
     [self.tableHeaderView addSubview:headerLine];
     
     //表头中标题的图标
-    self.titleImage=[[UIImageView alloc] initWithFrame:CGRectMake((self.tableHeaderView.width-24-3-76)/2, (self.tableHeaderView.height-24)/2, 24, 24)];
+    self.titleImage=[[UIImageView alloc] initWithFrame:CGRectMake((self.tableHeaderView.width-21-3-76)/2, (self.tableHeaderView.height-21)/2, 21, 21)];
     self.titleImage.image=[UIImage imageNamed:@"points_diamond"];
     [self.tableHeaderView addSubview:self.titleImage];
     
@@ -178,19 +183,18 @@
     hud.labelText=@"获取中...";
     
     //构造参数
-    NSString *url=@"qiandao";
+    NSString *url=@"qiandao_detail";
     NSDictionary *parameters=@{@"token":Token,
-                               @"uid":[self getUid],
-                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+                               @"uid":[self getUid]};
     
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
             NSDictionary *dic=(NSDictionary *)result;
-            [self.myPointsLabel setTextWidth:[[[dic objectForKey:@"result"] objectForKey:@"total"] stringValue] size:CGSizeMake(self.topView.width, 100)];
+            [self.myPointsLabel setTextWidth:[dic objectForKey:@"jifen"] size:CGSizeMake(self.topView.width, 100)];
             self.myPointsLabel.frame=CGRectMake((self.topView.width-self.myPointsLabel.width)/2, self.pointLabel.bottom+20, self.myPointsLabel.width, 100);
-            
-            NSArray *today=[[dic objectForKey:@"result"] objectForKey:@"today"];
+        
+            NSArray *today=[dic objectForKey:@"list"];
             if (today.count>0) {
                 [_pointsList addObjectsFromArray:today];
                 
@@ -218,8 +222,7 @@
  *
  *  @param sender 按钮
  */
--(void)leftBarButtonTouch:(UIButton *)sender
-{
+-(void)leftBarButtonTouch:(UIButton *)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
