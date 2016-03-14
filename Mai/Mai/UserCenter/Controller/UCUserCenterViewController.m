@@ -333,9 +333,11 @@
     [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
         
         if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
             hud.mode=MBProgressHUDModeCustomView;
             hud.customView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
-            hud.labelText=@"签到成功";
+            hud.labelText=[NSString stringWithFormat:@"签到成功，获得 %@ 积分",[dic objectForKey:@"jifen"]];
             [hud hide:YES afterDelay:3];
         }
         else{
@@ -422,7 +424,7 @@
 /**
  *  签到按钮
  *
- *  @param sender 
+ *  @param sender
  */
 -(void)signButton:(UIButton *)sender{
     if (![self isLogin]) {
