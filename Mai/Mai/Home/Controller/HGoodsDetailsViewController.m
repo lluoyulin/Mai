@@ -321,11 +321,8 @@
     //刷新数据
     self.isRefresh=YES;
     
-    //添加到购物车
-//    [self addShoppingCart];
-    
-    SCShoppingCartViewController *vc=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleDefault];
-    [self.navigationController pushViewController:vc animated:YES];
+    //立即购买
+    [self pay];
 }
 
 /**
@@ -437,6 +434,47 @@
         }
         
     } failure:^(NSError *error) {
+        
+        [CAlertView alertMessage:NetErrorMessage];
+        
+    }];
+}
+
+/**
+ *  立即购买
+ */
+-(void)pay{
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType=MBProgressHUDAnimationZoom;
+    hud.labelText=@"加入购物车...";
+    
+    //构造参数
+    NSString *url=@"add_to_car";
+    NSDictionary *parameters=@{@"token":Token,
+                               @"uid":[self getUid],
+                               @"gid":self.gid,
+                               @"isLogin":[self isLogin] ? @"1" : @"0"};
+    
+    [self post:url parameters:parameters cache:NO success:^(BOOL isSuccess, id result, NSString *error) {
+        
+        if (isSuccess) {
+            NSDictionary *dic=(NSDictionary *)result;
+            
+            //设置购物车商品数量
+            [self setShoppingCount:[dic objectForKey:@"count"] sid:self.gid fid:self.fid isAdd:YES];
+            
+            SCShoppingCartViewController *vc=[[SCShoppingCartViewController alloc] initWithStyle:ShoppingCartStyleDefault];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else{
+            [CAlertView alertMessage:error];
+        }
+        
+        [hud hide:YES];
+        
+    } failure:^(NSError *error) {
+        
+        [hud hide:YES];
         
         [CAlertView alertMessage:NetErrorMessage];
         
