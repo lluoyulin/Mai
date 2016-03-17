@@ -182,7 +182,7 @@
     //竖线
     UIView *verticalLine=[[UIView alloc] initWithFrame:CGRectMake(self.goodsInfoView.width-44-1, (self.goodsInfoView.height-18)/2, 1, 18)];
     verticalLine.backgroundColor=bottomLine.backgroundColor;
-    [self.goodsInfoView addSubview:verticalLine];
+//    [self.goodsInfoView addSubview:verticalLine];
     
     //收藏按钮
     self.starButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -190,7 +190,7 @@
     [self.starButton setImageEdgeInsets:UIEdgeInsetsMake(3.5, 0, 22.5, 0)];
     [self.starButton setImage:[UIImage imageNamed:@"home_collection"] forState:UIControlStateNormal];
     [self.starButton addTarget:self action:@selector(starButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.goodsInfoView addSubview:self.starButton];
+//    [self.goodsInfoView addSubview:self.starButton];
     
     //收藏文字
     self.starLabel=[[UILabel alloc] initWithFrame:CGRectMake(0, 24.5, self.starButton.width, 14)];
@@ -198,7 +198,7 @@
     self.starLabel.textColor=UIColorFromRGB(0x666666);
     self.starLabel.text=@"收藏";
     self.starLabel.textAlignment=NSTextAlignmentCenter;
-    [self.starButton addSubview:self.starLabel];
+//    [self.starButton addSubview:self.starLabel];
     
     //商品名称
     self.nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(15, 10, self.goodsInfoView.width-15-verticalLine.width-self.starButton.width, 18)];
