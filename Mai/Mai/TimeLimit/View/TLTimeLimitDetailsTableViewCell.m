@@ -84,7 +84,7 @@
     [_goodsImage sd_setImageWithURL:[NSURL URLWithString:[self.dic objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"image_default"]];
     
     //商品名称
-    _nameLabel.frame=CGRectMake(_goodsImage.right+10, _goodsImage.top, self.width-_goodsImage.right-10-15, 16);
+    _nameLabel.frame=CGRectMake(_goodsImage.right+10, _goodsImage.top, self.width-_goodsImage.right-10, 16);
     _nameLabel.font=[UIFont systemFontOfSize:14.0];
     _nameLabel.textColor=ThemeBlack;
     _nameLabel.text=[self.dic objectForKey:@"title"];
@@ -98,7 +98,7 @@
     //零售价
     _price2Label.font=[UIFont systemFontOfSize:11.0];
     _price2Label.textColor=ThemeGray;
-    [_price2Label setTextWidth:[NSString stringWithFormat:@"¥%.2f",[[self.dic objectForKey:@"price1"] floatValue]] size:CGSizeMake(40, 13)];
+    [_price2Label setTextWidth:[NSString stringWithFormat:@"¥%.2f",[[self.dic objectForKey:@"price1"] floatValue]] size:CGSizeMake(100, 13)];
     _price2Label.frame=CGRectMake(_nameLabel.left, _goodsImage.bottom-13, _price2Label.width, 13);
     
     //添加删除线
