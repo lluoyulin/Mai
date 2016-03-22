@@ -1207,7 +1207,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ionicframework.chulaimai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1c73c875-f6f2-409f-90d5-5725d9f9f834";
+				PROVISIONING_PROFILE = "a733dc07-fdc5-4da0-87a7-93b41b2d5c15";
 			};
 			name = Debug;
 		};
@@ -1228,7 +1228,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ionicframework.chulaimai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1c73c875-f6f2-409f-90d5-5725d9f9f834";
+				PROVISIONING_PROFILE = "a733dc07-fdc5-4da0-87a7-93b41b2d5c15";
 			};
 			name = Release;
 		};
