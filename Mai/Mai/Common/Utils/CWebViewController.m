@@ -1,12 +1,12 @@
 //
-//  LBWebViewViewController.m
-//  Mai
+//  CWebViewController.m
+//  DongJing
 //
-//  Created by freedom on 16/2/23.
-//  Copyright © 2016年 freedom_luo. All rights reserved.
+//  Created by freedom on 16/4/14.
+//  Copyright © 2016年 李红(lh.coder@foxmail.com). All rights reserved.
 //
 
-#import "LBWebViewViewController.h"
+#import "CWebViewController.h"
 
 #import "Const.h"
 #import "UIView+Frame.h"
@@ -14,7 +14,7 @@
 
 #import "NJKWebViewProgressView.h"
 
-@interface LBWebViewViewController ()
+@interface CWebViewController ()
 
 @property(nonatomic,strong) UIView *navigationBarView;//导航栏
 @property(nonatomic,strong) UILabel *titleLabel;//标题
@@ -30,12 +30,12 @@
 
 @end
 
-@implementation LBWebViewViewController
+@implementation CWebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
+    self.view.backgroundColor=[UIColor whiteColor];
     
     //初始化导航栏
     [self initNavigationBar];
@@ -65,20 +65,20 @@
 -(void)initNavigationBar{
     //导航栏
     self.navigationBarView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT)];
-    self.navigationBarView.backgroundColor=ThemeYellow;
+    self.navigationBarView.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:self.navigationBarView];
     
     //左边按钮
     self.backBarButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.backBarButton.frame=CGRectMake(0, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-44)/2, 44, 44);
-    [self.backBarButton setImage:[UIImage imageNamed:@"navigation_menu"] forState:UIControlStateNormal];
+    [self.backBarButton setImage:[UIImage imageNamed:@"navigation_back"] forState:UIControlStateNormal];
     [self.backBarButton addTarget:self action:@selector(backBarButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationBarView addSubview:self.backBarButton];
     
     //标题
     self.titleLabel=[UILabel new];
     self.titleLabel.font=[UIFont systemFontOfSize:18.0];
-    self.titleLabel.textColor=ThemeBlack;
+    self.titleLabel.textColor=UIColorFromRGB(0x292f33);
     [self.navigationBarView addSubview:self.titleLabel];
     
     //分割线
@@ -131,6 +131,16 @@
     self.titleLabel.frame=CGRectMake(self.backBarButton.right+(self.navigationBarView.width-self.backBarButton.width*(self.closeBarButton.isHidden ? 2 : 3)-self.titleLabel.width)/2, STATUS_BAR_HEIGHT+(NAVIGATION_BAR_HEIGHT-20)/2,self.titleLabel.width, 20);
 }
 
+#pragma mark 重新系统方法
+/**
+ *  状态栏样式
+ *
+ *  @return 状态栏样式
+ */
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleDefault;
+}
+
 #pragma mark 按钮事件
 /**
  *  返回按钮
@@ -138,8 +148,12 @@
  *  @param sender
  */
 -(void)backBarButton:(UIButton *)sender{
-    //点击汉堡包发送通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"showmenu" object:nil];
+    if (self.webView.canGoBack) {
+        [self.webView goBack];
+    }
+    else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 /**
@@ -148,9 +162,7 @@
  *  @param sender
  */
 -(void)closeBarButton:(UIButton *)sender{
-    if (self.webView.canGoBack) {
-        [self.webView goBack];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /**

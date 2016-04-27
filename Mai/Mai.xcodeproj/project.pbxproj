@@ -90,6 +90,7 @@
 		E6BA82041C508D6500A5C16F /* SwipeBackNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA82001C508D6500A5C16F /* SwipeBackNavigationViewController.m */; };
 		E6BA820B1C50B9E700A5C16F /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA820A1C50B9E700A5C16F /* TabBarViewController.m */; };
 		E6BA82141C50C3BB00A5C16F /* HGoodsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */; };
+		E6BFA79E1CD05BEF00A195F3 /* CWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFA79D1CD05BEF00A195F3 /* CWebViewController.m */; };
 		E6C25CD11C7178B000FE6E9F /* SCConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C25CD01C7178B000FE6E9F /* SCConfirmOrderViewController.m */; };
 		E6C25CDD1C71A9E200FE6E9F /* SCGoodsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C25CDC1C71A9E200FE6E9F /* SCGoodsListViewController.m */; };
 		E6C46A1E1C75532E005D643A /* ULLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C46A1D1C75532E005D643A /* ULLoginViewController.m */; };
@@ -283,6 +284,8 @@
 		E6BA820A1C50B9E700A5C16F /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		E6BA82121C50C3BB00A5C16F /* HGoodsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGoodsDetailsViewController.h; sourceTree = "<group>"; };
 		E6BA82131C50C3BB00A5C16F /* HGoodsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGoodsDetailsViewController.m; sourceTree = "<group>"; };
+		E6BFA79C1CD05BEF00A195F3 /* CWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWebViewController.h; sourceTree = "<group>"; };
+		E6BFA79D1CD05BEF00A195F3 /* CWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWebViewController.m; sourceTree = "<group>"; };
 		E6C25CCF1C7178B000FE6E9F /* SCConfirmOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConfirmOrderViewController.h; sourceTree = "<group>"; };
 		E6C25CD01C7178B000FE6E9F /* SCConfirmOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConfirmOrderViewController.m; sourceTree = "<group>"; };
 		E6C25CDB1C71A9E200FE6E9F /* SCGoodsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCGoodsListViewController.h; sourceTree = "<group>"; };
@@ -666,6 +669,8 @@
 				E61CCE751C7201B100CAF626 /* CKeyboardToolBar.m */,
 				E6C46A1F1C755B16005D643A /* CTextField.h */,
 				E6C46A201C755B16005D643A /* CTextField.m */,
+				E6BFA79C1CD05BEF00A195F3 /* CWebViewController.h */,
+				E6BFA79D1CD05BEF00A195F3 /* CWebViewController.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1069,6 +1074,7 @@
 				E6138CCB1C79B97B003A370E /* UCEditProfileViewController.m in Sources */,
 				E6F340851C7D37C80064E7A0 /* TLTimeLimitDetailsViewController.m in Sources */,
 				E6C46A241C7570C5005D643A /* ULRegisterViewController.m in Sources */,
+				E6BFA79E1CD05BEF00A195F3 /* CWebViewController.m in Sources */,
 				E65B0BA01C4F84C4002262F1 /* MJRefreshBackNormalFooter.m in Sources */,
 				E673C0F71C7C3C860091FA85 /* LBLeftBarViewController.m in Sources */,
 				E65B0BD01C4F84CE002262F1 /* SDWebImageDecoder.m in Sources */,
@@ -1217,7 +1223,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tingyin Li (F98W68MJQ5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tingyin Li (FM6B86744V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tingyin Li (F98W68MJQ5)";
 				INFOPLIST_FILE = Mai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

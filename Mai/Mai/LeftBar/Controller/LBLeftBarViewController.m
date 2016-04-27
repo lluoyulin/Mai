@@ -114,6 +114,9 @@
         
         [self.tableView reloadData];
         
+        //点击汉堡包发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showmenu" object:nil];
+        
     }]];
     
     [self presentViewController:alert animated:YES completion:nil];

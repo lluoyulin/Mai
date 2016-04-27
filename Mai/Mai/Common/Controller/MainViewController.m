@@ -23,7 +23,7 @@
 @property(nonatomic,strong) UIView *showLeftView;//显示左边视图时触摸事件的View
 @property(nonatomic,strong) UITapGestureRecognizer *tapGesture;//触摸事件
 
-@property(nonatomic,strong) SwipeBackNavigationViewController *webViewVC;
+@property(nonatomic,strong) LBWebViewViewController *webViewVC;
 
 @end
 
@@ -130,8 +130,8 @@
     }
     else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"社区"]){
         if (!self.webViewVC) {
-            LBWebViewViewController *vc=[LBWebViewViewController new];
-            self.webViewVC=[[SwipeBackNavigationViewController alloc] initWithRootViewController:vc];
+            self.webViewVC=[LBWebViewViewController new];
+            self.webViewVC.url=@"http://shequ.yunzhijia.com/thirdapp/forum/network/571848f3e4b0d2075fe47ba6";
         }
         
         [self addChildViewController:self.webViewVC];
