@@ -75,7 +75,7 @@
     _list=[[NSMutableArray alloc] init];
     [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"商城",@"logo":@"leftbar_store",@"isselect":@"1"}]];
 //    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"蚤市",@"logo":@"leftbar_market",@"isselect":@"0"}]];
-//    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"社区",@"logo":@"leftbar_community",@"isselect":@"0"}]];
+    [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"社区",@"logo":@"leftbar_community",@"isselect":@"0"}]];
 }
 
 /**
@@ -127,7 +127,7 @@
     //去掉选中效果
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
-    if ([self isLogin] && _list.count<2) {
+    if ([self isLogin] && _list.count<3) {
         [_list addObject:[NSMutableDictionary dictionaryWithDictionary:@{@"name":@"退出",@"logo":@"leftbar_log_out",@"isselect":@"0"}]];
         
         [self.tableView reloadData];
@@ -186,15 +186,15 @@
 //        case 1:
 //            [dic setObject:@"蚤市" forKey:@"title"];
 //            break;
-//        case 2:
-//            [dic setObject:@"社区" forKey:@"title"];
-//            break;
-        case 1://退出
+        case 1:
+            [dic setObject:@"社区" forKey:@"title"];
+            break;
+        case 2://退出
             [self userLogout];
             break;
     }
     
-    if (indexPath.row!=1) {
+    if (indexPath.row!=2) {
         //刷新列表
         [self refresh:indexPath.row];
         

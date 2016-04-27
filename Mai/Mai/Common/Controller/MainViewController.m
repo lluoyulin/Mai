@@ -118,27 +118,26 @@
 -(void)loadCenterView:(NSNotification *)notification{
     [self showMenu:nil];
     
-    if (!self.webViewVC) {
-        LBWebViewViewController *vc=[LBWebViewViewController new];
-        self.webViewVC=[[SwipeBackNavigationViewController alloc] initWithRootViewController:vc];
-    }
-    
     [self.centerViewController.view removeFromSuperview];
     [self.centerViewController removeFromParentViewController];
     [self.webViewVC.view removeFromSuperview];
     [self.webViewVC removeFromParentViewController];
     
-    [self addChildViewController:self.webViewVC];
-    [self.webViewVC didMoveToParentViewController:self];
-    
     if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"商城"]) {
         [self addChildViewController:self.centerViewController];
         [self.centerViewController didMoveToParentViewController:self];
         [self.centerView addSubview:self.centerViewController.view];
-        return;
     }
-    
-    [self.centerView addSubview:self.webViewVC.view];
+    else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"社区"]){
+        if (!self.webViewVC) {
+            LBWebViewViewController *vc=[LBWebViewViewController new];
+            self.webViewVC=[[SwipeBackNavigationViewController alloc] initWithRootViewController:vc];
+        }
+        
+        [self addChildViewController:self.webViewVC];
+        [self.webViewVC didMoveToParentViewController:self];
+        [self.centerView addSubview:self.webViewVC.view];
+    }
 }
 
 /**
