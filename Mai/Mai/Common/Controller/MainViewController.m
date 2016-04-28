@@ -15,16 +15,17 @@
 
 @interface MainViewController ()
 
-@property(nonatomic,strong) UIViewController *leftViewController;//左边VC
-@property(nonatomic,strong) UIViewController *centerViewController;//中间VC
-@property(nonatomic,strong) UIView *leftView;//左边视图
-@property(nonatomic,strong) UIView *centerView;//中间视图
+@property (nonatomic,strong) UIViewController        *leftViewController;//左边VC
+@property (nonatomic,strong) UIViewController        *centerViewController;//中间VC
+@property (nonatomic,strong) UIViewController        *currentCenterVC;//当前中间显示VC
+@property (nonatomic,strong) UIView                  *leftView;//左边视图
+@property (nonatomic,strong) UIView                  *centerView;//中间视图
 
-@property(nonatomic,strong) UIView *showLeftView;//显示左边视图时触摸事件的View
-@property(nonatomic,strong) UITapGestureRecognizer *tapGesture;//触摸事件
+@property (nonatomic,strong) UIView                  *showLeftView;//显示左边视图时触摸事件的View
+@property (nonatomic,strong) UITapGestureRecognizer  *tapGesture;//触摸事件
 
-@property(nonatomic,strong) LBWebViewViewController *communityVC;//社区VC
-@property(nonatomic,strong) LBWebViewViewController *marketVC;//蚤市VC
+@property (nonatomic,strong) LBWebViewViewController *communityVC;//社区VC
+@property (nonatomic,strong) LBWebViewViewController *marketVC;//蚤市VC
 
 @end
 
@@ -60,15 +61,18 @@
     self.centerView.layer.masksToBounds=YES;
     [self.view addSubview:self.centerView];
     
+    //当前中间显示VC
+    self.currentCenterVC=self.centerViewController;
+
     //添加左边VC
     [self addChildViewController:self.leftViewController];
     [self.leftViewController didMoveToParentViewController:self];
     [self.leftView addSubview:self.leftViewController.view];
     
     //添加中间VC
-    [self addChildViewController:self.centerViewController];
-    [self.centerViewController didMoveToParentViewController:self];
-    [self.centerView addSubview:self.centerViewController.view];
+    [self addChildViewController:self.currentCenterVC];
+    [self.currentCenterVC didMoveToParentViewController:self];
+    [self.centerView addSubview:self.currentCenterVC.view];
     
     //显示左边视图时触摸事件的View
     self.showLeftView=[[UIView alloc] initWithFrame:CGRectMake(self.view.width*2/3, 0, self.view.width*2/3, self.view.height)];
@@ -118,39 +122,33 @@
  */
 -(void)loadCenterView:(NSNotification *)notification{
     [self showMenu:nil];
-    
-    [self.centerViewController.view removeFromSuperview];
-    [self.centerViewController removeFromParentViewController];
-    [self.marketVC.view removeFromSuperview];
-    [self.marketVC removeFromParentViewController];
-    [self.communityVC.view removeFromSuperview];
-    [self.communityVC removeFromParentViewController];
-    
+
+    [self.currentCenterVC.view removeFromSuperview];
+    [self.currentCenterVC removeFromParentViewController];
+
     if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"商城"]) {
-        [self addChildViewController:self.centerViewController];
-        [self.centerViewController didMoveToParentViewController:self];
-        [self.centerView addSubview:self.centerViewController.view];
+        self.currentCenterVC = self.centerViewController;
     }
     else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"蚤市"]){
         if (!self.marketVC) {
             self.marketVC=[LBWebViewViewController new];
             self.marketVC.url=@"http://www.demo.com/index.php/home/appweb/jishi/isLogin/1";
         }
-        
-        [self addChildViewController:self.marketVC];
-        [self.marketVC didMoveToParentViewController:self];
-        [self.centerView addSubview:self.marketVC.view];
+
+        self.currentCenterVC = self.marketVC;
     }
     else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"社区"]){
         if (!self.communityVC) {
             self.communityVC=[LBWebViewViewController new];
             self.communityVC.url=@"http://shequ.yunzhijia.com/thirdapp/forum/network/571848f3e4b0d2075fe47ba6";
         }
-        
-        [self addChildViewController:self.communityVC];
-        [self.communityVC didMoveToParentViewController:self];
-        [self.centerView addSubview:self.communityVC.view];
+
+        self.currentCenterVC = self.communityVC;
     }
+
+    [self addChildViewController:self.currentCenterVC];
+    [self.currentCenterVC didMoveToParentViewController:self];
+    [self.centerView addSubview:self.currentCenterVC.view];
 }
 
 /**
