@@ -38,7 +38,6 @@
     self.window.rootViewController=[[MainViewController alloc] initWithLeftViewController:[LBLeftBarViewController new] centerViewController:[TabBarViewController new]];
     [self.window makeKeyAndVisible];
     
-    
     //向微信注册wx3eb102aff53e1896
     [WXApi registerApp:@"wx3eb102aff53e1896" withDescription:@"出来mai"];
     

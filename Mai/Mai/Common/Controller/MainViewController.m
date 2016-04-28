@@ -86,6 +86,7 @@
     [self.showLeftView addGestureRecognizer:self.tapGesture];
 }
 
+#pragma mark 事件
 /**
  *  触摸事件
  *
@@ -95,6 +96,7 @@
     [self showMenu:nil];
 }
 
+#pragma mark 通知
 /**
  *  显示左边视图
  */
@@ -151,8 +153,9 @@
     [self.centerView addSubview:self.currentCenterVC.view];
 }
 
+#pragma mark 重写系统方法
 /**
- *  是否隐藏状态栏（重写）
+ *  是否隐藏状态栏
  *
  *  @return 是或否
  */
@@ -161,7 +164,7 @@
 }
 
 /**
- *  状态栏样式（重写）
+ *  状态栏样式
  *
  *  @return 样式
  */
@@ -169,6 +172,7 @@
     return _statusBarStyle;
 }
 
+#pragma mark 属性
 -(void)setStatusBarHidden:(BOOL)statusBarHidden{
     _statusBarHidden=statusBarHidden;
     
