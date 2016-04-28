@@ -23,7 +23,8 @@
 @property(nonatomic,strong) UIView *showLeftView;//显示左边视图时触摸事件的View
 @property(nonatomic,strong) UITapGestureRecognizer *tapGesture;//触摸事件
 
-@property(nonatomic,strong) LBWebViewViewController *webViewVC;
+@property(nonatomic,strong) LBWebViewViewController *communityVC;//社区VC
+@property(nonatomic,strong) LBWebViewViewController *marketVC;//蚤市VC
 
 @end
 
@@ -120,23 +121,35 @@
     
     [self.centerViewController.view removeFromSuperview];
     [self.centerViewController removeFromParentViewController];
-    [self.webViewVC.view removeFromSuperview];
-    [self.webViewVC removeFromParentViewController];
+    [self.marketVC.view removeFromSuperview];
+    [self.marketVC removeFromParentViewController];
+    [self.communityVC.view removeFromSuperview];
+    [self.communityVC removeFromParentViewController];
     
     if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"商城"]) {
         [self addChildViewController:self.centerViewController];
         [self.centerViewController didMoveToParentViewController:self];
         [self.centerView addSubview:self.centerViewController.view];
     }
-    else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"社区"]){
-        if (!self.webViewVC) {
-            self.webViewVC=[LBWebViewViewController new];
-            self.webViewVC.url=@"http://shequ.yunzhijia.com/thirdapp/forum/network/571848f3e4b0d2075fe47ba6";
+    else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"蚤市"]){
+        if (!self.marketVC) {
+            self.marketVC=[LBWebViewViewController new];
+            self.marketVC.url=@"http://www.demo.com/index.php/home/appweb/jishi/isLogin/1";
         }
         
-        [self addChildViewController:self.webViewVC];
-        [self.webViewVC didMoveToParentViewController:self];
-        [self.centerView addSubview:self.webViewVC.view];
+        [self addChildViewController:self.marketVC];
+        [self.marketVC didMoveToParentViewController:self];
+        [self.centerView addSubview:self.marketVC.view];
+    }
+    else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"社区"]){
+        if (!self.communityVC) {
+            self.communityVC=[LBWebViewViewController new];
+            self.communityVC.url=@"http://shequ.yunzhijia.com/thirdapp/forum/network/571848f3e4b0d2075fe47ba6";
+        }
+        
+        [self addChildViewController:self.communityVC];
+        [self.communityVC didMoveToParentViewController:self];
+        [self.centerView addSubview:self.communityVC.view];
     }
 }
 
