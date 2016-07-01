@@ -11,7 +11,9 @@
 #import "Const.h"
 #import "NSObject+Utils.h"
 
+#import "SwipeBackNavigationViewController.h"
 #import "LBLeftBarTableViewCell.h"
+#import "ULLoginViewController.h"
 
 @interface LBLeftBarViewController (){
     NSMutableArray *_list;
@@ -180,6 +182,14 @@
 
 #pragma mark tableView动作委托
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row!=0 && indexPath.row!=3) {
+        if (![self isLogin]) {
+            [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
+            
+            return;
+        }
+    }
+    
     NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithDictionary:@{@"title":@""}];
     
     switch (indexPath.row) {

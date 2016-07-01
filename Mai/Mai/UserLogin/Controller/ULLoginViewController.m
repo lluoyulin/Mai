@@ -23,6 +23,8 @@
 
 @interface ULLoginViewController ()
 
+@property(nonatomic,strong) UIButton *navigationBarLeftButton;//导航栏左边按钮
+
 @property(nonatomic,strong) UIView *contentView;
 @property(nonatomic,strong) CTextField *phoneText;//手机号
 @property(nonatomic,strong) CTextField *passwordText;//密码
@@ -48,6 +50,9 @@
     //注册键盘消失通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    //初始化导航栏按钮
+    [self initNavigationBarButton];
+    
     //初始化视图
     [self initView];
 }
@@ -61,6 +66,23 @@
 }
 
 #pragma mark 初始化视图
+/**
+ *  初始化导航栏按钮
+ */
+-(void)initNavigationBarButton{
+    //导航栏左边按钮
+    self.navigationBarLeftButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.navigationBarLeftButton.frame=CGRectMake(0, 0, 54, 44);
+    [self.navigationBarLeftButton setTitleColor:ThemeBlack forState:UIControlStateNormal];
+    [self.navigationBarLeftButton setTitle:@"返回" forState:UIControlStateNormal];
+    [self.navigationBarLeftButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 36)];
+    [self.navigationBarLeftButton setImage:[UIImage imageNamed:@"navigation_back"] forState:UIControlStateNormal];
+    [self.navigationBarLeftButton addTarget:self action:@selector(navigationBarLeftButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *leftBarButtonItem=[[UIBarButtonItem alloc] initWithCustomView:self.navigationBarLeftButton];
+    self.navigationItem.leftBarButtonItem=leftBarButtonItem;
+}
+
 /**
  *  初始化视图
  */
@@ -187,7 +209,7 @@
             //获取购物车数据
             [self loadShoppingCartData];
             
-            [self.navigationController popViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
         else{
             
@@ -315,6 +337,15 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+/**
+ *  导航栏左边按钮
+ *
+ *  @param sender
+ */
+-(void)navigationBarLeftButton:(UIButton *)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark 键盘弹出、隐藏通知
 /**
  *  键盘弹出回调
@@ -337,7 +368,7 @@
     CGFloat offset=self.contentView.height-viewHeight-kbSize.height;
     if (offset<=0) {//view和键盘有重合
         [UIView animateWithDuration:0.4 animations:^{
-                        self.contentView.transform=CGAffineTransformMakeTranslation(0, offset-20);
+            self.contentView.transform=CGAffineTransformMakeTranslation(0, offset-20);
         }];
     }
     else{

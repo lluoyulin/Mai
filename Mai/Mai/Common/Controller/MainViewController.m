@@ -134,7 +134,7 @@
     else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"蚤市"]){
         if (!self.marketVC) {
             self.marketVC=[LBWebViewViewController new];
-            self.marketVC.url=@"http://www.demo.com/index.php/home/appweb/jishi/isLogin/1";
+            self.marketVC.url=@"http://www.baidu.com";
         }
 
         self.currentCenterVC = self.marketVC;
@@ -142,7 +142,7 @@
     else if ([[notification.userInfo objectForKey:@"title"] isEqualToString:@"社区"]){
         if (!self.communityVC) {
             self.communityVC=[LBWebViewViewController new];
-            self.communityVC.url=@"http://shequ.yunzhijia.com/thirdapp/forum/network/571848f3e4b0d2075fe47ba6";
+            self.communityVC.url=@"http://www.sina.com.cn";
         }
 
         self.currentCenterVC = self.communityVC;
