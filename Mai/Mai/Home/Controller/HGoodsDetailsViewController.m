@@ -16,6 +16,8 @@
 #import "UILabel+AutoFrame.h"
 #import "NSObject+Utils.h"
 
+#import "SwipeBackNavigationViewController.h"
+
 #import "CSlidingViewController.h"
 #import "HGoodsDescriptionsViewController.h"
 #import "HGoodsImageInfoViewController.h"
@@ -270,7 +272,7 @@
  */
 -(void)addShoppingCartButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }
@@ -313,7 +315,7 @@
  */
 -(void)buyButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }
@@ -341,7 +343,7 @@
  */
 -(void)navigationShoppingButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }

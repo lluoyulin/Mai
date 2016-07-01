@@ -13,6 +13,8 @@
 #import "NSObject+HttpTask.h"
 #import "NSObject+Utils.h"
 
+#import "SwipeBackNavigationViewController.h"
+
 #import "SCShoppingCartTableViewCell.h"
 #import "SCConfirmOrderViewController.h"
 #import "ULLoginViewController.h"
@@ -98,7 +100,7 @@
                 [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
                 [alert addAction:[UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     
-                    [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+                    [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
                     
                 }]];
                 

@@ -14,6 +14,8 @@
 #import "CAlertView.h"
 #import "NSObject+HttpTask.h"
 
+#import "SwipeBackNavigationViewController.h"
+
 #import "MainViewController.h"
 #import "ULLoginViewController.h"
 #import "UCEditProfileViewController.h"
@@ -363,7 +365,7 @@
  */
 -(void)userInfoButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }
@@ -378,7 +380,7 @@
  */
 -(void)myPointsButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }
@@ -394,7 +396,7 @@
  */
 -(void)allOrdersButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }
@@ -411,7 +413,7 @@
  */
 -(void)orderOperateButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }
@@ -428,7 +430,7 @@
  */
 -(void)signButton:(UIButton *)sender{
     if (![self isLogin]) {
-        [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+        [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
         
         return;
     }

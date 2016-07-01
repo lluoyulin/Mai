@@ -14,6 +14,8 @@
 #import "UILabel+AutoFrame.h"
 #import "NSObject+Utils.h"
 
+#import "SwipeBackNavigationViewController.h"
+
 #import "HHomeDetailsTableViewCell.h"
 #import "HGoodsDetailsViewController.h"
 #import "ULLoginViewController.h"
@@ -544,7 +546,7 @@
         cell.ShoppingBlock=^(NSString *sid,NSString *count,NSString *fid){
             
             if (sid==nil && count==nil && fid==nil) {//登录
-                [self.navigationController pushViewController:[ULLoginViewController new] animated:YES];
+                [self presentViewController:[[SwipeBackNavigationViewController alloc] initWithRootViewController:[ULLoginViewController new]] animated:YES completion:nil];
                 
                 return;
             }
